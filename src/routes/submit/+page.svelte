@@ -321,7 +321,7 @@
         padding: 15px 20px;
     }
 
-    .card-content p, .card-content ul, .card-content h3 {
+    .card-content p {
         color: var(--color-text-dark);
         margin-top: 10px;
         line-height: 1.5;
@@ -336,7 +336,7 @@
         padding-bottom: 3px;
     }
 
-    .card-content ul {
+    :global(.card-content ul) {
         margin-top: 5px;
         padding-left: 20px;
         list-style: disc;

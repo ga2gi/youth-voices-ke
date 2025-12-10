@@ -27,3 +27,4 @@
         flex: 1; /* Ensures content pushes the footer down */
     }
 </style>
+

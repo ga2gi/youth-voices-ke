@@ -1,3 +1,4 @@
+
 // src/routes/about/+page.server.js
 
 // Updated static data representing the DIVERSE types of potential partners
