@@ -2,7 +2,8 @@
     /** @type {import('./$types').PageData} */
     export let data;
 
-    const { briefs } = data;
+    // Use groupedBriefs instead of briefs
+    const { groupedBriefs } = data;
 
     // Helper for formatting date
     const formatDate = (isoDate) => {
@@ -17,63 +18,110 @@
         const statuses = ['Delivered', 'Acknowledged', 'In Review', 'Implemented'];
         const index = statuses.indexOf(status);
         if (index === -1) return 0;
-        return (index / (statuses.length - 1)) * 100;
+        // Use 0, 33.3, 66.6, 100 for percentage progression
+        return (index / (statuses.length - 1)) * 100; 
     };
 </script>
 
 <div class="container briefs-page">
     <header>
         <h1>🏛️ Policy Briefs Tracking</h1>
+        <p class="context-text">
+            Youth Voices KE's policy briefs are the final output, drafted from the top youth solutions selected by the community vote and expert review. Use this page to monitor the status of each brief as it progresses from official Delivery to Implementation by government agencies and stakeholders.
+        </p>
         <p class="intro-text">
             Track the journey of policy briefs generated from youth solutions. We monitor the progress 
-            of each brief from **Delivery** to **Implementation** by relevant stakeholders.
+            of each brief from Delivery to Implementation by relevant stakeholders.
         </p>
     </header>
 
-    <div class="briefs-list">
-        {#if briefs.length === 0}
+    <div class="briefs-group-list">
+        {#if groupedBriefs.length === 0}
             <div class="empty-state">
                 <p>No policy briefs have been published or are currently being tracked.</p>
             </div>
         {:else}
-            {#each briefs as brief (brief.id)}
-                <div class="brief-card">
-                    <div class="brief-header">
-                        <h2>{brief.title}</h2>
-                        <div class="delivery-date">Delivered: **{formatDate(brief.delivery_date)}**</div>
+            {#each groupedBriefs as challengeGroup (challengeGroup.id)}
+                <section class="challenge-group">
+                    <h2 class="challenge-group-title">Briefs for: {challengeGroup.title}</h2>
+                    <div class="briefs-list">
+                        {#each challengeGroup.briefs as brief (brief.id)}
+                            <div class="brief-card">
+                                <div class="brief-header">
+                                    <div class="title-meta">
+                                        <h2>{brief.title}</h2>
+                                        <div class="delivery-date">Delivered: {formatDate(brief.delivery_date)}</div>
+                                    </div>
+                                    
+                                    {#if brief.pdf_url}
+                                        <a href={brief.pdf_url} target="_blank" class="download-button" rel="noopener noreferrer">
+                                            Download Brief (PDF) ⬇️
+                                        </a>
+                                    {/if}
+                                </div>
+
+                                <p class="description">{brief.description}</p>
+                                
+                                {#if brief.stakeholder_acknowledged}
+                                    <p class="acknowledgement">
+                                        Acknowledged By: {brief.stakeholder_acknowledged}
+                                    </p>
+                                {/if}
+
+                                <div class="status-tracker">
+                                    <div class="status-bar">
+                                        <div class="progress" style="width: {getStatusPercentage(brief.status)}%"></div>
+                                    </div>
+
+                                    <ul class="status-labels">
+                                        <li class:active={brief.status === 'Delivered' || getStatusPercentage(brief.status) > 0}>Delivered</li>
+                                        <li class:active={brief.status === 'Acknowledged' || getStatusPercentage(brief.status) > 25}>Acknowledged</li>
+                                        <li class:active={brief.status === 'In Review' || getStatusPercentage(brief.status) > 75}>In Review</li>
+                                        <li class:active={brief.status === 'Implemented' || getStatusPercentage(brief.status) === 100}>Implemented</li>
+                                    </ul>
+                                    
+                                    <div class="current-status-tag">
+                                        Current Status: {brief.status}
+                                    </div>
+                                </div>
+                            </div>
+                        {/each}
                     </div>
-
-                    <p class="description">{brief.description}</p>
-                    
-                    {#if brief.stakeholder_acknowledged}
-                        <p class="acknowledgement">
-                            **Acknowledged By:** {brief.stakeholder_acknowledged}
-                        </p>
-                    {/if}
-
-                    <div class="status-tracker">
-                        <div class="status-bar">
-                            <div class="progress" style="width: {getStatusPercentage(brief.status)}%"></div>
-                        </div>
-
-                        <ul class="status-labels">
-                            <li class:active={brief.status === 'Delivered' || getStatusPercentage(brief.status) > 0}>Delivered</li>
-                            <li class:active={brief.status === 'Acknowledged' || getStatusPercentage(brief.status) > 25}>Acknowledged</li>
-                            <li class:active={brief.status === 'In Review' || getStatusPercentage(brief.status) > 75}>In Review</li>
-                            <li class:active={brief.status === 'Implemented' || getStatusPercentage(brief.status) === 100}>Implemented</li>
-                        </ul>
-                        
-                        <div class="current-status-tag">
-                            Current Status: **{brief.status}**
-                        </div>
-                    </div>
-                </div>
+                </section>
             {/each}
         {/if}
     </div>
 </div>
 
 <style>
+    /* New Grouping Styles */
+    .challenge-group {
+        margin-bottom: 50px;
+    }
+
+    .challenge-group-title {
+        font-size: 2em;
+        color: var(--color-text-dark);
+        border-bottom: 3px solid var(--color-primary-accent);
+        padding-bottom: 10px;
+        margin-bottom: 25px;
+        font-weight: 600;
+    }
+    
+    /* New Context Text Style */
+    .context-text {
+        font-style: italic;
+        font-size: 1em;
+        color: var(--color-text-dark);
+        margin-bottom: 25px;
+        border-left: 4px solid var(--color-secondary-accent);
+        padding-left: 15px;
+        max-width: 800px;
+        margin: 0 auto 30px auto;
+        text-align: left;
+    }
+    
+    /* --- Existing Styles (Modified for Layout/Button) --- */
     .briefs-page {
         padding-top: 40px;
         padding-bottom: 60px;
@@ -92,7 +140,7 @@
 
     .intro-text {
         max-width: 700px;
-        margin: 0 auto;
+        margin: 0 auto 20px auto;
         color: var(--color-text-light);
         font-size: 1.1em;
     }
@@ -111,27 +159,51 @@
         transform: translateY(-3px);
     }
 
+    /* Updated Brief Header for download button */
     .brief-header {
         display: flex;
         justify-content: space-between;
-        align-items: flex-start;
+        align-items: center; 
         margin-bottom: 15px;
         border-bottom: 1px dashed var(--color-border-light);
         padding-bottom: 10px;
+        flex-wrap: wrap; 
     }
 
+    .brief-header .title-meta {
+        flex-grow: 1;
+        margin-right: 20px;
+    }
+    
     .brief-header h2 {
         font-size: 1.8em;
         color: var(--color-text-dark);
         margin: 0;
         flex-grow: 1;
+        margin-bottom: 5px; /* Added spacing */
     }
 
     .delivery-date {
         font-size: 0.9em;
         color: var(--color-text-light);
         flex-shrink: 0;
-        margin-left: 20px;
+    }
+    
+    /* Download Button Style */
+    .download-button {
+        background-color: var(--color-primary-accent);
+        color: var(--color-white);
+        padding: 10px 15px;
+        border-radius: 6px;
+        font-weight: 600;
+        text-decoration: none;
+        transition: background-color 0.2s;
+        flex-shrink: 0;
+        margin-top: 10px; 
+    }
+
+    .download-button:hover {
+        background-color: #005625; 
     }
 
     .description {
@@ -220,9 +292,12 @@
             flex-direction: column;
             align-items: flex-start;
         }
-        .delivery-date {
-            margin-left: 0;
-            margin-top: 5px;
+        .brief-header .title-meta {
+            width: 100%;
+        }
+        .download-button {
+            width: 100%;
+            text-align: center;
         }
         .status-labels {
             flex-wrap: wrap;

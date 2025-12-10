@@ -2,6 +2,7 @@
     /** @type {import('./$types').PageData} */
     export let data;
     
+    // Original variables for single featured challenge
     const { featuredChallenge, metrics } = data;
 </script>
 
@@ -40,7 +41,7 @@
                     <a href="/submit" class="button-secondary">
                         Submit Solution for this Challenge
                     </a>
-                </div>
+                    </div>
             </div>
         {:else}
             <div class="no-challenge-info">

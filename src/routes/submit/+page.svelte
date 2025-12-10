@@ -209,7 +209,7 @@
                 required
             />
             
-            <label for="implementation_timeline">3. Proposed Implementation Timeline (Estimate) *</label>
+            <label for="implementation_timeline">3. Proposed Implementation Timeline (Estimate) </label>
             <input 
                 type="text" 
                 id="implementation_timeline" 

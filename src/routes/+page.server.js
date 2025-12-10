@@ -14,11 +14,12 @@ export async function load() {
             created_at,
             submissions (count)
         `)
-        .eq('month_highlighted', true)
+        .eq('month_highlighted', true) // <-- Reverting to original filter
         .limit(1)
         .single();
         
-    if (challengeError && challengeError.code !== 'PGRST116') { // PGRST116 = No rows found
+    // Suppress the error if no rows are found (PGRST116)
+    if (challengeError && challengeError.code !== 'PGRST116') {
         console.error('Homepage Featured Challenge Error:', challengeError);
     }
     
@@ -33,13 +34,15 @@ export async function load() {
         supabase.from('policybriefs').select('*', { count: 'exact', head: true }).eq('status', 'Implemented'),
     ]);
 
+    // 3. Format the challenge data
     const formattedChallenge = featuredChallenge ? {
         ...featuredChallenge,
+        // Extract count from the nested PostgREST response
         submission_count: featuredChallenge.submissions[0]?.count || 0
     } : null;
 
     return {
-        featuredChallenge: formattedChallenge,
+        featuredChallenge: formattedChallenge, // Single featured challenge
         metrics: {
             totalSubmissions: totalSubmissions || 0,
             totalBriefs: totalBriefs || 0,

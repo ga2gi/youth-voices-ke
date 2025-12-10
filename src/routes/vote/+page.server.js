@@ -1,38 +1,22 @@
 // src/routes/vote/+page.server.js
-import { supabase } from '$lib/supabaseClient';
 import { fail } from '@sveltejs/kit';
+import { supabase } from '$lib/supabaseClient';
+import { fetchGroupedSubmissions } from '$lib/server/db'; 
 
 /** @type {import('./$types').PageServerLoad} */
 export async function load() {
-    const { data: submissionsData, error: loadError } = await supabase
-        .from('submissions') 
-        .select(`
-            id, 
-            solution_text,
-            is_shortlisted,
-            challenge:challenge_id (title),
-            vote_count:votes(count)
-        `)
-        .eq('is_shortlisted', true); 
+    // Use the robust helper function to fetch and group data, now including vote counts
+    const submissions = await fetchGroupedSubmissions();
 
-    if (loadError) {
-        console.error('Error fetching submissions for voting:', loadError);
+    if (submissions.length === 0) {
         return { submissions: [] };
     }
-    
-    const formattedSubmissions = submissionsData.map(sub => ({
-        id: sub.id,
-        solution_text: sub.solution_text,
-        challenge_title: sub.challenge.title,
-        vote_count: sub.vote_count[0]?.count || 0,
-    }));
 
-    return { submissions: formattedSubmissions };
+    return { submissions };
 }
 
 /** @type {import('./$types').Actions} */
 export const actions = {
-    // NOTE: We now access the 'cookies' object here
     vote: async ({ request, cookies }) => { 
         const formData = await request.formData();
         const submission_id = formData.get('submission_id');
@@ -41,45 +25,64 @@ export const actions = {
             return fail(400, { error: 'Invalid submission selected.' });
         }
         
-        // --- FIX: UNIQUE VOTER ID PER DEVICE ---
+        // --- Voter ID Logic ---
         let voter_id = cookies.get('vote_session_id');
-
         if (!voter_id) {
-            // Generate a unique ID (UUID) for this new session/device
             voter_id = crypto.randomUUID(); 
-            
-            // Set the cookie to persist the unique ID for 30 days
             cookies.set('vote_session_id', voter_id, {
                 path: '/',
-                maxAge: 60 * 60 * 24 * 30, // 30 days
-                httpOnly: true, // Security best practice
+                maxAge: 60 * 60 * 24 * 30,
+                httpOnly: true,
                 sameSite: 'strict',
             });
         }
-        // ----------------------------------------
+        
+        // --- Submission Challenge Lookup ---
+        const { data: submissionData, error: lookupError } = await supabase
+            .from('submissions')
+            .select('challenge_id')
+            .eq('id', submission_id)
+            .single();
 
+        if (lookupError || !submissionData) {
+            return fail(500, { error: 'Could not find the associated challenge.' });
+        }
+        
+        const challenge_id = submissionData.challenge_id;
+
+        // --- One Vote Per Challenge Check ---
+        const { data: existingVote, error: voteCheckError } = await supabase
+            .from('votes')
+            .select(`
+                id, 
+                submission:submission_id (challenge_id)
+            `)
+            .eq('voter_id', voter_id)
+            .eq('submission.challenge_id', challenge_id)
+            .limit(1)
+            .single();
+
+        if (existingVote) {
+             return fail(409, { error: `You have already voted on a solution for this challenge.`, voted_id: submission_id });
+        }
+
+        if (voteCheckError && voteCheckError.code !== 'PGRST116') {
+             console.error('Vote check error:', voteCheckError);
+             return fail(500, { error: 'Failed to verify existing votes.' });
+        }
+
+        // --- Insert New Vote ---
         const { error: insertError } = await supabase
             .from('votes')
             .insert({
                 submission_id: submission_id,
-                voter_id: voter_id, // Use the new, unique ID
+                voter_id: voter_id,
                 is_upvote: true
             });
 
         if (insertError) {
             console.error('Supabase Vote Insertion Error:', insertError);
-            
-            if (insertError.code === '23505') {
-                 return fail(409, { 
-                    // This error is now specifically for the current device/session
-                    error: 'You have already voted on this solution with this device.',
-                    voted_id: submission_id
-                });
-            }
-            
-            return fail(500, { 
-                error: 'Could not record vote due to a server error.' 
-            });
+            return fail(500, { error: 'Could not record vote due to a server error.' });
         }
         
         return { success: true, voted_id: submission_id };
