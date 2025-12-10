@@ -4,14 +4,18 @@ import { fail } from '@sveltejs/kit';
 
 /** @type {import('./$types').PageServerLoad} */
 export async function load() {
-    // Fetch all submissions, joining with challenges to get the title.
+    // 1. Fetch all submissions that are shortlisted and join with Challenges for the title
+    // 2. Also, COUNT the total votes for each submission
     const { data: submissionsData, error: loadError } = await supabase
-        .from('submissions')
+        .from('Submissions') // Use 'Submissions' with capital S as per your new table definition
         .select(`
             id, 
-            solution_text, 
-            challenge:challenge_id (title)
-        `);
+            solution_text,
+            is_shortlisted,
+            challenge:challenge_id (title),
+            vote_count:votes(count)
+        `)
+        .eq('is_shortlisted', true); // Only fetch submissions ready for voting
 
     if (loadError) {
         console.error('Error fetching submissions for voting:', loadError);
@@ -22,6 +26,8 @@ export async function load() {
         id: sub.id,
         solution_text: sub.solution_text,
         challenge_title: sub.challenge.title,
+        // The vote_count array returns [{ count: N }], so we extract N
+        vote_count: sub.vote_count[0]?.count || 0,
     }));
 
     return { submissions: formattedSubmissions };
@@ -35,17 +41,16 @@ export const actions = {
         
         const submission_id = formData.get('submission_id');
         
-        // NOTE: Since the submission page was 'No login required', 
-        // we use a simple placeholder 'voter_id'. In a real app, 
-        // this must be a unique, secure ID (e.g., from a session or a cookie).
-        const voter_id = 'public_voter_temp'; 
+        // SECURE VOTER ID: This is a critical point. For local testing, 
+        // we use a simple placeholder. In a production environment, 
+        // you MUST use a secure, unique identifier (e.g., from a session or Supabase Auth).
+        const voter_id = 'public_voter_temp'; // Placeholder
 
         if (!submission_id) {
             return fail(400, { error: 'Invalid submission selected.' });
         }
         
         // Insert a new vote record
-        // We assume a simple upvote for the MVP (is_upvote: true)
         const { error: insertError } = await supabase
             .from('votes')
             .insert({
@@ -57,14 +62,20 @@ export const actions = {
         if (insertError) {
             console.error('Supabase Vote Insertion Error:', insertError);
             
-            // A common error here will be a violation of a UNIQUE constraint 
-            // (e.g., preventing a user from voting twice on the same solution).
+            // Check for unique constraint violation (code '23505' for PostgreSQL)
+            if (insertError.code === '23505') {
+                 return fail(409, { // 409 Conflict status code
+                    error: 'You have already voted on this solution.',
+                    voted_id: submission_id
+                });
+            }
+            
             return fail(500, { 
-                error: 'Could not record vote. You may have already voted on this solution or a server error occurred.' 
+                error: 'Could not record vote due to a server error.' 
             });
         }
         
-        // Return a success object. SvelteKit handles the UI update without redirecting.
+        // Return a success object.
         return { success: true, voted_id: submission_id };
     }
 };

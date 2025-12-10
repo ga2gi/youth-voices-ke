@@ -1,123 +1,213 @@
 <script>
     import { enhance } from '$app/forms';
+    import { fly } from 'svelte/transition';
 
-    /** @type {{id: string, solution_text: string, challenge_title: string}} */
+    /** @type {{id: string, solution_text: string, challenge_title: string, vote_count: number}} */
     export let submission;
-
-    // The actionData passed from the parent page after a form submission
+    
     /** @type {import('../../routes/vote/$types').ActionData} */
-    export let form; 
+    export let form;
 
-    // Track state to disable/update the button after a successful vote
-    $: isVoted = form?.success && form.voted_id === submission.id;
+    let expanded = false;
+    let isVoted = false;
+    let voteError = null;
+
+    // Check if this card was the target of the last form submission
+    $: isTarget = form && (form.voted_id === submission.id);
+    
+    // Update local state based on action result
+    $: {
+        if (isTarget) {
+            if (form.success) {
+                isVoted = true;
+                // Clear any previous error
+                voteError = null;
+            } else if (form.error) {
+                // Display error (e.g., already voted)
+                voteError = form.error;
+            }
+        }
+    }
+
+    // Function to handle the form submission
+    function handleVote({ formData }) {
+        // Clear previous error and reset isVoted status before submission
+        voteError = null;
+        isVoted = false;
+
+        // Add the submission ID to the form data
+        formData.append('submission_id', submission.id);
+
+        return async ({ update }) => {
+            // Update the page data to refresh vote counts after a successful submission
+            await update({ invalidateAll: true });
+        };
+    }
 </script>
 
-<div class="submission-card" class:voted={isVoted}>
-    <div class="card-content">
-        <p class="challenge-tag">
-            Challenge: <span>{submission.challenge_title}</span>
-        </p>
-        
-        <h4>Proposed Solution:</h4>
-        <div class="solution-text-container">
-            <p class="solution-text">
-                {submission.solution_text}
-            </p>
+<div class="card {isVoted ? 'voted' : ''}">
+    <div class="header" on:click={() => expanded = !expanded}>
+        <h3 class="challenge-title">Challenge: {submission.challenge_title}</h3>
+        <p class="summary-label">Solution Proposal</p>
+        <span class="expand-icon">{expanded ? '▲' : '▼'}</span>
+    </div>
+
+    {#if expanded}
+        <div class="details" transition:fly={{ y: 5, duration: 200 }}>
+            <p class="solution-text">{submission.solution_text}</p>
         </div>
+    {/if}
+
+    <div class="footer">
+        <div class="vote-info">
+            <span class="vote-count">{submission.vote_count}</span>
+            <span class="vote-label">Votes</span>
+        </div>
+        
+        <form 
+            method="POST" 
+            action="?/vote" 
+            use:enhance={handleVote}
+            class="vote-form"
+        >
+            <input type="hidden" name="submission_id" value={submission.id}>
+
+            {#if isVoted}
+                <button class="vote-button voted" disabled>
+                    Voted! 🎉
+                </button>
+            {:else}
+                <button class="vote-button" type="submit">
+                    Cast Your Vote
+                </button>
+            {/if}
+        </form>
     </div>
     
-    <div class="vote-actions">
-        <form method="POST" action="?/vote" use:enhance>
-            <input type="hidden" name="submission_id" value={submission.id} />
-
-            <button 
-                type="submit" 
-                class="button-primary vote-button" 
-                disabled={isVoted}
-            >
-                {#if isVoted}
-                    Vote Recorded! ✅
-                {:else}
-                    Upvote This Solution 👍
-                {/if}
-            </button>
-        </form>
-
-        {#if form?.error}
-            <p class="vote-error">
-                {form.error}
-            </p>
-        {/if}
-    </div>
+    {#if voteError && isTarget}
+        <p class="error-message" transition:fly={{ y: -5, duration: 200 }}>{voteError}</p>
+    {/if}
 </div>
 
 <style>
-    .submission-card {
-        background-color: var(--color-white);
+    .card {
+        background-color: #ffffff;
         border: 1px solid var(--color-border-light);
-        border-radius: 8px;
-        padding: 25px;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        border-radius: 12px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
         display: flex;
         flex-direction: column;
+        transition: all 0.2s ease-in-out;
+    }
+    
+    .card.voted {
+        border-color: var(--color-success);
+        box-shadow: 0 0 15px rgba(39, 174, 96, 0.2);
+    }
+
+    .header {
+        padding: 20px;
+        cursor: pointer;
+        border-bottom: 1px solid var(--color-border-light);
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
         justify-content: space-between;
-        transition: all 0.3s;
-    }
-    
-    .voted {
-        border: 2px solid var(--color-primary-accent);
-        box-shadow: 0 4px 12px rgba(0, 122, 51, 0.2);
-        opacity: 0.9;
     }
 
-    .challenge-tag {
-        font-size: 0.9em;
-        font-weight: 500;
-        color: var(--color-text-light);
-        margin-bottom: 15px;
-        border-bottom: 1px dashed var(--color-border-light);
-        padding-bottom: 5px;
+    .header:hover {
+        background-color: #f7f7f7;
     }
 
-    .challenge-tag span {
-        font-weight: 700;
-        color: var(--color-text-dark);
-    }
-    
-    .submission-card h4 {
+    .challenge-title {
         font-size: 1.1em;
-        color: var(--color-text-dark);
+        font-weight: 600;
+        color: var(--color-primary-accent);
         margin-bottom: 5px;
+        flex: 1 1 100%;
+    }
+    
+    .summary-label {
+        font-size: 0.9em;
+        color: var(--color-text-light);
+        flex: 1 1 80%;
     }
 
-    .solution-text-container {
-        /* Limit height of solution text to keep card size consistent */
-        max-height: 150px; 
-        overflow: hidden;
-        margin-bottom: 15px;
-    }
-
-    .solution-text {
-        font-size: 0.95em;
+    .expand-icon {
+        font-size: 1.2em;
         color: var(--color-text-dark);
-        /* Use a slight vertical gradient to hint at truncated text */
-        mask-image: linear-gradient(to bottom, black 80%, transparent 100%);
     }
 
-    .vote-actions {
+    .details {
+        padding: 0 20px 15px;
+        overflow: hidden;
+    }
+    
+    .solution-text {
+        white-space: pre-wrap; /* Ensures line breaks in the submission are respected */
+        font-size: 1em;
+        line-height: 1.6;
+        color: var(--color-text-dark);
+        border-left: 3px solid var(--color-secondary-light);
+        padding-left: 15px;
+        margin-top: 15px;
+    }
+
+    .footer {
+        padding: 15px 20px;
         border-top: 1px solid var(--color-border-light);
-        padding-top: 15px;
-        text-align: center;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: #fafafa;
+        border-radius: 0 0 12px 12px;
+    }
+
+    .vote-info {
+        display: flex;
+        align-items: baseline;
+        gap: 8px;
+    }
+    
+    .vote-count {
+        font-size: 1.8em;
+        font-weight: 700;
+        color: var(--color-primary-accent);
+    }
+    
+    .vote-label {
+        font-size: 0.9em;
+        color: var(--color-text-light);
     }
 
     .vote-button {
-        width: 100%;
-        font-size: 1.1em;
+        background-color: var(--color-primary-accent);
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 6px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background-color 0.2s;
     }
 
-    .vote-error {
-        color: var(--color-secondary-accent);
-        font-size: 0.8em;
-        margin-top: 10px;
+    .vote-button:hover:not(:disabled) {
+        background-color: var(--color-primary-dark);
+    }
+    
+    .vote-button.voted {
+        background-color: var(--color-success);
+        cursor: default;
+        box-shadow: 0 0 10px rgba(39, 174, 96, 0.5);
+    }
+
+    .error-message {
+        background-color: #fcebeb;
+        color: #e74c3c;
+        padding: 10px 20px;
+        border-radius: 0 0 12px 12px;
+        margin-top: -1px;
+        font-size: 0.9em;
+        text-align: center;
     }
 </style>
