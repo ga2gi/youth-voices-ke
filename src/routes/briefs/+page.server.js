@@ -26,7 +26,7 @@ export async function load() {
     // If successful, we wrap each brief in a dummy group so the Svelte component can render them
     const dummyGroup = {
         // Show a clean, user-facing title in the UI
-        title: "POLICY BRIEFS",
+        title: "ALL BRIEFS",
         id: "diagnostic",
         briefs: briefsData
     };
