@@ -86,7 +86,7 @@
     }
 
     .accent-ke-green {
-        color: var(--color-primary-accent); /* #007A33 - Green */
+        color: #8B1620; /* Dark burgundy/wine red */
         font-weight: 800;
     }
 
