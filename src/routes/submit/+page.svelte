@@ -9,32 +9,122 @@
     // State for client-side form data and validation checks
     let challengeTitle = '';
     let solutionText = '';
+    let responsibleStakeholder = '';
+    let implementationTimeline = '';
+    let supportingEvidence = '';
     let optionalContact = '';
 
     // Function to check if the minimum character count is met (for visual feedback)
     $: isDetailedEnough = solutionText.length >= 50;
+
+    // --- Hardcoded Challenges of the Month & Collapsible State ---
+    // NOTE: MUST be defined with `let` for the toggle function to work (reactivity fix).
+    let challengesOfTheMonth = [
+        {
+            id: 1,
+            title: "Youth Lack of Capital for Self-Employment in Kenya",
+            excerpt: "Limited access to capital, coupled with financial illiteracy and stringent collateral requirements, severely constrains self-employment opportunities. Click to view detailed analysis and policy gaps.",
+            // FULL Detailed Content for Challenge 1
+            details: `
+                <h3>2. Scope and Statistics</h3>
+                <ul>
+                    <li><strong>Youth Unemployment Rate:</strong> ~22%</li>
+                    <li><strong>Youth Business Failure Rate:</strong> Over 70% of youth-led startups fail within the first year, largely due to inadequate capital.</li>
+                    <li><strong>Funding Gap:</strong> MSMEs contribute 30% to Kenya’s GDP, but youth-led enterprises remain underrepresented.</li>
+                    <li><strong>Access to Credit:</strong> Only 15–20% of youth entrepreneurs successfully access loans from banks due to collateral requirements.</li>
+                </ul>
+                <h3>3. Causes of Limited Access to Capital</h3>
+                <p>Financial Illiteracy, Stringent Loan Conditions (collateral, high interest rates), Weak Institutional Support (YEDF/Uwezo bureaucracy, limited rural outreach), and Socio-Cultural Barriers (perception of inexperience).</p>
+                <h3>6. Policy & Programmatic Gaps</h3>
+                <p>Limited allocation of funds, poor coordination between government/banks/NGOs, insufficient monitoring, and weak linkages between financial support and mentorship services.</p>
+                <h3>7. Recommendations for Solutions</h3>
+                <p>Simplify loan procedures, reduce collateral requirements, enhance financial literacy training, strengthen government fund transparency, and leverage digital financing solutions.</p>
+            `,
+            expanded: false 
+        },
+        {
+            id: 2,
+            title: "Youth Mental Health in Kenya: Challenges, Statistics, and Stakeholders",
+            excerpt: "Approximately one in four young Kenyans experiences mental health challenges. Stigma, economic pressures, and insufficient service access require urgent policy attention. Click to view detailed analysis and policy gaps.",
+            // FULL Detailed Content for Challenge 2
+            details: `
+                <h3>2. Scope of Youth Mental Health in Kenya</h3>
+                <ul>
+                    <li><strong>Prevalence:</strong> Studies indicate that 25% of Kenyan youth experience mental health challenges.</li>
+                    <li><strong>Mortality:</strong> Suicide ranks among the top three causes of death for youth aged 15–29.</li>
+                    <li><strong>Service Access:</strong> Kenya has only 0.1 psychiatrists per 100,000 population.</li>
+                </ul>
+                <h3>3. Challenges Facing Youth Mental Health</h3>
+                <p>Limited Access to Services (mostly urban-based), Stigma and Cultural Barriers (dismissed as 'moodiness'), Education System Pressures, Economic Pressures (unemployment), and Digital/Social Pressures (cyberbullying).</p>
+                <h3>5. Policy & Programmatic Gaps</h3>
+                <p>Insufficient funding for youth mental health services, limited data on youth-specific trends, few trained adolescent specialists, and lack of integration with education and employment programs.</p>
+                <h3>6. Recommendations for Solutions</h3>
+                <p>Expand youth-friendly services (school counseling, hotlines), implement awareness campaigns to reduce stigma, train more specialized professionals, and integrate mental health into national youth development plans.</p>
+            `,
+            expanded: false
+        }
+    ];
+
+    /**
+     * FIX: Forces Svelte reactivity by creating a new array when an element is updated.
+     */
+    function toggleChallenge(id) {
+        // Create a new array by mapping over the old one and updating the expanded state for the target ID
+        challengesOfTheMonth = challengesOfTheMonth.map(c => {
+            if (c.id === id) {
+                // Return a new object for the modified challenge (using spread syntax)
+                return { ...c, expanded: !c.expanded };
+            }
+            // Return the original object for all other challenges
+            return c;
+        });
+    }
 </script>
 
 <div class="container submit-page">
     <header>
-        <h1>📝 Submit Your Policy Solution</h1>
-        <p class="tagline">Turn your innovative idea into a tangible policy brief. Please ensure your solution meets the criteria below.</p>
+        <h1>📝 Submit Your Actionable Solution</h1>
+        <p class="tagline">Your idea must directly address one of the challenges below or a challenge from the dropdown list.</p>
     </header>
+    
+    <section class="challenges-of-month-section">
+        <h2>🔥 Challenges of the Month (Context)</h2>
+        <p class="section-intro">Review the detailed policy context below before submitting your solution.</p>
+        <div class="challenge-cards-wrapper">
+            {#each challengesOfTheMonth as challenge (challenge.id)}
+                <div class="challenge-card" class:expanded={challenge.expanded}>
+                    <button class="card-header" on:click={() => toggleChallenge(challenge.id)}>
+                        <h3>{challenge.title}</h3>
+                        <span class="toggle-icon">{challenge.expanded ? '−' : '+'}</span>
+                    </button>
+                    
+                    <div class="card-content">
+                        <p>{@html challenge.excerpt}</p>
+                        {#if challenge.expanded}
+                            <div class="details-content">
+                                {@html challenge.details}
+                            </div>
+                        {/if}
+                    </div>
+                </div>
+            {/each}
+        </div>
+    </section>
 
     <div class="submission-content-wrapper">
         <section class="criteria-section">
-            <h2>💡 Our Submission Criteria</h2>
-            <p>Solutions that move forward to voting and policy formulation must be:</p>
+            <h2>💡 Structure of a Strong Solution</h2>
+            <p>To ensure policy relevance and actionability, your solution (50–500 words) must address these **four pillars**:</p>
             <ul>
-                <li>Relevance: Directly address one of the listed policy challenges.</li>
-                <li>Feasibility: Proposed action must be realistic and implementable within the Kenyan governance context.</li>
-                <li>Impact: Clearly articulate the positive outcome for the community or the target policy area.</li>
-                <li>Clarity: Solution must be detailed, well-articulated, and constructive (minimum 50 characters).</li>
+                <li>**Actionable Proposal:** Detailed, realistic action with clear expected impact. (The main solution field)</li>
+                <li>**Responsible Stakeholder:** Who is best positioned to implement this solution? (e.g., Ministry of ICT, County Assembly)</li>
+                <li>**Proposed Timeline:** Estimate a realistic duration for the implementation.</li>
+                <li>**Supporting Evidence:** Best practices or local examples to back your idea (Optional).</li>
             </ul>
         </section>
 
         <form method="POST" action="?/submit" use:enhance class="single-page-form">
-            <h2>Submit Solution Details</h2>
+            <h2>Solution Details</h2>
             
             <label for="challenge_title">Select the Policy Challenge Area *</label>
             <select 
@@ -49,25 +139,54 @@
                 {/each}
             </select>
             
-            <label for="solution_text">Detail Your Proposed Solution *</label>
+            <label for="solution_text">1. Clear, Actionable Proposal *</label>
             <textarea 
                 id="solution_text"
                 name="solution_text" 
                 rows="10" 
-                placeholder="Be specific about the problem it solves, the proposed action, and the expected impact. (Min 50 characters)"
+                placeholder="Be specific about the proposed action, the problem it solves, and the expected impact. (Min 50 characters, Max 500 words)"
                 bind:value={solutionText}
                 required
             ></textarea>
             <p class="char-count" class:valid={isDetailedEnough}>
-                Characters: {solutionText.length} (Maximum 500 required)
+                Characters: {solutionText.length} (Minimum 50 required)
             </p>
+
+            <label for="responsible_stakeholder">2. Responsible Stakeholder *</label>
+            <input 
+                type="text" 
+                id="responsible_stakeholder" 
+                name="responsible_stakeholder" 
+                placeholder="E.g., Ministry of Education, Nairobi County CEC for Health, Local Community Policing Group"
+                bind:value={responsibleStakeholder}
+                required
+            />
+            
+            <label for="implementation_timeline">3. Proposed Implementation Timeline (Estimate) *</label>
+            <input 
+                type="text" 
+                id="implementation_timeline" 
+                name="implementation_timeline" 
+                placeholder="E.g., 6 months for pilot, 2 years for nationwide rollout"
+                bind:value={implementationTimeline}
+                required
+            />
+
+            <label for="supporting_evidence">4. Supporting Evidence (Optional)</label>
+            <textarea 
+                id="supporting_evidence"
+                name="supporting_evidence" 
+                rows="4" 
+                placeholder="Mention best practices, local successes, or global examples that support your idea."
+                bind:value={supportingEvidence}
+            ></textarea>
 
             <label for="optional_contact">Your Contact Information (Optional)</label>
             <input 
                 type="text" 
                 id="optional_contact" 
                 name="optional_contact" 
-                placeholder="Email or Phone Number (if you wish to be included in next step if challenge is selected)"
+                placeholder="Email or Phone Number (for credit/clarification)"
                 bind:value={optionalContact}
             />
 
@@ -79,12 +198,12 @@
             <button type="submit" class="button-primary final-submit-btn" disabled={!isDetailedEnough}>
                 Submit Solution to Policy Team
             </button>
-            
-            </form>
+        </form>
     </div>
 </div>
 
 <style>
+    /* --- General Layout --- */
     .submit-page {
         padding-top: 40px;
         padding-bottom: 60px;
@@ -115,7 +234,121 @@
         box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     }
 
-    /* --- Criteria Section --- */
+    /* --- Challenges of the Month Styling --- */
+    .challenges-of-month-section {
+        max-width: 700px;
+        margin: 0 auto 30px auto;
+        padding: 0 10px;
+    }
+    
+    .challenges-of-month-section h2 {
+        text-align: center;
+        font-size: 1.8em;
+        color: var(--color-secondary-accent);
+        margin-bottom: 10px;
+        border-bottom: 2px solid var(--color-border-light);
+        padding-bottom: 5px;
+    }
+
+    .section-intro {
+        text-align: center;
+        font-size: 0.9em;
+        color: var(--color-text-light);
+        margin-bottom: 20px;
+    }
+
+    .challenge-cards-wrapper {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .challenge-card {
+        background-color: var(--color-white);
+        border: 2px solid var(--color-border-light);
+        border-radius: 8px;
+        overflow: hidden;
+        transition: all 0.3s ease-in-out;
+    }
+
+    .challenge-card.expanded {
+        border-color: var(--color-primary-accent);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .card-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        padding: 15px 20px;
+        background-color: #f9f9f9;
+        border: none;
+        cursor: pointer;
+        text-align: left;
+        transition: background-color 0.2s;
+        /* Ensure font color contrast */
+        color: var(--color-text-dark);
+    }
+    
+    .challenge-card.expanded .card-header {
+        background-color: var(--color-primary-accent);
+        color: var(--color-white);
+    }
+    
+    .card-header h3 {
+        margin: 0;
+        font-size: 1.1em;
+        font-weight: 600;
+        color: inherit;
+    }
+
+    .toggle-icon {
+        font-size: 1.5em;
+        font-weight: 700;
+        line-height: 1;
+    }
+    
+    .card-content {
+        padding: 0 20px;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.5s ease-in-out;
+    }
+
+    .challenge-card.expanded .card-content {
+        max-height: 1000px; 
+        padding: 15px 20px;
+    }
+
+    .card-content p, .card-content ul, .card-content h3 {
+        color: var(--color-text-dark);
+        margin-top: 10px;
+        line-height: 1.5;
+    }
+    
+    .card-content h3 {
+        font-size: 1.2em;
+        color: var(--color-secondary-accent);
+        margin-top: 20px;
+        margin-bottom: 5px;
+        border-bottom: 1px dashed var(--color-border-light);
+        padding-bottom: 3px;
+    }
+
+    .card-content ul {
+        margin-top: 5px;
+        padding-left: 20px;
+        list-style: disc;
+    }
+
+    .details-content {
+        margin-top: 10px;
+        padding-top: 10px;
+    }
+
+
+    /* --- Submission Criteria & Form Styling --- */
     .criteria-section {
         background-color: #f7f7f7;
         padding: 20px;
@@ -127,10 +360,6 @@
     .criteria-section h2 {
         font-size: 1.6em;
         color: var(--color-secondary-accent);
-        margin-bottom: 15px;
-    }
-
-    .criteria-section p {
         margin-bottom: 15px;
     }
 
@@ -147,14 +376,13 @@
     }
 
     .criteria-section li::before {
-        content: '✓';
+        content: '▪'; 
         color: var(--color-primary-accent);
         font-weight: bold;
         position: absolute;
         left: 0;
     }
 
-    /* --- Form Styling --- */
     .single-page-form h2 {
         font-size: 1.6em;
         color: var(--color-text-dark);

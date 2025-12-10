@@ -4,7 +4,7 @@
 
     const { stakeholders } = data; // Data fetched from +page.server.js
 
-    // Define the steps of the policy creation cycle
+    // Define the original 6 steps of the policy creation cycle for the 'How it Works' section
     const policySteps = [
         { 
             title: "1. Challenge Identification", 
@@ -14,12 +14,12 @@
         { 
             title: "2. Solution Submission", 
             icon: "📝", 
-            description: "Youth submit innovative solutions through our platform. All raw ideas are reviewed by a vetting committee." 
+            description: "Youth submit innovative solutions through our platform (50-500 words). All raw ideas are reviewed by a vetting committee." 
         },
         { 
             title: "3. Shortlisting & Voting", 
             icon: "🗳️", 
-            description: "The best solutions are shortlisted, and the public votes to prioritize the ideas that move forward." 
+            description: "The best solutions are shortlisted based on Feasibility, Relevance, and Impact, and the public votes to prioritize ideas." 
         },
         { 
             title: "4. Policy Brief Formulation", 
@@ -42,7 +42,7 @@
 <div class="container about-page">
     <header>
         <h1>About Youth Voices KE</h1>
-        <p class="tagline">Empowering the youth to be co-creators of policy and good governance.</p>
+        <p class="tagline">Your Voice Shapes Kenya's Future.</p>
     </header>
 
     <hr>
@@ -52,8 +52,7 @@
         <div class="mission-content">
             <div class="mission-text">
                 <h3>Our Mission</h3>
-                <p>To empower Kenya's youth to shape public policy and community action by providing a simple, open, and credible platform where they can propose practical and actionable solutions to the challenges they face and ensure these solutions reach the relevant stakeholders with transparency and accountability.
-</p>
+                <p>To empower Kenya's youth to shape public policy and community action by providing a simple, open, and credible platform where they can propose practical and actionable solutions to the challenges they face and ensure these solutions reach the relevant stakeholders with transparency and accountability.</p>
             </div>
             <div class="mission-text">
                 <h3>Our Vision</h3>
@@ -63,11 +62,29 @@
     </section>
 
     <hr>
-    
-    <section class="policy-cycle-section">
-        <h2>Our 6-Step Policy Cycle </h2>
+
+    <section class="narrative-section">
+        <h2>The Foundation</h2>
         <p class="section-intro">
-            Transparency is key. Here is how your ideas move from a simple suggestion to a formal, trackable policy document.
+            Youth Voices KE is a civic-tech platform built by young people, for young people, rooted in the belief that Kenya's youth hold real, practical solutions to the country's most persistent challenges.
+        </p>
+        <p class="section-intro">
+            While many platforms ask youth to describe their problems, we flip the script: we already know the challenges from data and research; what the youth need now is **solutions**. Our platform removes the barriers that often hinder meaningful youth participation: no registration, no sign-up walls, no bureaucracy.
+        </p>
+        <p class="section-intro">
+            At Youth Voices KE, we ensure youth participation is substantive, not symbolic. We foster a community where ideas mature into policies, policies push institutions, and institutions become accountable to the youth they serve.
+        </p>
+    </section>
+    
+    <hr>
+
+    <section class="policy-cycle-section">
+        <h2>Our 6-Step Policy Cycle 
+
+[Image of Policy Cycle Diagram]
+</h2>
+        <p class="section-intro">
+            Transparency is key. Here is how your solution moves from an idea to a trackable policy document.
         </p>
 
         <div class="cycle-grid">
@@ -119,7 +136,7 @@
 </div>
 
 <style>
-    /* --- General Layout --- */
+    /* --- General Layout and Reset --- */
     .about-page {
         padding-top: 40px;
         padding-bottom: 60px;
@@ -157,7 +174,7 @@
         font-size: 1.1em;
     }
 
-    /* --- Mission and Vision (Styling kept for prominence) --- */
+    /* --- 1. Mission and Vision --- */
     .mission-section {
         background-color: var(--color-text-dark);
         color: var(--color-white);
@@ -193,10 +210,15 @@
         margin-bottom: 10px;
         font-weight: 700;
     }
-
-    /* --- Policy Cycle Section --- */
-    .policy-cycle-section h2 {
+    
+    /* --- 2. About Us Narrative --- */
+    .narrative-section h2 {
         color: var(--color-primary-accent);
+    }
+
+    /* --- 3. Policy Cycle Section --- */
+    .policy-cycle-section h2 {
+        color: var(--color-secondary-accent);
     }
     
     .cycle-grid {
@@ -211,7 +233,7 @@
         padding: 25px;
         border-radius: 8px;
         box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-        border-top: 5px solid var(--color-secondary-accent);
+        border-top: 5px solid var(--color-primary-accent);
         text-align: center;
     }
 
@@ -233,7 +255,7 @@
         margin-bottom: 15px;
     }
 
-    /* --- Stakeholders Section --- */
+    /* --- 4. Stakeholders Section --- */
     .stakeholders-section h2 {
         color: var(--color-secondary-accent);
     }
@@ -254,7 +276,7 @@
         border-radius: 8px;
         border: 1px solid var(--color-border-light);
         box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-        border-left: 5px solid #3498DB; /* Blue accent */
+        border-left: 5px solid #3498DB; 
     }
     
     .partner-details h4 {
@@ -269,11 +291,11 @@
         font-weight: 600; 
     }
 
-    /* --- Partnership CTA --- */
+    /* --- 5. Partnership CTA --- */
     .cta-section {
         text-align: center;
         padding: 40px;
-        background-color: #e8f5e9; /* Light green background */
+        background-color: #e8f5e9; 
         border-radius: 10px;
         border: 1px solid var(--color-primary-accent);
     }
@@ -309,9 +331,6 @@
     @media (max-width: 768px) {
         .mission-content {
             flex-direction: column;
-        }
-        .cta-section {
-            padding: 20px;
         }
     }
 </style>
