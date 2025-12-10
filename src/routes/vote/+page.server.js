@@ -4,21 +4,21 @@ import { fail } from '@sveltejs/kit';
 
 /** @type {import('./$types').PageServerLoad} */
 export async function load() {
-    // 1. Fetch all submissions that are shortlisted and join with Challenges for the title
-    // 2. Also, COUNT the total votes for each submission
+    // **FIXED:** Using lowercase 'submissions' to match your database
     const { data: submissionsData, error: loadError } = await supabase
-        .from('Submissions') 
+        .from('submissions') 
         .select(`
             id, 
             solution_text,
             is_shortlisted,
             challenge:challenge_id (title),
-            vote_count:votes(count) // Retrieves the vote count
+            vote_count:votes(count) // votes is already lowercase
         `)
-        .eq('is_shortlisted', true); // Only fetch submissions ready for voting
+        .eq('is_shortlisted', true); 
 
     if (loadError) {
         console.error('Error fetching submissions for voting:', loadError);
+        // The page will now correctly show the cards if there's data, or the empty state if not.
         return { submissions: [] };
     }
     
@@ -26,7 +26,6 @@ export async function load() {
         id: sub.id,
         solution_text: sub.solution_text,
         challenge_title: sub.challenge.title,
-        // The vote_count array returns [{ count: N }], so we extract N
         vote_count: sub.vote_count[0]?.count || 0,
     }));
 
@@ -35,18 +34,16 @@ export async function load() {
 
 /** @type {import('./$types').Actions} */
 export const actions = {
-    // Action to handle a vote submission
     vote: async ({ request }) => {
         const formData = await request.formData();
-        
         const submission_id = formData.get('submission_id');
-        // Placeholder for voter_id (must be secured in a production app)
-        const voter_id = 'public_voter_temp'; 
+        const voter_id = 'public_voter_temp'; // Placeholder
 
         if (!submission_id) {
             return fail(400, { error: 'Invalid submission selected.' });
         }
         
+        // 'votes' is already correct and lowercase
         const { error: insertError } = await supabase
             .from('votes')
             .insert({
@@ -58,9 +55,8 @@ export const actions = {
         if (insertError) {
             console.error('Supabase Vote Insertion Error:', insertError);
             
-            // Check for unique constraint violation (code '23505' for PostgreSQL)
             if (insertError.code === '23505') {
-                 return fail(409, { // 409 Conflict status code
+                 return fail(409, { 
                     error: 'You have already voted on this solution.',
                     voted_id: submission_id
                 });
@@ -71,7 +67,6 @@ export const actions = {
             });
         }
         
-        // Return a success object.
         return { success: true, voted_id: submission_id };
     }
 };
