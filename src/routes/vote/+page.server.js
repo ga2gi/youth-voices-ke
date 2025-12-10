@@ -7,13 +7,13 @@ export async function load() {
     // 1. Fetch all submissions that are shortlisted and join with Challenges for the title
     // 2. Also, COUNT the total votes for each submission
     const { data: submissionsData, error: loadError } = await supabase
-        .from('Submissions') // Use 'Submissions' with capital S as per your new table definition
+        .from('Submissions') 
         .select(`
             id, 
             solution_text,
             is_shortlisted,
             challenge:challenge_id (title),
-            vote_count:votes(count)
+            vote_count:votes(count) // Retrieves the vote count
         `)
         .eq('is_shortlisted', true); // Only fetch submissions ready for voting
 
@@ -40,17 +40,13 @@ export const actions = {
         const formData = await request.formData();
         
         const submission_id = formData.get('submission_id');
-        
-        // SECURE VOTER ID: This is a critical point. For local testing, 
-        // we use a simple placeholder. In a production environment, 
-        // you MUST use a secure, unique identifier (e.g., from a session or Supabase Auth).
-        const voter_id = 'public_voter_temp'; // Placeholder
+        // Placeholder for voter_id (must be secured in a production app)
+        const voter_id = 'public_voter_temp'; 
 
         if (!submission_id) {
             return fail(400, { error: 'Invalid submission selected.' });
         }
         
-        // Insert a new vote record
         const { error: insertError } = await supabase
             .from('votes')
             .insert({
