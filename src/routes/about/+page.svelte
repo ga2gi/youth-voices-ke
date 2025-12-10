@@ -14,7 +14,7 @@
         { 
             title: "2. Solution Submission", 
             icon: "📝", 
-            description: "Youth submit innovative solutions through our platform (50-500 words). All raw ideas are reviewed by a vetting committee." 
+            description: "Youth submit innovative solutions through our platform. All raw ideas are reviewed by a vetting committee." 
         },
         { 
             title: "3. Shortlisting & Voting", 
@@ -69,7 +69,7 @@
             Youth Voices KE is a civic-tech platform built by young people, for young people, rooted in the belief that Kenya's youth hold real, practical solutions to the country's most persistent challenges.
         </p>
         <p class="section-intro">
-            While many platforms ask youth to describe their problems, we flip the script: we already know the challenges from data and research; what the youth need now is **solutions**. Our platform removes the barriers that often hinder meaningful youth participation: no registration, no sign-up walls, no bureaucracy.
+            While many platforms ask youth to describe their problems, we flip the script: we already know the challenges from data and research; what the youth need now is solutions. Our platform removes the barriers that often hinder meaningful youth participation: no registration, no sign-up walls, no bureaucracy.
         </p>
         <p class="section-intro">
             At Youth Voices KE, we ensure youth participation is substantive, not symbolic. We foster a community where ideas mature into policies, policies push institutions, and institutions become accountable to the youth they serve.
@@ -128,10 +128,10 @@
     <section class="cta-section">
         <h3>Ready to Partner With Us?</h3>
         <p>If your organization shares our vision for youth empowerment and governance, we welcome your partnership in policy implementation, outreach, or funding. **Take action today.**</p>
-        <a href="mailto:partnerships@youthvoiceske.org" class="button-primary large-btn">
+        <a href="mailto:info@youthvoiceske.org" class="button-primary large-btn">
             Contact Our Partnership Team 📧
         </a>
-        <p class="email-address">Email: **partnerships@youthvoiceske.org**</p>
+        <p class="email-address">Email:info@youthvoiceske.org</p>
     </section>
 </div>
 

@@ -30,7 +30,7 @@
                 <div class="card-header">
                     <h3>{featuredChallenge.title}</h3>
                     <span class="solution-count">
-                        **{featuredChallenge.submission_count}** Solutions Submitted
+                        {featuredChallenge.submission_count} Solution(s) Submitted
                     </span>
                 </div>
                 

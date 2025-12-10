@@ -1,50 +1,93 @@
 // src/routes/submit/+page.server.js
+import { supabase } from '$lib/supabaseClient'; 
+import { fail } from '@sveltejs/kit';
 
-import { supabase } from '$lib/supabaseClient';
-import { fail, redirect } from '@sveltejs/kit';
+/**
+ * @type {import('./$types').PageServerLoad}
+ * Fetches the list of active challenges from the Supabase database.
+ */
+export async function load() {
+    const { data: challenges, error } = await supabase
+        .from('challenges')
+        .select('id, title'); 
 
-/** @type {import('./$types').Actions} */
+    if (error) {
+        console.error('Database Error during challenge fetch:', error);
+        throw new Error('Failed to load policy challenges from the server.');
+    }
+    
+    return {
+        challenges: challenges ?? []
+    };
+}
+
+
+/**
+ * @type {import('./$types').Actions}
+ * Handles the form submission (POST request).
+ */
 export const actions = {
-    default: async ({ request }) => {
+    submit: async ({ request }) => {
         const formData = await request.formData();
-        
-        // Updated data fields matching the new 4 pillars + challenge selection
+
+        // Retrieve form fields
         const challenge_title = formData.get('challenge_title');
         const solution_text = formData.get('solution_text');
         const responsible_stakeholder = formData.get('responsible_stakeholder');
         const implementation_timeline = formData.get('implementation_timeline');
-        const supporting_evidence = formData.get('supporting_evidence'); // Optional
-        const optional_contact = formData.get('optional_contact'); // Optional
-        
-        // 1. Basic server-side validation for required fields
-        if (
-            !challenge_title || 
-            !solution_text || 
-            !responsible_stakeholder || 
-            !implementation_timeline ||
-            solution_text.length < 50
-        ) {
+        // Note: Svelte's use:enhance requires the form field name, not the bound variable
+        const supporting_evidence = formData.get('supporting_evidence') || null; 
+        const optional_contact = formData.get('optional_contact') || null; 
+
+        // Basic Server-side Validation
+        if (!challenge_title || !solution_text || !responsible_stakeholder || !implementation_timeline) {
             return fail(400, { 
-                error: 'Please ensure you select a challenge, provide a detailed solution (min 50 chars), and fill in the Stakeholder and Timeline fields.' 
+                success: false, 
+                message: 'Missing required fields: Challenge, Solution, Stakeholder, or Timeline.' 
+            });
+        }
+
+        // Check minimum length for solution_text
+        if (solution_text.length < 50) {
+             return fail(400, { 
+                success: false, 
+                message: 'The solution proposal must be at least 50 characters long.' 
             });
         }
         
-        // 2. Database insertion (Ensure your Supabase 'submissions' table has columns for the new fields)
-        const { error } = await supabase.from('submissions').insert({
-            challenge_title,
-            solution_text,
-            responsible_stakeholder,
-            implementation_timeline,
-            supporting_evidence,
-            optional_contact,
-        });
-
-        if (error) {
-            console.error('Submission Error:', error);
-            return fail(500, { error: 'A server error occurred during submission. Please try again.' });
+        // Ensure the declaration checkbox was checked
+        if (!formData.has('declaration')) {
+            return fail(400, { 
+                success: false, 
+                message: 'You must agree to the terms of submission.' 
+            });
         }
 
-        // 3. Success redirect
-        throw redirect(303, '/recognition');
+        // 3. Insert the submission into the 'solutions' table in Supabase
+        const { error: insertError } = await supabase
+            .from('solutions') 
+            .insert({
+                challenge_title,
+                solution_text,
+                responsible_stakeholder,
+                implementation_timeline,
+                supporting_evidence,
+                optional_contact,
+                created_at: new Date().toISOString()
+            });
+
+        if (insertError) {
+            console.error('Supabase Insert Error:', insertError);
+            return fail(500, { 
+                success: false, 
+                message: 'Database error: Failed to submit solution. Please check your network and try again.' 
+            });
+        }
+
+        // 4. Return a success response
+        return {
+            success: true,
+            message: 'Solution submitted successfully! It is now under review by the policy team.'
+        };
     }
 };

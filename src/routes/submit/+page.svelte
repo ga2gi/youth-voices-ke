@@ -1,24 +1,71 @@
 <script>
     import { enhance } from '$app/forms';
 
-    /** @type {import('./$types').PageData} */
+    /** * @type {import('./$types').PageData} 
+     * This prop receives the challenges array fetched from +page.server.js.
+     */
     export let data;
 
-    const { challenges } = data; // Data containing available challenges
+    // Destructures the 'challenges' array from the server-fetched data.
+    const { challenges } = data; 
     
     // State for client-side form data and validation checks
-    let challengeTitle = '';
+    let challengeTitle = ''; // Bound to the dynamic SELECT dropdown
     let solutionText = '';
     let responsibleStakeholder = '';
     let implementationTimeline = '';
     let supportingEvidence = '';
     let optionalContact = '';
+    let declarationChecked = false; // State for the required checkbox
+
+    // Form submission status and message
+    let formMessage = {
+        type: 'none', // 'none', 'success', 'error'
+        text: ''
+    };
 
     // Function to check if the minimum character count is met (for visual feedback)
     $: isDetailedEnough = solutionText.length >= 50;
 
+    // --- SVELTE FORM ENHANCEMENT LOGIC ---
+    const handleSubmit = () => {
+        return async ({ update, result, form }) => {
+            // Clear previous message
+            formMessage = { type: 'none', text: '' };
+
+            await update(); // Wait for the form to submit and the server to respond
+
+            // Process the result from +page.server.js
+            if (result.type === 'success' && result.data && result.data.success) {
+                formMessage = { 
+                    type: 'success', 
+                    text: result.data.message || 'Solution submitted successfully!' 
+                };
+                
+                // Reset all form fields on successful submission
+                challengeTitle = '';
+                solutionText = '';
+                responsibleStakeholder = '';
+                implementationTimeline = '';
+                supportingEvidence = '';
+                optionalContact = '';
+                declarationChecked = false; // Reset checkbox
+                
+            } else if (result.type === 'failure' && result.data) {
+                formMessage = { 
+                    type: 'error', 
+                    text: result.data.message || 'Submission failed due to invalid data.' 
+                };
+            } else if (result.type === 'error') {
+                 formMessage = { 
+                    type: 'error', 
+                    text: 'An unexpected server error occurred during submission. Please check your connection and try again.' 
+                };
+            }
+        };
+    };
+
     // --- Hardcoded Challenges of the Month & Collapsible State ---
-    // NOTE: MUST be defined with `let` for the toggle function to work (reactivity fix).
     let challengesOfTheMonth = [
         {
             id: 1,
@@ -65,17 +112,11 @@
         }
     ];
 
-    /**
-     * FIX: Forces Svelte reactivity by creating a new array when an element is updated.
-     */
     function toggleChallenge(id) {
-        // Create a new array by mapping over the old one and updating the expanded state for the target ID
         challengesOfTheMonth = challengesOfTheMonth.map(c => {
             if (c.id === id) {
-                // Return a new object for the modified challenge (using spread syntax)
                 return { ...c, expanded: !c.expanded };
             }
-            // Return the original object for all other challenges
             return c;
         });
     }
@@ -114,16 +155,22 @@
     <div class="submission-content-wrapper">
         <section class="criteria-section">
             <h2>💡 Structure of a Strong Solution</h2>
-            <p>To ensure policy relevance and actionability, your solution (50–500 words) must address these **four pillars**:</p>
+            <p>To ensure policy relevance and actionability, your solution (500 words Max) must address these **four pillars**:</p>
             <ul>
-                <li>**Actionable Proposal:** Detailed, realistic action with clear expected impact. (The main solution field)</li>
-                <li>**Responsible Stakeholder:** Who is best positioned to implement this solution? (e.g., Ministry of ICT, County Assembly)</li>
-                <li>**Proposed Timeline:** Estimate a realistic duration for the implementation.</li>
-                <li>**Supporting Evidence:** Best practices or local examples to back your idea (Optional).</li>
+                <li>Actionable Proposal: Detailed, realistic action with clear expected impact. (The main solution field)</li>
+                <li>Responsible Stakeholder: Who is best positioned to implement this solution? (e.g., Ministry of ICT, County Assembly)</li>
+                <li>Proposed Timeline: Estimate a realistic duration for the implementation.</li>
+                <li>Supporting Evidence: Best practices or local examples to back your idea (Optional).</li>
             </ul>
         </section>
+        
+        {#if formMessage.type !== 'none'}
+            <div class="alert {formMessage.type}">
+                {formMessage.text}
+            </div>
+        {/if}
 
-        <form method="POST" action="?/submit" use:enhance class="single-page-form">
+        <form method="POST" action="?/submit" use:enhance={handleSubmit} class="single-page-form">
             <h2>Solution Details</h2>
             
             <label for="challenge_title">Select the Policy Challenge Area *</label>
@@ -134,7 +181,7 @@
                 required
             >
                 <option value="" disabled selected>-- Select a Policy Challenge --</option>
-                {#each challenges as challenge (challenge.id)}
+                {#each challenges as challenge (challenge.id)} 
                     <option value={challenge.title}>{challenge.title}</option>
                 {/each}
             </select>
@@ -191,11 +238,15 @@
             />
 
             <div class="declaration">
-                <input type="checkbox" id="declaration" required />
+                <input type="checkbox" id="declaration" name="declaration" bind:checked={declarationChecked} required />
                 <label for="declaration" class="inline-label">I declare that this solution is original and I agree to the <a href="/terms">terms of submission</a>.</label>
             </div>
             
-            <button type="submit" class="button-primary final-submit-btn" disabled={!isDetailedEnough}>
+            <button 
+                type="submit" 
+                class="button-primary final-submit-btn" 
+                disabled={!isDetailedEnough || !declarationChecked}
+            >
                 Submit Solution to Policy Team
             </button>
         </form>
@@ -203,6 +254,31 @@
 </div>
 
 <style>
+    /* Add styling for the alert message */
+    .alert {
+        padding: 15px;
+        margin-bottom: 20px;
+        border-radius: 6px;
+        font-weight: 600;
+        text-align: center;
+    }
+    .alert.success {
+        background-color: #d4edda;
+        color: #155724;
+        border: 1px solid #c3e6cb;
+    }
+    .alert.error {
+        background-color: #f8d7da;
+        color: #721c24;
+        border: 1px solid #f5c6cb;
+    }
+
+    /* Update button logic to also check the declaration checkbox */
+    .final-submit-btn:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+    }
+
     /* --- General Layout --- */
     .submit-page {
         padding-top: 40px;
@@ -327,7 +403,7 @@
         line-height: 1.5;
     }
     
-    .card-content h3 {
+    :global(.card-content h3) {
         font-size: 1.2em;
         color: var(--color-secondary-accent);
         margin-top: 20px;
@@ -443,5 +519,7 @@
 
     .final-submit-btn {
         width: 100%;
+        padding: 15px;
+        font-size: 1.1em;
     }
 </style>
