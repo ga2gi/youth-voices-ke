@@ -20,6 +20,7 @@
         if (isTarget) {
             if (form.success) {
                 isVoted = true;
+                // Clear any previous error
                 voteError = null;
             } else if (form.error) {
                 // Display error (e.g., already voted)
@@ -30,9 +31,10 @@
 
     // Function to handle the form submission
     function handleVote({ formData }) {
+        // Clear previous error and reset isVoted status before submission
         voteError = null;
-        
-        // Add the submission ID to the form data
+        isVoted = false;
+
         formData.append('submission_id', submission.id);
 
         return async ({ update }) => {
@@ -43,11 +45,10 @@
 </script>
 
 <div class="card {isVoted ? 'voted' : ''}">
-    
-    <div class="header" on:click={() => expanded = !expanded} role="button" tabindex="0" on:keydown={(e) => { if (e.key === 'Enter') expanded = !expanded; }}>
-        <h3 class="challenge-title">{submission.challenge_title}</h3>
-        <p class="summary-label">Proposed Solution:</p>
-        <span class="expand-icon">{expanded ? '▲ Hide Details' : '▼ View Full Solution'}</span>
+    <div class="header" on:click={() => expanded = !expanded}>
+        <h3 class="challenge-title">Challenge: {submission.challenge_title}</h3>
+        <p class="summary-label">Solution Proposal</p>
+        <span class="expand-icon">{expanded ? '▲' : '▼'}</span>
     </div>
 
     {#if expanded}
@@ -70,9 +71,9 @@
         >
             <input type="hidden" name="submission_id" value={submission.id}>
 
-            {#if isVoted || (form && form.error && form.voted_id === submission.id)}
+            {#if isVoted}
                 <button class="vote-button voted" disabled>
-                    {isVoted ? 'Voted! 🎉' : 'Already Voted'}
+                    Voted! 🎉
                 </button>
             {:else}
                 <button class="vote-button" type="submit">
@@ -88,83 +89,82 @@
 </div>
 
 <style>
-    /* Card Styles */
+    /* NOTE: The global :root block was removed from here. 
+       The component now uses simple values or assumes global variables exist. 
+       If your original styles don't use these exact colors, you can change them here.
+    */
     .card {
         background-color: #ffffff;
-        border: 1px solid var(--color-border-light);
+        border: 1px solid #ecf0f1; /* Using simple color value */
         border-radius: 12px;
-        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
         display: flex;
         flex-direction: column;
-        transition: all 0.3s ease-in-out;
-        overflow: hidden;
+        transition: all 0.2s ease-in-out;
     }
     
     .card.voted {
-        border-color: var(--color-success);
-        box-shadow: 0 0 15px rgba(39, 174, 96, 0.3);
+        border-color: #27ae60; /* Success green */
+        box-shadow: 0 0 15px rgba(39, 174, 96, 0.2);
     }
 
-    /* Header Styles (Clickable for Expand) */
     .header {
         padding: 20px;
         cursor: pointer;
-        border-bottom: 1px solid var(--color-border-light);
+        border-bottom: 1px solid #ecf0f1;
         display: flex;
-        flex-direction: column;
-        gap: 5px;
-        transition: background-color 0.2s;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
     }
 
     .header:hover {
-        background-color: #fcfcfc;
+        background-color: #f7f7f7;
     }
 
     .challenge-title {
-        font-size: 1.2em;
+        font-size: 1.1em;
         font-weight: 600;
-        color: var(--color-primary-accent);
-        line-height: 1.4;
+        color: #2c3e50; /* Primary accent */
+        margin-bottom: 5px;
+        flex: 1 1 100%;
     }
     
     .summary-label {
         font-size: 0.9em;
-        font-weight: 500;
-        color: var(--color-text-light);
+        color: #7f8c8d; /* Light text */
+        flex: 1 1 80%;
     }
 
     .expand-icon {
-        font-size: 0.9em;
-        font-weight: 600;
-        color: var(--color-secondary-light);
-        margin-top: 10px;
-        align-self: flex-end;
+        font-size: 1.2em;
+        color: #333333; /* Dark text */
+        margin-left: 10px;
     }
-    
-    /* Details (Expanded Content) */
+
     .details {
         padding: 0 20px 15px;
         overflow: hidden;
     }
     
     .solution-text {
-        white-space: pre-wrap; /* Ensures line breaks are respected */
+        white-space: pre-wrap;
         font-size: 1em;
         line-height: 1.6;
-        color: var(--color-text-dark);
-        border-left: 3px solid var(--color-secondary-light);
+        color: #333333; /* Dark text */
+        border-left: 3px solid #bdc3c7; /* Secondary light */
         padding-left: 15px;
         margin-top: 15px;
     }
 
-    /* Footer (Vote Info) */
     .footer {
         padding: 15px 20px;
-        border-top: 1px solid var(--color-border-light);
+        border-top: 1px solid #ecf0f1;
         display: flex;
         justify-content: space-between;
         align-items: center;
         background-color: #fafafa;
+        border-radius: 0 0 12px 12px;
     }
 
     .vote-info {
@@ -174,62 +174,44 @@
     }
     
     .vote-count {
-        font-size: 2em;
-        font-weight: 800;
-        color: var(--color-success); 
-        line-height: 1;
+        font-size: 1.8em;
+        font-weight: 700;
+        color: #27ae60; /* Success green */
     }
     
     .vote-label {
         font-size: 0.9em;
-        color: var(--color-text-light);
+        color: #7f8c8d; /* Light text */
     }
 
-    /* Vote Button */
     .vote-button {
-        background-color: var(--color-primary-accent);
+        background-color: #2c3e50; /* Primary accent */
         color: white;
         border: none;
-        padding: 12px 25px;
+        padding: 10px 20px;
         border-radius: 6px;
         font-weight: 600;
         cursor: pointer;
-        transition: background-color 0.2s, transform 0.1s;
-        font-size: 1em;
+        transition: background-color 0.2s;
     }
 
     .vote-button:hover:not(:disabled) {
-        background-color: var(--color-primary-dark);
-        transform: translateY(-1px);
+        background-color: #1e2b38; /* Primary dark */
     }
     
     .vote-button.voted {
-        background-color: var(--color-success);
+        background-color: #27ae60; /* Success green */
         cursor: default;
-        box-shadow: 0 0 10px rgba(39, 174, 96, 0.3);
+        box-shadow: 0 0 10px rgba(39, 174, 96, 0.5);
     }
 
-    /* Error Message */
     .error-message {
-        background-color: #fef4f4;
+        background-color: #fcebeb;
         color: #e74c3c;
         padding: 10px 20px;
+        border-radius: 0 0 12px 12px;
+        margin-top: -1px;
         font-size: 0.9em;
         text-align: center;
-        margin: 0;
-    }
-    
-    /* Mobile adjustments */
-    @media (max-width: 480px) {
-        .footer {
-            flex-direction: column;
-            gap: 15px;
-            align-items: flex-start;
-        }
-
-        .vote-button {
-            width: 100%;
-            padding: 10px;
-        }
     }
 </style>
