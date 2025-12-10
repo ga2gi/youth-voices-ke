@@ -263,14 +263,14 @@
         text-align: center;
     }
     .alert.success {
-        background-color: #d4edda;
-        color: #155724;
-        border: 1px solid #c3e6cb;
+        background-color: rgba(0, 122, 51, 0.1);
+        color: var(--color-primary-accent);
+        border: 1px solid var(--color-primary-accent);
     }
     .alert.error {
-        background-color: #f8d7da;
-        color: #721c24;
-        border: 1px solid #f5c6cb;
+        background-color: rgba(176, 30, 38, 0.1);
+        color: var(--color-secondary-accent);
+        border: 1px solid var(--color-secondary-accent);
     }
 
     /* Update button logic to also check the declaration checkbox */
@@ -358,7 +358,7 @@
         align-items: center;
         width: 100%;
         padding: 15px 20px;
-        background-color: #f9f9f9;
+        background-color: var(--color-background-light);
         border: none;
         cursor: pointer;
         text-align: left;
@@ -426,7 +426,7 @@
 
     /* --- Submission Criteria & Form Styling --- */
     .criteria-section {
-        background-color: #f7f7f7;
+        background-color: var(--color-background-light);
         padding: 20px;
         border-radius: 8px;
         margin-bottom: 30px;

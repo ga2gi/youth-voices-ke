@@ -12,40 +12,41 @@
     let isVoted = false;
     let voteError = null;
 
-    // Check if this card was the target of the last form submission
     $: isTarget = form && (form.voted_id === submission.id);
     
-    // Update local state based on action result
     $: {
         if (isTarget) {
             if (form.success) {
                 isVoted = true;
-                // Clear any previous error
                 voteError = null;
             } else if (form.error) {
-                // Display error (e.g., already voted)
                 voteError = form.error;
             }
         }
     }
 
-    // Function to handle the form submission
     function handleVote({ formData }) {
-        // Clear previous error and reset isVoted status before submission
         voteError = null;
         isVoted = false;
-
         formData.append('submission_id', submission.id);
-
         return async ({ update }) => {
-            // Invalidate the page data to refresh vote counts after a successful submission
             await update({ invalidateAll: true });
         };
     }
 </script>
 
 <div class="card {isVoted ? 'voted' : ''}">
-    <div class="header" on:click={() => expanded = !expanded}>
+    <div 
+        class="header" 
+        role="button"
+        tabindex="0"
+        on:click={() => expanded = !expanded}
+        on:keydown={(e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                expanded = !expanded;
+            }
+        }}
+    >
         <h3 class="challenge-title">Challenge: {submission.challenge_title}</h3>
         <p class="summary-label">Solution Proposal</p>
         <span class="expand-icon">{expanded ? '▲' : '▼'}</span>
@@ -89,13 +90,14 @@
 </div>
 
 <style>
-    /* NOTE: The global :root block was removed from here. 
-       The component now uses simple values or assumes global variables exist. 
-       If your original styles don't use these exact colors, you can change them here.
-    */
+    /* Local variable definition for the success state, ensuring it does not conflict globally */
     .card {
-        background-color: #ffffff;
-        border: 1px solid #ecf0f1; /* Using simple color value */
+        --color-voted-success: #27ae60; /* Use a distinct green for success feedback */
+    }
+
+    .card {
+        background-color: var(--color-white);
+        border: 1px solid var(--color-border-light);
         border-radius: 12px;
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
         display: flex;
@@ -104,14 +106,14 @@
     }
     
     .card.voted {
-        border-color: #27ae60; /* Success green */
+        border-color: var(--color-voted-success);
         box-shadow: 0 0 15px rgba(39, 174, 96, 0.2);
     }
 
     .header {
         padding: 20px;
         cursor: pointer;
-        border-bottom: 1px solid #ecf0f1;
+        border-bottom: 1px solid var(--color-border-light);
         display: flex;
         flex-wrap: wrap;
         align-items: center;
@@ -119,26 +121,27 @@
     }
 
     .header:hover {
-        background-color: #f7f7f7;
+        /* Use a slight variation of the background for hover feedback */
+        background-color: var(--color-background-light); 
     }
 
     .challenge-title {
         font-size: 1.1em;
         font-weight: 600;
-        color: #2c3e50; /* Primary accent */
+        color: var(--color-primary-accent); /* USES YOUR KENYAN GREEN */
         margin-bottom: 5px;
         flex: 1 1 100%;
     }
     
     .summary-label {
         font-size: 0.9em;
-        color: #7f8c8d; /* Light text */
+        color: var(--color-text-light);
         flex: 1 1 80%;
     }
 
     .expand-icon {
         font-size: 1.2em;
-        color: #333333; /* Dark text */
+        color: var(--color-text-dark);
         margin-left: 10px;
     }
 
@@ -151,19 +154,20 @@
         white-space: pre-wrap;
         font-size: 1em;
         line-height: 1.6;
-        color: #333333; /* Dark text */
-        border-left: 3px solid #bdc3c7; /* Secondary light */
+        color: var(--color-text-dark);
+        /* Uses primary accent for the border to match your brand */
+        border-left: 3px solid var(--color-primary-accent); 
         padding-left: 15px;
         margin-top: 15px;
     }
 
     .footer {
         padding: 15px 20px;
-        border-top: 1px solid #ecf0f1;
+        border-top: 1px solid var(--color-border-light);
         display: flex;
         justify-content: space-between;
         align-items: center;
-        background-color: #fafafa;
+        background-color: var(--color-background-light);
         border-radius: 0 0 12px 12px;
     }
 
@@ -176,19 +180,19 @@
     .vote-count {
         font-size: 1.8em;
         font-weight: 700;
-        color: #27ae60; /* Success green */
+        color: var(--color-voted-success);
     }
     
     .vote-label {
         font-size: 0.9em;
-        color: #7f8c8d; /* Light text */
+        color: var(--color-text-light);
     }
 
     .vote-button {
-        background-color: #2c3e50; /* Primary accent */
-        color: white;
-        border: none;
+        background-color: var(--color-primary-accent); /* USES YOUR KENYAN GREEN */
+        color: var(--color-white);
         padding: 10px 20px;
+        border: none;
         border-radius: 6px;
         font-weight: 600;
         cursor: pointer;
@@ -196,11 +200,12 @@
     }
 
     .vote-button:hover:not(:disabled) {
-        background-color: #1e2b38; /* Primary dark */
+        /* Uses the dark green hex from your app.css hover state */
+        background-color: #005625; 
     }
     
     .vote-button.voted {
-        background-color: #27ae60; /* Success green */
+        background-color: var(--color-voted-success);
         cursor: default;
         box-shadow: 0 0 10px rgba(39, 174, 96, 0.5);
     }

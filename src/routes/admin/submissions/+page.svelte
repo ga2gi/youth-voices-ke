@@ -128,13 +128,13 @@
     th, td {
         padding: 12px 15px;
         text-align: left;
-        border-bottom: 1px solid #eee;
+        border-bottom: 1px solid var(--color-border-light);
         font-size: 0.9em;
         vertical-align: top;
     }
     
     th {
-        background-color: #f5f5f5;
+        background-color: var(--color-background-light);
         font-weight: 600;
         color: var(--color-text-dark);
     }
@@ -185,11 +185,11 @@
     }
 
     .status-active:hover {
-        background-color: #008f4c; /* Darker green on hover */
+        background-color: #005625; /* Darker green on hover */
     }
 
     .status-inactive:hover {
-        background-color: #c9c9c9;
+        background-color: #c0c0c0;
     }
     
     .empty-state {

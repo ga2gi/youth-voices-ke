@@ -183,7 +183,7 @@
         justify-content: space-between;
         align-items: center;
         background-color: var(--color-white);
-        border: 1px solid #ddd;
+        border: 1px solid var(--color-border-light);
         border-radius: 6px;
         padding: 15px 20px;
         margin-bottom: 15px;
@@ -227,7 +227,7 @@
     }
     
     .button-delete:hover {
-        background-color: #a01018;
+        background-color: #8B1620;
     }
 
     .success-message, .error-message {

@@ -49,7 +49,7 @@
     .admin-wrapper {
         display: flex;
         min-height: 100vh;
-        background-color: #f8f9fa;
+        background-color: var(--color-background-light);
     }
 
     .sidebar {

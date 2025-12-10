@@ -29,18 +29,7 @@
 </div>
 
 <style>
-    /* Color Variables (Assuming you have these defined globally, but defining them here for safety) */
-    :global(body) {
-        --color-primary-accent: #2c3e50; /* Dark Blue/Grey */
-        --color-primary-dark: #1e2b38;
-        --color-text-dark: #333333;
-        --color-text-light: #7f8c8d;
-        --color-border-light: #ecf0f1;
-        --color-secondary-light: #bdc3c7;
-        --color-success: #27ae60; /* Green */
-        --color-background-light: #f4f4f4;
-    }
-
+    /* Using global CSS variables from app.css */
     .voting-page-container {
         padding: 20px 0;
         max-width: 1200px;

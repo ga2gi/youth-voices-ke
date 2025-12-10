@@ -181,7 +181,7 @@
     }
 
     .nav-item:hover {
-        background-color: #f0f0f0;
+        background-color: var(--color-background-light);
     }
 
     .nav-item h4 {
@@ -198,8 +198,8 @@
     }
 
     /* Color coding for quick links */
-    .submission-item h4 { border-color: #3498DB; }
-    .brief-item h4 { border-color: #B01E26; }
-    .challenge-item h4 { border-color: #F39C12; }
-    .education-item h4 { border-color: #007A33; }
+    .submission-item h4 { border-color: var(--color-text-dark); }
+    .brief-item h4 { border-color: var(--color-secondary-accent); }
+    .challenge-item h4 { border-color: var(--color-primary-accent); }
+    .education-item h4 { border-color: var(--color-primary-accent); }
 </style>

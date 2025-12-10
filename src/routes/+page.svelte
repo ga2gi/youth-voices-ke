@@ -203,7 +203,7 @@
 
     .no-challenge-info {
         padding: 40px;
-        background-color: #f0f0f0;
+        background-color: var(--color-background-light);
         border-radius: 8px;
     }
     

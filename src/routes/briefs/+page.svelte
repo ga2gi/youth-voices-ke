@@ -150,12 +150,12 @@
     .status-tracker {
         margin-top: 30px;
         padding-top: 20px;
-        border-top: 1px solid #eee;
+        border-top: 1px solid var(--color-border-light);
     }
 
     .status-bar {
         height: 8px;
-        background-color: #e0e0e0;
+        background-color: var(--color-background-light);
         border-radius: 4px;
         margin-bottom: 10px;
         position: relative;

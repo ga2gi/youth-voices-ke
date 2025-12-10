@@ -223,12 +223,12 @@
     th, td {
         padding: 12px 15px;
         text-align: left;
-        border-bottom: 1px solid #eee;
+        border-bottom: 1px solid var(--color-border-light);
         font-size: 0.9em;
     }
     
     th {
-        background-color: #f5f5f5;
+        background-color: var(--color-background-light);
         font-weight: 600;
     }
 
@@ -281,7 +281,7 @@
     }
     
     .button-delete:hover {
-        background-color: #a01018;
+        background-color: #8B1620;
     }
     
     .success-message, .error-message {
