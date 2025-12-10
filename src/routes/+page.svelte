@@ -8,9 +8,9 @@
 <div class="homepage-wrapper">
     <section class="hero-section">
         <div class="container hero-content">
-            <h1>Youth Voices KE: Your Solution, Our Policy.</h1>
+            <h1>Youth Voices KE</h1>
             <p class="tagline">
-                Turning young Kenyan ideas into actionable policy briefs for governance and development.
+                Youth Voice Shapes Kenya's Future.
             </p>
             <div class="cta-buttons">
                 <a href="/submit" class="button-primary large-btn">

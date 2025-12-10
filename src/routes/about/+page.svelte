@@ -52,11 +52,12 @@
         <div class="mission-content">
             <div class="mission-text">
                 <h3>Our Mission</h3>
-                <p>To establish a resilient, digitized pipeline that channels **validated youth policy solutions** directly to high-level decision-makers, guaranteeing that the priorities of Kenya's youth inform national and county development agendas.</p>
+                <p>To empower Kenya's youth to shape public policy and community action by providing a simple, open, and credible platform where they can propose practical and actionable solutions to the challenges they face and ensure these solutions reach the relevant stakeholders with transparency and accountability.
+</p>
             </div>
             <div class="mission-text">
                 <h3>Our Vision</h3>
-                <p>A Kenya where every young person is an **active citizen**, empowered with the knowledge and platform to shape the legislative landscape, resulting in transparent, inclusive, and equitable governance.</p>
+                <p>A Kenya where youth ideas directly influence decision-making, drive innovation, and lead measurable change in government, communities, and institutions; a country where young people are not just heard, but their solutions guide the nation's future.</p>
             </div>
         </div>
     </section>
