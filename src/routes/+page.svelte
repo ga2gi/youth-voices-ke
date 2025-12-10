@@ -40,9 +40,6 @@
                     <a href="/submit" class="button-secondary">
                         Submit Solution for this Challenge
                     </a>
-                    <a href={featuredChallenge.pdf_url} target="_blank" rel="noopener noreferrer" class="button-link">
-                        Read Full Policy Brief →
-                    </a>
                 </div>
             </div>
         {:else}
