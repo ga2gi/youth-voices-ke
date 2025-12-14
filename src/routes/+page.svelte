@@ -11,8 +11,7 @@
         <div class="container hero-content">
             <h1>Youth Voices KE</h1>
             <p class="tagline">
-                Youth Voice Shapes Kenya's Future.
-            </p>
+Youth Voices KE aligns with the SDGs and Vision 2030, empowering young people to drive national and global development. We flip the script: instead of asking youth what problems they face, we present data-driven policy challenges and pose a more powerful question: What solution do you propose? Positioning youths as active policy actors and champions of youth-led solutions and action.            </p>
             <div class="cta-buttons">
                 <a href="/submit" class="button-primary large-btn">
                     Submit Your Solution Today 💡

@@ -38,6 +38,7 @@ export const actions = {
         }
         
         // --- Submission Challenge Lookup ---
+        // Get the challenge ID associated with the submission ID
         const { data: submissionData, error: lookupError } = await supabase
             .from('submissions')
             .select('challenge_id')
@@ -50,15 +51,16 @@ export const actions = {
         
         const challenge_id = submissionData.challenge_id;
 
-        // --- One Vote Per Challenge Check ---
+        // --- One Vote Per Challenge Check (The Fix) ---
+        // Find any existing vote by this voter_id where the submission's challenge_id matches the current challenge_id.
         const { data: existingVote, error: voteCheckError } = await supabase
             .from('votes')
             .select(`
                 id, 
-                submission:submission_id (challenge_id)
+                submission_id!inner(challenge_id) 
             `)
             .eq('voter_id', voter_id)
-            .eq('submission.challenge_id', challenge_id)
+            .eq('submission_id.challenge_id', challenge_id) // <-- Using the foreign key relationship filter
             .limit(1)
             .single();
 
