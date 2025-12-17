@@ -2,25 +2,40 @@
     import { enhance } from '$app/forms';
 
     /** * @type {import('./$types').PageData} 
-     * This prop receives the challenges array fetched from +page.server.js.
+     * This prop receives the challenges array fetched from +page.server.js, 
+     * now including id, title, and pdf_url.
      */
     export let data;
 
     // Destructures the 'challenges' array from the server-fetched data.
-    const { challenges } = data; 
+    // The server data contains: { id, title, pdf_url }
+    const { challenges: serverChallenges } = data; 
     
     // State for client-side form data and validation checks
-    let challengeTitle = ''; // Bound to the dynamic SELECT dropdown
+    let challengeTitle = ''; 
     let solutionText = '';
-    let responsibleStakeholder = '';
+    let responsibleStakeholder = ''; 
     let implementationTimeline = '';
     let supportingEvidence = '';
     let optionalContact = '';
-    let declarationChecked = false; // State for the required checkbox
+    let declarationChecked = false; 
+
+    // --- Hardcoded Stakeholder Options for the Dropdown ---
+    const stakeholderOptions = [
+        "National & County Governments",
+        "Civil Society Organizations (CSOs) & NGOs",
+        "Academic & Research Institutions",
+        "Development Partners & Donors",
+        "Private Sector & Tech Ecosystem",
+        "Oversight & Accountability Bodies"
+    ];
+
+    // Reactive variable to check if the 'Other' option is currently selected
+    $: isOtherSelected = responsibleStakeholder === 'Other'; 
 
     // Form submission status and message
     let formMessage = {
-        type: 'none', // 'none', 'success', 'error'
+        type: 'none', 
         text: ''
     };
 
@@ -33,23 +48,22 @@
             // Clear previous message
             formMessage = { type: 'none', text: '' };
 
-            await update(); // Wait for the form to submit and the server to respond
+            await update(); 
 
-            // Process the result from +page.server.js
             if (result.type === 'success' && result.data && result.data.success) {
                 formMessage = { 
                     type: 'success', 
                     text: result.data.message || 'Solution submitted successfully!' 
                 };
                 
-                // Reset all form fields on successful submission
+                // Reset form fields
                 challengeTitle = '';
                 solutionText = '';
                 responsibleStakeholder = '';
                 implementationTimeline = '';
                 supportingEvidence = '';
                 optionalContact = '';
-                declarationChecked = false; // Reset checkbox
+                declarationChecked = false; 
                 
             } else if (result.type === 'failure' && result.data) {
                 formMessage = { 
@@ -60,18 +74,18 @@
                  formMessage = { 
                     type: 'error', 
                     text: 'An unexpected server error occurred during submission. Please check your connection and try again.' 
-                };
+                 };
             }
         };
     };
 
-    // --- Hardcoded Challenges of the Month & Collapsible State ---
-    let challengesOfTheMonth = [
+    // --- Hardcoded Challenges of the Month Context ---
+    let challengesOfTheMonthContext = [
         {
-            id: 1,
+            // Note: This ID MUST match the ID in your Supabase 'challenges' table for the PDF mapping to work
+            id: 1, 
             title: "Youth Lack of Capital for Self-Employment in Kenya",
             excerpt: "Limited access to capital, coupled with financial illiteracy and stringent collateral requirements, severely constrains self-employment opportunities. Click to view detailed analysis and policy gaps.",
-            // FULL Detailed Content for Challenge 1
             details: `
                 <h3>2. Scope and Statistics</h3>
                 <ul>
@@ -87,13 +101,14 @@
                 <h3>7. Recommendations for Solutions</h3>
                 <p>Simplify loan procedures, reduce collateral requirements, enhance financial literacy training, strengthen government fund transparency, and leverage digital financing solutions.</p>
             `,
-            expanded: false 
+            expanded: false,
+            pdfLink: null // Will be populated dynamically
         },
         {
+            // Note: This ID MUST match the ID in your Supabase 'challenges' table
             id: 2,
             title: "Youth Mental Health in Kenya: Challenges, Statistics, and Stakeholders",
             excerpt: "Approximately one in four young Kenyans experiences mental health challenges. Stigma, economic pressures, and insufficient service access require urgent policy attention. Click to view detailed analysis and policy gaps.",
-            // FULL Detailed Content for Challenge 2
             details: `
                 <h3>2. Scope of Youth Mental Health in Kenya</h3>
                 <ul>
@@ -108,12 +123,31 @@
                 <h3>6. Recommendations for Solutions</h3>
                 <p>Expand youth-friendly services (school counseling, hotlines), implement awareness campaigns to reduce stigma, train more specialized professionals, and integrate mental health into national youth development plans.</p>
             `,
-            expanded: false
+            expanded: false,
+            pdfLink: null // Will be populated dynamically
         }
     ];
 
+    // --- Dynamic PDF Link Population ---
+    // Function that runs whenever serverChallenges changes (i.e., on page load)
+    challengesOfTheMonthContext = challengesOfTheMonthContext.map(contextChallenge => {
+        // Find the corresponding challenge data from the server
+        const matchingServerChallenge = serverChallenges.find(sc => sc.id === contextChallenge.id);
+
+        if (matchingServerChallenge && matchingServerChallenge.pdf_url) {
+            // Update the hardcoded context with the real PDF link from the server
+            return {
+                ...contextChallenge,
+                pdfLink: matchingServerChallenge.pdf_url
+            };
+        }
+        return contextChallenge;
+    });
+    // --- End Dynamic PDF Link Population ---
+
+
     function toggleChallenge(id) {
-        challengesOfTheMonth = challengesOfTheMonth.map(c => {
+        challengesOfTheMonthContext = challengesOfTheMonthContext.map(c => {
             if (c.id === id) {
                 return { ...c, expanded: !c.expanded };
             }
@@ -132,7 +166,7 @@
         <h2>🔥 Challenges of the Month (Context)</h2>
         <p class="section-intro">Review the detailed policy context below before submitting your solution.</p>
         <div class="challenge-cards-wrapper">
-            {#each challengesOfTheMonth as challenge (challenge.id)}
+            {#each challengesOfTheMonthContext as challenge (challenge.id)}
                 <div class="challenge-card" class:expanded={challenge.expanded}>
                     <button class="card-header" on:click={() => toggleChallenge(challenge.id)}>
                         <h3>{challenge.title}</h3>
@@ -145,6 +179,11 @@
                             <div class="details-content">
                                 {@html challenge.details}
                             </div>
+                            {#if challenge.pdfLink}
+                                <a href={challenge.pdfLink} target="_blank" class="pdf-download-link">
+                                    ⬇️ Download Full Challenge PDF (Statistics & Policy Analysis)
+                                </a>
+                            {/if}
                         {/if}
                     </div>
                 </div>
@@ -181,7 +220,7 @@
                 required
             >
                 <option value="" disabled selected>-- Select a Policy Challenge --</option>
-                {#each challenges as challenge (challenge.id)} 
+                {#each serverChallenges as challenge (challenge.id)} 
                     <option value={challenge.title}>{challenge.title}</option>
                 {/each}
             </select>
@@ -200,16 +239,31 @@
             </p>
 
             <label for="responsible_stakeholder">2. Responsible Stakeholder *</label>
-            <input 
-                type="text" 
-                id="responsible_stakeholder" 
-                name="responsible_stakeholder" 
-                placeholder="E.g., Ministry of Education, Nairobi County CEC for Health, Local Community Policing Group"
+            <select
+                id="responsible_stakeholder"
+                name="responsible_stakeholder"
                 bind:value={responsibleStakeholder}
                 required
-            />
+            >
+                <option value="" disabled selected>-- Select the Responsible Body --</option>
+                {#each stakeholderOptions as stakeholder (stakeholder)}
+                    <option value={stakeholder}>{stakeholder}</option>
+                {/each}
+                <option value="Other">Other (Specify Below)</option>
+            </select>
             
-            <label for="implementation_timeline">3. Proposed Implementation Timeline (Estimate) </label>
+            {#if isOtherSelected}
+                <label for="other_stakeholder">Please Specify the Responsible Stakeholder *</label>
+                <input 
+                    type="text" 
+                    id="other_stakeholder" 
+                    name="other_stakeholder" 
+                    placeholder="E.g., Local Ward Development Committee, Ministry of Transport's Planning Department"
+                    required
+                />
+            {/if}
+            
+            <label for="implementation_timeline">3. Proposed Implementation Timeline (Estimate) *</label>
             <input 
                 type="text" 
                 id="implementation_timeline" 
@@ -245,7 +299,7 @@
             <button 
                 type="submit" 
                 class="button-primary final-submit-btn" 
-                disabled={!isDetailedEnough || !declarationChecked}
+                disabled={!isDetailedEnough || !declarationChecked || !responsibleStakeholder || (isOtherSelected && !document.getElementById('other_stakeholder')?.value)}
             >
                 Submit Solution to Policy Team
             </button>
@@ -421,6 +475,28 @@
     .details-content {
         margin-top: 10px;
         padding-top: 10px;
+        padding-bottom: 10px; 
+    }
+
+    /* Style for PDF Download Link */
+    .pdf-download-link {
+        display: inline-block;
+        margin-top: 15px;
+        margin-bottom: 15px;
+        padding: 10px 15px;
+        background-color: var(--color-background-light);
+        color: var(--color-primary-accent);
+        border: 1px solid var(--color-primary-accent);
+        border-radius: 6px;
+        text-decoration: none;
+        font-weight: 600;
+        transition: background-color 0.2s, color 0.2s;
+        font-size: 0.9em;
+    }
+
+    .pdf-download-link:hover {
+        background-color: var(--color-primary-accent);
+        color: var(--color-white);
     }
 
 

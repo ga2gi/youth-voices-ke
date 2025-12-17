@@ -5,11 +5,13 @@ import { fail } from '@sveltejs/kit';
 /**
  * @type {import('./$types').PageServerLoad}
  * Fetches the list of active challenges from the Supabase database.
+ * * UPDATE: Now includes 'pdf_url' in the select statement.
  */
 export async function load() {
     const { data: challenges, error } = await supabase
         .from('challenges')
-        .select('id, title'); 
+        // UPDATED: Include 'pdf_url' to link to the detailed challenge documents
+        .select('id, title, pdf_url'); 
 
     if (error) {
         console.error('Database Error during challenge fetch:', error);
@@ -25,6 +27,7 @@ export async function load() {
 /**
  * @type {import('./$types').Actions}
  * Handles the form submission (POST request).
+ * * UPDATE: Now handles the conditional 'other_stakeholder' field.
  */
 export const actions = {
     submit: async ({ request }) => {
@@ -33,9 +36,23 @@ export const actions = {
         // Retrieve form fields
         const challenge_title = formData.get('challenge_title');
         const solution_text = formData.get('solution_text');
-        const responsible_stakeholder = formData.get('responsible_stakeholder');
+        
+        // --- STAKEHOLDER LOGIC START ---
+        // Retrieve both the dropdown value and the conditional text input
+        let responsible_stakeholder_dropdown = formData.get('responsible_stakeholder');
+        const other_stakeholder_text = formData.get('other_stakeholder');
+
+        let responsible_stakeholder;
+
+        // If 'Other' was selected, use the text input, otherwise use the dropdown value.
+        if (responsible_stakeholder_dropdown === 'Other') {
+            responsible_stakeholder = other_stakeholder_text;
+        } else {
+            responsible_stakeholder = responsible_stakeholder_dropdown;
+        }
+        // --- STAKEHOLDER LOGIC END ---
+
         const implementation_timeline = formData.get('implementation_timeline');
-        // Note: Svelte's use:enhance requires the form field name, not the bound variable
         const supporting_evidence = formData.get('supporting_evidence') || null; 
         const optional_contact = formData.get('optional_contact') || null; 
 
@@ -46,13 +63,21 @@ export const actions = {
                 message: 'Missing required fields: Challenge, Solution, Stakeholder, or Timeline.' 
             });
         }
+        
+        // Check for empty 'Other' field if it was the source of the stakeholder value
+        if (responsible_stakeholder_dropdown === 'Other' && !responsible_stakeholder) {
+             return fail(400, { 
+                success: false, 
+                message: 'If "Other" stakeholder is selected, you must specify the responsible body.' 
+            });
+        }
 
         // Check minimum length for solution_text
         if (solution_text.length < 50) {
              return fail(400, { 
-                success: false, 
-                message: 'The solution proposal must be at least 50 characters long.' 
-            });
+                 success: false, 
+                 message: 'The solution proposal must be at least 50 characters long.' 
+             });
         }
         
         // Ensure the declaration checkbox was checked
@@ -69,7 +94,8 @@ export const actions = {
             .insert({
                 challenge_title,
                 solution_text,
-                responsible_stakeholder,
+                // The correct stakeholder value (category or custom text) is used here
+                responsible_stakeholder, 
                 implementation_timeline,
                 supporting_evidence,
                 optional_contact,
