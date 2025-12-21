@@ -15,7 +15,7 @@
             <ul>
                 <li><a href="/">Home</a></li>
                 <li><a href="/about">About Us</a></li>
-                <li><a href="/briefs">Policy Tracking</a></li>
+                <li><a href="/opportunities">Opportunities</a></li> <li><a href="/briefs">Policy Tracking</a></li>
                 <li><a href="/submit" class="button-link">Submit Solution</a></li>
             </ul>
         </div>
@@ -34,7 +34,7 @@
             <ul>
                 <li><a href="/terms">Terms of Use</a></li>
                 <li><a href="/privacy">Privacy Policy</a></li>
-                <li class="contact-info">Email: partnerships@youthvoiceske.org</li>
+                <li class="contact-info">Email: info@youthvoiceske.org</li>
             </ul>
         </div>
     </div>

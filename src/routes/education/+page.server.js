@@ -1,22 +1,21 @@
-// src/routes/education/+page.server.js
 import { supabase } from '$lib/supabaseClient';
-import { fail } from '@sveltejs/kit';
+import { error } from '@sveltejs/kit';
 
 /** @type {import('./$types').PageServerLoad} */
 export async function load() {
-    // Fetch all civic education content
+    // Fetch all content, ordered so Lessons appear in sequence
     const { data: content, error: contentError } = await supabase
-        .from('civiceducation') // Ensure this is lowercase
+        .from('civiceducation')
         .select('*')
-        .order('category', { ascending: true }) // Order by category first
-        .order('topic', { ascending: true }); // Then by topic
+        .order('category', { ascending: true })
+        .order('created_at', { ascending: true });
 
     if (contentError) {
         console.error('Civic Education Load Error:', contentError);
-        return fail(500, { message: 'Failed to load educational content.' });
+        throw error(500, 'Failed to load educational content.');
     }
-    
-    // Group the content by category for easier display on the frontend
+
+    // Grouping logic for the frontend categories
     const categorizedContent = content.reduce((acc, item) => {
         const category = item.category || 'General';
         if (!acc[category]) {
@@ -26,5 +25,8 @@ export async function load() {
         return acc;
     }, {});
 
-    return { categorizedContent };
+    return { 
+        categorizedContent,
+        totalLessons: content.length 
+    };
 }

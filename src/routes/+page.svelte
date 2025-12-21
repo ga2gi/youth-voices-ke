@@ -2,8 +2,9 @@
     /** @type {import('./$types').PageData} */
     export let data;
     
-    // Original variables for single featured challenge
-    const { featuredChallenge, metrics } = data;
+    // Changing this to a reactive statement ensures numbers update 
+    // automatically when the data object changes.
+    $: ({ featuredChallenge, metrics } = data);
 </script>
 
 <div class="homepage-wrapper">
@@ -30,7 +31,7 @@ Youth Voices KE aligns with the SDGs and Vision 2030, empowering young people to
                 <div class="card-header">
                     <h3>{featuredChallenge.title}</h3>
                     <span class="solution-count">
-                        {featuredChallenge.submission_count} Solution(s) Submitted
+                        {featuredChallenge.submission_count || 0} Solution(s) Submitted
                     </span>
                 </div>
                 
@@ -40,7 +41,7 @@ Youth Voices KE aligns with the SDGs and Vision 2030, empowering young people to
                     <a href="/submit" class="button-secondary">
                         Submit Solution for this Challenge
                     </a>
-                    </div>
+                </div>
             </div>
         {:else}
             <div class="no-challenge-info">
@@ -240,6 +241,7 @@ Youth Voices KE aligns with the SDGs and Vision 2030, empowering young people to
         font-size: 2.2em;
         font-weight: 800;
         color: var(--color-text-dark);
+        display: block;
     }
 
     .metric-label {
