@@ -2,8 +2,7 @@
     /** @type {import('./$types').PageData} */
     export let data;
     
-    // Changing this to a reactive statement ensures numbers update 
-    // automatically when the data object changes.
+    // Maintain your existing reactive statement
     $: ({ featuredChallenge, metrics } = data);
 </script>
 
@@ -12,13 +11,17 @@
         <div class="container hero-content">
             <h1>Youth Voices KE</h1>
             <p class="tagline">
-Youth Voices KE aligns with the SDGs and Vision 2030, empowering young people to drive national and global development. We flip the script: instead of asking youth what problems they face, we present data-driven policy challenges and pose a more powerful question: What solution do you propose? Positioning youths as active policy actors and champions of youth-led solutions and action.            </p>
+                Youth Voices KE aligns with the SDGs and Vision 2030, empowering young people to drive national and global development. We flip the script: instead of asking youth what problems they face, we present data-driven policy challenges and pose a more powerful question: <strong>What solution do you propose?</strong>
+            </p>
             <div class="cta-buttons">
                 <a href="/submit" class="button-primary large-btn">
-                    Submit Your Solution Today 💡
+                    Submit Your Solution 💡
+                </a>
+                <a href="/get-involved" class="button-get-involved large-btn">
+                    Join the Movement 🤝
                 </a>
                 <a href="/vote" class="button-secondary large-btn">
-                    Vote on Shortlisted Ideas 👍
+                    Vote on Ideas 👍
                 </a>
             </div>
         </div>
@@ -52,7 +55,17 @@ Youth Voices KE aligns with the SDGs and Vision 2030, empowering young people to
         {/if}
     </section>
 
-    <hr>
+    <section class="community-bridge">
+        <div class="container bridge-grid">
+            <div class="bridge-text">
+                <h2>Join a Community of Action</h2>
+                <p>We are more than policy papers. From climate action to charity outreach, get involved in direct impact initiatives across Kenya.</p>
+            </div>
+            <div class="bridge-cta">
+                <a href="/get-involved" class="action-link">See Ways to Get Involved →</a>
+            </div>
+        </div>
+    </section>
     
     <section class="impact-snapshot container">
         <h2 class="section-title">Our Impact Snapshot</h2>
@@ -86,6 +99,8 @@ Youth Voices KE aligns with the SDGs and Vision 2030, empowering young people to
     /* --- General Layout --- */
     .homepage-wrapper {
         padding-bottom: 60px;
+        /* Applying Source Sans Pro as requested */
+        font-family: 'Source Sans 3', 'Source Sans Pro', sans-serif;
     }
     
     .container {
@@ -104,7 +119,7 @@ Youth Voices KE aligns with the SDGs and Vision 2030, empowering young people to
         padding-bottom: 5px;
     }
 
-    /* --- 1. Hero Section --- */
+    /* --- Hero Section --- */
     .hero-section {
         background-color: var(--color-text-dark);
         color: var(--color-white);
@@ -114,23 +129,19 @@ Youth Voices KE aligns with the SDGs and Vision 2030, empowering young people to
         box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
     }
 
-    .hero-content h1 {
-        font-size: 3.5em;
-        margin-bottom: 15px;
-        font-weight: 800;
-    }
+    .hero-content h1 { font-size: 3.5em; margin-bottom: 15px; font-weight: 800; }
 
     .tagline {
-        font-size: 1.4em;
+        font-size: 1.3em;
         margin-bottom: 40px;
         color: rgba(255, 255, 255, 0.9);
+        max-width: 900px;
+        margin-left: auto;
+        margin-right: auto;
+        line-height: 1.6;
     }
 
-    .cta-buttons {
-        display: flex;
-        justify-content: center;
-        gap: 20px;
-    }
+    .cta-buttons { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; }
 
     .large-btn {
         padding: 15px 30px;
@@ -142,16 +153,43 @@ Youth Voices KE aligns with the SDGs and Vision 2030, empowering young people to
         transition: transform 0.2s;
     }
     
-    .large-btn:hover {
-        transform: translateY(-2px);
-    }
+    .button-primary { background-color: var(--color-primary-accent); color: white; }
+    .button-get-involved { background-color: white; color: var(--color-text-dark); }
+    .button-secondary { border: 2px solid white; color: white; }
+
+    .large-btn:hover { transform: translateY(-2px); }
     
-    /* --- 2. Featured Challenge Module --- */
-    .challenge-module {
-        text-align: center;
-        margin-bottom: 60px;
+    /* --- Community Bridge (The New Section) --- */
+    .community-bridge {
+        background: #f4fbf7;
+        padding: 60px 0;
+        margin: 40px 0;
+        border-top: 1px solid #e6f2eb;
+        border-bottom: 1px solid #e6f2eb;
     }
-    
+
+    .bridge-grid {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 40px;
+    }
+
+    .bridge-text h2 { color: #007a33; font-size: 2rem; margin-bottom: 10px; }
+    .bridge-text p { font-size: 1.2rem; color: #444; margin: 0; }
+
+    .action-link {
+        background: #007a33;
+        color: white;
+        padding: 18px 32px;
+        border-radius: 12px;
+        text-decoration: none;
+        font-weight: 800;
+        white-space: nowrap;
+        display: inline-block;
+    }
+
+    /* --- Metrics & Cards (Maintained) --- */
     .challenge-card {
         background-color: var(--color-white);
         border: 2px solid var(--color-primary-accent);
@@ -162,64 +200,19 @@ Youth Voices KE aligns with the SDGs and Vision 2030, empowering young people to
         box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     }
 
-    .card-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 15px;
-        border-bottom: 1px dashed var(--color-border-light);
-        padding-bottom: 10px;
-    }
-    
-    .card-header h3 {
-        font-size: 1.8em;
-        color: var(--color-secondary-accent);
-        margin: 0;
-    }
-    
+    .card-header h3 { font-size: 1.8em; color: var(--color-secondary-accent); margin: 0; }
     .solution-count {
         background-color: rgba(0, 122, 51, 0.1);
         color: var(--color-primary-accent);
         padding: 5px 10px;
         border-radius: 5px;
         font-weight: 600;
-        font-size: 0.9em;
-    }
-    
-    .challenge-overview {
-        font-size: 1.1em;
-        line-height: 1.6;
-        color: var(--color-text-dark);
-        margin-bottom: 30px;
-    }
-
-    .challenge-actions {
-        display: flex;
-        justify-content: center;
-        gap: 15px;
-    }
-
-    .no-challenge-info {
-        padding: 40px;
-        background-color: var(--color-background-light);
-        border-radius: 8px;
-    }
-    
-    /* --- 3. Impact Snapshot --- */
-    .impact-snapshot {
-        text-align: center;
-        padding-top: 30px;
-    }
-    
-    .impact-snapshot .section-title {
-        border-bottom-color: var(--color-secondary-accent);
     }
 
     .metrics-grid {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-        gap: 30px;
-        margin-bottom: 40px;
+        gap: 20px;
         margin-top: 40px;
     }
 
@@ -230,46 +223,14 @@ Youth Voices KE aligns with the SDGs and Vision 2030, empowering young people to
         box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
         border-top: 4px solid var(--color-primary-accent);
     }
-    
-    .metric-icon {
-        font-size: 2.5em;
-        display: block;
-        margin-bottom: 10px;
-    }
 
-    .metric-value {
-        font-size: 2.2em;
-        font-weight: 800;
-        color: var(--color-text-dark);
-        display: block;
-    }
+    .metric-value { font-size: 2.2em; font-weight: 800; display: block; }
+    .metric-label { font-size: 0.95em; color: #666; }
 
-    .metric-label {
-        display: block;
-        font-size: 0.95em;
-        color: var(--color-text-light);
-        margin-top: 5px;
-    }
-    
-    .center-link {
-        display: inline-block;
-        font-weight: 600;
-        color: var(--color-secondary-accent);
-    }
-    
-    /* Responsive adjustments */
+    /* Responsive */
     @media (max-width: 768px) {
-        .hero-content h1 {
-            font-size: 2.5em;
-        }
-        .tagline {
-            font-size: 1.2em;
-        }
-        .cta-buttons {
-            flex-direction: column;
-        }
-        .challenge-actions {
-            flex-direction: column;
-        }
+        .hero-content h1 { font-size: 2.5em; }
+        .bridge-grid { flex-direction: column; text-align: center; }
+        .cta-buttons { flex-direction: column; }
     }
 </style>

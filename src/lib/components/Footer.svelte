@@ -15,7 +15,9 @@
             <ul>
                 <li><a href="/">Home</a></li>
                 <li><a href="/about">About Us</a></li>
-                <li><a href="/opportunities">Opportunities</a></li> <li><a href="/briefs">Policy Tracking</a></li>
+                <li><a href="/get-involved">Get Involved</a></li>
+                <li><a href="/opportunities">Opportunities</a></li> 
+                <li><a href="/briefs">Policy Tracking</a></li>
                 <li><a href="/submit" class="button-link">Submit Solution</a></li>
             </ul>
         </div>
@@ -47,6 +49,8 @@
         color: var(--color-white);
         padding: 40px 0;
         border-top: 5px solid var(--color-primary-accent);
+        /* Ensure font remains consistent with your site's new style */
+        font-family: 'Source Sans 3', 'Source Sans Pro', sans-serif;
     }
     
     .container { 

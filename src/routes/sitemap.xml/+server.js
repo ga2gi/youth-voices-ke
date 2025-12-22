@@ -1,6 +1,4 @@
 export async function GET() {
-    // Define all your live pages
-    // The empty string '' represents the homepage
     const pages = [
         { path: '', priority: '1.0', changefreq: 'daily' },
         { path: 'submit', priority: '0.9', changefreq: 'weekly' },
@@ -13,30 +11,19 @@ export async function GET() {
         { path: 'terms', priority: '0.3', changefreq: 'monthly' }
     ];
 
-    const body = `<?xml version="1.0" encoding="UTF-8" ?>
-    <urlset
-        xmlns="https://www.sitemaps.org/schemas/sitemap/0.9"
-        xmlns:xhtml="https://www.w3.org/1999/xhtml"
-        xmlns:mobile="https://www.google.com/schemas/sitemap-mobile/1.0"
-        xmlns:news="https://www.google.com/schemas/sitemap-news/0.9"
-        xmlns:image="https://www.google.com/schemas/sitemap-image/1.1"
-        xmlns:video="https://www.google.com/schemas/sitemap-video/1.1"
-    >
-        ${pages
-            .map((page) => `
-            <url>
-                <loc>https://www.youthvoiceske.org/${page.path}</loc>
-                <changefreq>${page.changefreq}</changefreq>
-                <priority>${page.priority}</priority>
-            </url>
-            `)
-            .join('')}
-    </urlset>`.trim();
+    // Important: No spaces/tabs before <?xml or inside the loop tags
+    const xml = `<?xml version="1.0" encoding="UTF-8" ?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${pages.map(page => `  <url>
+    <loc>https://www.youthvoiceske.org/${page.path}</loc>
+    <changefreq>${page.changefreq}</changefreq>
+    <priority>${page.priority}</priority>
+  </url>`).join('\n')}
+</urlset>`.trim();
 
-    return new Response(body, {
+    return new Response(xml, {
         headers: {
             'Content-Type': 'application/xml',
-            // Tells browsers and Google to cache this for 1 hour
             'Cache-Control': 'max-age=0, s-maxage=3600'
         }
     });
