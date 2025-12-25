@@ -110,7 +110,8 @@
     }
 
     .page-header {
-        border-bottom: 2px solid #e2e8f0;
+        /* Color changed to match your Green/Burgundy palette */
+        border-bottom: 3px solid var(--color-primary-accent);
         padding-bottom: 30px;
         margin-bottom: 40px;
         text-align: center;
@@ -137,11 +138,12 @@
     }
 
     h2 {
-        color: #2b6cb0; /* Professional Blue Accent */
+        /* Color changed from Blue to Burgundy/Red */
+        color: #8B1620; 
         font-size: 1.75rem;
         margin-top: 45px;
         margin-bottom: 20px;
-        border-left: 4px solid #2b6cb0;
+        border-left: 4px solid #8B1620;
         padding-left: 15px;
     }
 

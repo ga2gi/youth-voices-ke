@@ -1,11 +1,10 @@
-
 <script>
     import { page } from '$app/stores';
 
-    // 1. Mobile Menu State: Default is closed (NEW)
+    // 1. Mobile Menu State
     let isMobileMenuOpen = false;
 
-    // Define the navigation links for clarity and easy maintenance
+    // Navigation links - Optimized for spacing
     const navLinks = [
         { href: '/', label: 'Home' },
         { href: '/submit', label: 'Submit Solution' },
@@ -16,7 +15,7 @@
         { href: '/recognition', label: 'Stakeholder Recognition' },
     ];
     
-    // 2. Close the menu automatically when navigating (NEW)
+    // 2. Close the menu automatically when navigating
     $: {
         if ($page.url.pathname) {
             isMobileMenuOpen = false;
@@ -24,10 +23,16 @@
     }
 </script>
 
+<div class="holiday-banner">
+    <span class="snowflake">❄</span>
+    Happy Holidays from Youth Voices KE!
+    <span class="snowflake">❄</span>
+</div>
+
 <header>
     <div class="container header-content">
-        <a href="/" class="logo">
-            <h1>Youth Voices <span class="accent-ke-green">KE</span></h1>
+        <a href="/" class="logo-link">
+            <h1 class="festive-logo">Youth Voices <span class="accent-ke-green">KE</span></h1>
         </a>
 
         <nav class="main-nav">
@@ -42,7 +47,7 @@
             </ul>
         </nav>
         
-        <button class="menu-toggle" on:click={() => (isMobileMenuOpen = !isMobileMenuOpen)}>
+        <button class="menu-toggle" aria-label="Toggle Menu" on:click={() => (isMobileMenuOpen = !isMobileMenuOpen)}>
             {#if isMobileMenuOpen}
                 &times; {:else}
                 &#9776; {/if}
@@ -59,15 +64,66 @@
 </div>
 
 <style>
-    /* * Uses variables defined in src/app.css 
-      * Primary accent (Green) for professionalism and action.
-      */
+    /* --- HOLIDAY ELEMENTS --- */
+    .holiday-banner {
+        background: linear-gradient(90deg, #B01E26, #d42d36, #B01E26);
+        background-size: 200% auto;
+        animation: bannerShimmer 3s linear infinite;
+        color: white;
+        text-align: center;
+        height: 35px; /* Fixed height to prevent shifting */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.85rem;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+        z-index: 1001;
+        position: relative;
+    }
+
+    @keyframes bannerShimmer {
+        to { background-position: 200% center; }
+    }
+
+    .snowflake {
+        display: inline-block;
+        animation: spin 4s linear infinite;
+        margin: 0 8px;
+    }
+
+    @keyframes spin {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+    }
+
+    /* Precise Santa Hat positioning */
+    .festive-logo {
+        position: relative;
+        display: inline-block;
+        font-size: 1.1rem; /* Matched to your photo preference */
+        margin-left: 10px;
+    }
+
+    .festive-logo::before {
+        content: "🎅";
+        position: absolute;
+        top: -14px; /* Sits right on top of the text */
+        left: -10px;
+        font-size: 1.1rem;
+        transform: rotate(-10deg);
+        filter: drop-shadow(1px 1px 1px rgba(0,0,0,0.1));
+    }
+
+    /* --- MAIN HEADER STRUCTURE --- */
     header {
         background-color: var(--color-white);
-        border-bottom: 2px solid var(--color-border-light);
-        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
-        padding: 15px 0;
-        position: sticky; /* Keeps header visible on scroll */
+        /* Festive Green & Red bottom border */
+        border-bottom: 4px solid transparent;
+        border-image: linear-gradient(to right, #007A33, #B01E26, #007A33, #B01E26) 1;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+        padding: 10px 0; /* Slimmer padding to save vertical space */
+        position: sticky;
         top: 0;
         z-index: 1000;
     }
@@ -76,25 +132,27 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
     }
 
-    .logo {
+    .logo-link {
         text-decoration: none;
         color: var(--color-text-dark);
-        font-size: 1.2em;
-        white-space: nowrap; /* Keeps the title on one line */
+        white-space: nowrap;
     }
 
     .accent-ke-green {
-        color: #8B1620; /* Dark burgundy/wine red */
+        color: #8B1620; /* Your specific dark red from original code */
         font-weight: 800;
     }
 
-    /* --- Desktop Navigation Styles --- */
+    /* --- DESKTOP NAVIGATION --- */
     .main-nav ul {
         list-style: none;
         display: flex;
-        gap: 25px; /* Spacing between links */
+        gap: 12px; /* Tighter gap to fit all links */
         margin: 0;
         padding: 0;
     }
@@ -102,90 +160,77 @@
     .main-nav a {
         text-decoration: none;
         color: var(--color-text-dark);
-        font-weight: 500;
-        padding-bottom: 5px;
-        transition: color 0.2s, border-bottom 0.2s;
+        font-weight: 600;
+        padding: 4px 2px;
+        transition: all 0.3s ease;
+        font-size: 0.82rem; /* Adjusted for better fit */
+        white-space: nowrap;
     }
 
     .main-nav a:hover {
-        color: var(--color-primary-accent);
-        border-bottom: 2px solid var(--color-primary-accent);
+        color: #B01E26;
+        text-decoration: underline wavy #007A33;
     }
 
-    /* Active Link Style (Green highlight) */
     .main-nav a.active {
         color: var(--color-primary-accent);
         border-bottom: 2px solid var(--color-primary-accent);
-        font-weight: 700;
     }
 
-    /* --- Mobile Menu Toggle --- */
+    /* --- MOBILE STYLES --- */
     .menu-toggle {
-        display: none; /* Hidden by default */
+        display: none;
         background: none;
         border: none;
         color: var(--color-text-dark);
-        font-size: 2.2em;
+        font-size: 2em;
         cursor: pointer;
         padding: 0 5px;
         line-height: 1;
-        z-index: 1001; /* Ensure button is on top of dropdown */
+        z-index: 1001;
     }
 
-    /* --- Mobile Dropdown Menu --- */
     .mobile-menu {
-        position: absolute;
-        top: 70px; /* Adjust based on your header's actual height (15px padding + content) */
+        position: fixed;
+        top: 95px; /* Banner height + Header height */
         left: 0;
         width: 100%;
-        background-color: var(--color-text-dark); /* Dark background for visibility */
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        background-color: #1a1a1a;
         display: flex;
         flex-direction: column;
-        transform: translateY(-100%); /* Start hidden above the viewport */
-        transition: transform 0.3s ease-in-out;
+        transform: translateY(-150%);
+        transition: transform 0.4s ease-in-out;
         z-index: 999;
+        box-shadow: 0 10px 15px rgba(0,0,0,0.3);
     }
 
     .mobile-menu.open {
-        transform: translateY(0); /* Slide down when open */
+        transform: translateY(0);
     }
 
     .mobile-nav-link {
-        color: var(--color-white);
+        color: white;
         text-decoration: none;
-        padding: 15px 20px;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        padding: 18px 20px;
+        border-bottom: 1px solid #333;
         text-align: center;
-        transition: background-color 0.2s;
+        font-weight: 600;
     }
 
     .mobile-nav-link:hover, .mobile-nav-link.active {
-        background-color: var(--color-primary-accent);
-        color: var(--color-white);
+        background-color: #B01E26;
+        color: white;
     }
 
-    /* --- Responsive Overrides --- */
-    @media (max-width: 900px) {
-        /* 1. Hide desktop navigation */
-        .main-nav {
-            display: none;
-        }
-        
-        /* 2. Show the toggle button */
-        .menu-toggle {
-            display: block; 
-        }
-
-        /* 3. Ensure logo and toggle are visible */
-        .header-content {
-            justify-content: space-between;
-        }
+    /* --- BREAKPOINT ADJUSTMENTS --- */
+    /* Switched to mobile menu earlier to prevent text overlapping */
+    @media (max-width: 1180px) {
+        .main-nav { display: none; }
+        .menu-toggle { display: block; }
     }
     
     @media (max-width: 600px) {
-         .logo h1 {
-            font-size: 1.1em;
-         }
+         .festive-logo { font-size: 1rem; }
+         .festive-logo::before { top: -12px; font-size: 1rem; }
     }
 </style>

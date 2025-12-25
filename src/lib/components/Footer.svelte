@@ -3,11 +3,16 @@
 </script>
 
 <footer class="main-footer">
+    <div class="footer-holiday-note">
+        <p>🎄 Wishing you a season of joy, peace, and empowerment! ❄️</p>
+    </div>
+
     <div class="container footer-content">
         <div class="footer-brand">
             <span class="logo-text">Youth Voices KE 🇰🇪</span>
             <p>Empowering the youth to be co-creators of policy.</p>
-            <p>&copy; {currentYear} Policy Platform. All rights reserved.</p>
+            <p class="footer-url">www.youthvoiceske.org</p>
+            <p>&copy; {currentYear} Youth Voices KE. All rights reserved.</p>
         </div>
         
         <div class="footer-links">
@@ -18,7 +23,7 @@
                 <li><a href="/get-involved">Get Involved</a></li>
                 <li><a href="/opportunities">Opportunities</a></li> 
                 <li><a href="/briefs">Policy Tracking</a></li>
-                <li><a href="/submit" class="button-link">Submit Solution</a></li>
+                <li><a href="/submit" class="submit-highlight">Submit Solution</a></li>
             </ul>
         </div>
         
@@ -36,21 +41,39 @@
             <ul>
                 <li><a href="/terms">Terms of Use</a></li>
                 <li><a href="/privacy">Privacy Policy</a></li>
-                <li class="contact-info">Email: info@youthvoiceske.org</li>
+                <li class="contact-info">📧 info@youthvoiceske.org</li>
+                <li class="social-tag">📱 Follow us: @youthvoiceske</li>
             </ul>
         </div>
     </div>
 </footer>
 
 <style>
-    /* --- Footer Styling --- */
+    /* --- Main Footer Container --- */
     .main-footer {
-        background-color: var(--color-text-dark);
+        background-color: #1a1a1a; /* Sleek dark background */
         color: var(--color-white);
-        padding: 40px 0;
-        border-top: 5px solid var(--color-primary-accent);
-        /* Ensure font remains consistent with your site's new style */
+        padding: 0 0 40px 0;
+        /* Candy-cane style festive border at the top */
+        border-top: 6px solid transparent;
+        border-image: linear-gradient(to right, #007A33, #B01E26, #007A33, #B01E26) 1;
         font-family: 'Source Sans 3', 'Source Sans Pro', sans-serif;
+    }
+
+    /* --- Holiday Note --- */
+    .footer-holiday-note {
+        background-color: rgba(176, 30, 38, 0.1);
+        text-align: center;
+        padding: 15px 0;
+        margin-bottom: 30px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .footer-holiday-note p {
+        font-weight: 600;
+        color: #f9f9f9;
+        font-size: 0.95rem;
+        margin: 0;
     }
     
     .container { 
@@ -65,25 +88,35 @@
         gap: 30px;
     }
 
+    /* --- Brand Section --- */
     .logo-text {
         font-size: 1.5em;
         font-weight: 700;
-        color: var(--color-primary-accent);
+        color: var(--color-green);
         display: block;
         margin-bottom: 10px;
     }
+
+    .footer-url {
+        color: var(--color-red) !important;
+        font-weight: 700;
+        margin-top: 10px;
+    }
     
     .footer-brand p {
-        font-size: 0.9em;
+        font-size: 0.85em;
         color: rgba(255, 255, 255, 0.7);
         margin-bottom: 5px;
     }
 
+    /* --- Link Headers --- */
     .footer-links h4, .footer-external h4, .footer-legal h4 {
-        color: var(--color-secondary-accent);
+        color: var(--color-red);
         font-size: 1.1em;
         margin-bottom: 15px;
         font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 1px;
     }
 
     .footer-links ul, .footer-external ul, .footer-legal ul {
@@ -93,46 +126,58 @@
     }
 
     .footer-links a, .footer-external a, .footer-legal a {
-        color: rgba(255, 255, 255, 0.9);
+        color: rgba(255, 255, 255, 0.8);
         text-decoration: none;
         display: block;
-        padding: 5px 0;
-        font-size: 0.95em;
-        transition: color 0.2s;
+        padding: 6px 0;
+        font-size: 0.9rem;
+        transition: all 0.2s ease;
     }
     
-    .footer-external a:after {
-        content: ' ↗'; /* External link indicator */
-        font-size: 0.7em;
-        margin-left: 3px;
-        opacity: 0.6;
-    }
-
     .footer-links a:hover, .footer-external a:hover, .footer-legal a:hover {
-        color: var(--color-primary-accent);
-    }
-    
-    .contact-info {
-        color: var(--color-white);
-        padding: 5px 0;
-        font-size: 0.95em;
-        margin-top: 10px;
+        color: var(--color-green);
+        transform: translateX(5px);
     }
 
-    /* Responsive adjustments */
+    .submit-highlight {
+        color: var(--color-green) !important;
+        font-weight: 700;
+    }
+
+    /* --- Contact & Socials --- */
+    .contact-info, .social-tag {
+        color: var(--color-white);
+        padding: 8px 0;
+        font-size: 0.9rem;
+        font-weight: 500;
+    }
+
+    .footer-external a:after {
+        content: ' ↗';
+        font-size: 0.7em;
+        opacity: 0.5;
+    }
+
+    /* --- Responsive --- */
     @media (max-width: 900px) {
         .footer-content {
             grid-template-columns: repeat(2, 1fr);
         }
         .footer-brand {
             grid-column: 1 / -1;
-            margin-bottom: 20px;
+            text-align: center;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding-bottom: 20px;
         }
     }
 
     @media (max-width: 500px) {
         .footer-content {
             grid-template-columns: 1fr;
+            text-align: center;
+        }
+        .footer-links a:hover {
+            transform: none;
         }
     }
 </style>
