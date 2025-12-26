@@ -54,7 +54,7 @@
         <div class="action-card volunteer" class:disabled={!hasConsented} in:fly={{ y: 20, delay: 200 }}>
             <span class="card-icon">🙋🏾‍♂️</span>
             <h3>Volunteer With Us</h3>
-            <p>Lead campaigns, take part policy labs , or manage community projects in your county.</p>
+            <p>Lead campaigns, take part in policy labs , or manage community projects in your county.</p>
             <a href={hasConsented ? data.links.volunteerForm : '#'} 
                class="btn-dark"
                class:inactive={!hasConsented}>
