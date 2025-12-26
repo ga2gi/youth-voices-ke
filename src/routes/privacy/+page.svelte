@@ -1,3 +1,9 @@
+<svelte:head>
+    <title>Privacy Policy | Youth Voices KE</title>
+    <meta name="description" content="Read the Privacy Policy for Youth Voices KE. Learn how we protect your data in compliance with the Kenyan Data Protection Act 2019." />
+    <meta name="robots" content="index, follow" />
+</svelte:head>
+
 <div class="container legal-page">
     <header>
         <h1>🔒 Privacy Policy</h1>
@@ -96,7 +102,7 @@
         margin-bottom: 40px;
     }
     h2 {
-        font-size: 1.6em; /* Slightly adjusted for section numbering */
+        font-size: 1.6em; 
         color: var(--color-secondary-accent);
         margin-bottom: 15px;
         border-left: 5px solid var(--color-secondary-accent);

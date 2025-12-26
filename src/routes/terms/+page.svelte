@@ -1,3 +1,9 @@
+<svelte:head>
+    <title>Terms of Use | Youth Voices KE</title>
+    <meta name="description" content="View the Terms of Use and Submission for the Youth Voices KE platform. Understand the guidelines for contributing youth-led policy solutions." />
+    <meta name="robots" content="index, follow" />
+</svelte:head>
+
 <div class="terms-container container">
     <header class="page-header">
         <h1>Terms of Use and Submission</h1>
