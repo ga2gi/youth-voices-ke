@@ -11,7 +11,8 @@
         <div class="container hero-content">
             <h1>Youth Voices KE</h1>
             <p class="tagline">
-                Youth Voices KE aligns with the SDGs and Vision 2030, empowering young people to drive national and global development. We flip the script: instead of asking youth what problems they face, we present data-driven policy challenges and pose a more powerful question: <strong>What solution do you propose?</strong>
+                Youth Voices KE is a youth-led civic platform aligned with the SDGs and Kenya Vision 2030 that empowers young people to turn ideas into public policy solutions. Instead of asking youth to describe problems, we present data‑driven policy challenges and ask:
+ <strong>What solution do you propose?</strong>
             </p>
             <div class="cta-buttons">
                 <a href="/submit" class="button-primary large-btn">
@@ -58,8 +59,9 @@
     <section class="community-bridge">
         <div class="container bridge-grid">
             <div class="bridge-text">
-                <h2>Join a Community of Action</h2>
-                <p>We are more than policy papers. From climate action to charity outreach, get involved in direct impact initiatives across Kenya.</p>
+                <h2>A Platform for Youth-Driven Policy Impact
+</h2>
+                <p>Youth Voices KE bridges public participation and evidence-based policy action. Through structured engagement and a regular Policy Lab process, we help transform youth solutions into policy insights that support the three pillars of Kenya Vision 2030 ; economic, social, and political development. </p>
             </div>
             <div class="bridge-cta">
                 <a href="/get-involved" class="action-link">See Ways to Get Involved →</a>
