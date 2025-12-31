@@ -22,8 +22,9 @@
 <div class="page-container">
     <header class="hero" in:fade>
         <span class="eyebrow">Direct Impact</span>
-        <h1>Youth Voices KE: <br><span class="accent">Join the Community</span></h1>
-        <p>A community-driven platform where Kenyan youth move from conversation to action.</p>
+        <h1>Youth Voices KE: <br><span class="accent">Your Voice Matters. Make It Count.
+</span></h1>
+        <p>Join Kenya's youth community that turns ideas into real action, influences policy, and connects changemakers across the country.</p>
     </header>
 
     <section class="consent-box" in:fly={{ y: 20 }}>
@@ -31,9 +32,9 @@
             <input type="checkbox" bind:checked={hasConsented}>
             <span class="checkmark"></span>
             <p>
-                I <strong>explicitly consent</strong> to the processing of my personal data by Youth Voices KE as outlined in the 
-                <a href="/privacy">Privacy Policy</a> and <a href="/terms">Terms of Submission</a> 
-                for the purposes of community engagement and volunteering. I understand I can withdraw this consent at any time by contacting 
+                I <strong>explicitly consent</strong> to the processing of my personal data by Youth Voices KE as outlined in the
+                <a href="/privacy">Privacy Policy</a> and <a href="/terms">Terms of Submission</a>
+                for the purposes of community engagement and volunteering. I understand I can withdraw this consent at any time by contacting
                 <a href="mailto:info@youthvoiceske.org">info@youthvoiceske.org</a>.
             </p>
         </label>
@@ -43,9 +44,9 @@
         <div class="action-card community" class:disabled={!hasConsented} in:fly={{ y: 20, delay: 100 }}>
             <span class="card-icon">💬</span>
             <h3>WhatsApp Community</h3>
-            <p>The core of our daily engagement. Join for updates, debates, and local meetups.</p>
-            <a href={hasConsented ? data.links.whatsapp : '#'} 
-               class="btn-whatsapp" 
+            <p>Be part of a youth-led network driving discussions, volunteering, and policy solutions that shape Kenya's future.</p>
+            <a href={hasConsented ? data.links.whatsapp : '#'}
+               class="btn-whatsapp"
                class:inactive={!hasConsented}>
                {hasConsented ? 'Join WhatsApp Group' : 'Check consent box to join'}
             </a>
@@ -55,7 +56,7 @@
             <span class="card-icon">🙋🏾‍♂️</span>
             <h3>Volunteer With Us</h3>
             <p>Lead campaigns, take part in policy labs , or manage community projects in your county.</p>
-            <a href={hasConsented ? data.links.volunteerForm : '#'} 
+            <a href={hasConsented ? data.links.volunteerForm : '#'}
                class="btn-dark"
                class:inactive={!hasConsented}>
                {hasConsented ? 'Apply to Volunteer' : 'Check consent box to apply'}
