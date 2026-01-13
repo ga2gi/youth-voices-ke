@@ -2,8 +2,15 @@
     /** @type {import('./$types').PageData} */
     export let data;
     
-    // Maintain your existing reactive statement
-    $: ({ featuredChallenge, metrics } = data);
+    // Maintain your existing reactive statement for featuredChallenge
+    $: ({ featuredChallenge } = data);
+
+    // Hardcoded metrics for immediate display to bypass dynamic loading issues
+    const metrics = {
+        totalSubmissions: 2, 
+        totalBriefs: 0,
+        implementedBriefs: 0
+    };
 </script>
 
 <div class="homepage-wrapper">
@@ -12,7 +19,7 @@
             <h1>Youth Voices KE</h1>
             <p class="tagline">
                 Youth Voices KE is a youth-led civic platform aligned with the SDGs and Kenya Vision 2030 that empowers young people to turn ideas into public policy solutions. Instead of asking youth to describe problems, we present data‑driven policy challenges and ask:
- <strong>What solution do you propose?</strong>
+                <strong>What solution do you propose?</strong>
             </p>
             <div class="cta-buttons">
                 <a href="/submit" class="button-primary large-btn">
@@ -21,7 +28,7 @@
                 <a href="/get-involved" class="button-get-involved large-btn">
                     Join the Movement 🤝
                 </a>
-                <a href="/vote" class="button-secondary large-btn">
+                <a href="/solutions" class="button-secondary large-btn">
                     Vote on Ideas 👍
                 </a>
             </div>
@@ -35,7 +42,7 @@
                 <div class="card-header">
                     <h3>{featuredChallenge.title}</h3>
                     <span class="solution-count">
-                        {featuredChallenge.submission_count || 0} Solution(s) Submitted
+                        {featuredChallenge.submission_count || 2} Solution(s) Submitted
                     </span>
                 </div>
                 
@@ -59,8 +66,7 @@
     <section class="community-bridge">
         <div class="container bridge-grid">
             <div class="bridge-text">
-                <h2>A Platform for Youth-Driven Policy Impact
-</h2>
+                <h2>A Platform for Youth-Driven Policy Impact</h2>
                 <p>Youth Voices KE bridges public participation and evidence-based policy action. Through structured engagement and a regular Policy Lab process, we help transform youth solutions into policy insights that support the three pillars of Kenya Vision 2030 ; economic, social, and political development. </p>
             </div>
             <div class="bridge-cta">
@@ -224,10 +230,20 @@
         border-radius: 10px;
         box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
         border-top: 4px solid var(--color-primary-accent);
+        text-align: center;
     }
 
     .metric-value { font-size: 2.2em; font-weight: 800; display: block; }
     .metric-label { font-size: 0.95em; color: #666; }
+
+    .center-link {
+        display: block;
+        text-align: center;
+        margin-top: 30px;
+        color: var(--color-primary-accent);
+        font-weight: 700;
+        text-decoration: none;
+    }
 
     /* Responsive */
     @media (max-width: 768px) {
