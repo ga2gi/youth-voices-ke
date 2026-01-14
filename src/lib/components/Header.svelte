@@ -23,16 +23,10 @@
     }
 </script>
 
-<div class="holiday-banner">
-    <span class="snowflake">❄</span>
-    Happy Holidays from Youth Voices KE!
-    <span class="snowflake">❄</span>
-</div>
-
 <header>
     <div class="container header-content">
         <a href="/" class="logo-link">
-            <h1 class="festive-logo">Youth Voices <span class="accent-ke-green">KE</span></h1>
+            <h1 class="logo-text">Youth Voices <span class="accent-ke-green">KE</span></h1>
         </a>
 
         <nav class="main-nav">
@@ -64,63 +58,11 @@
 </div>
 
 <style>
-    /* --- HOLIDAY ELEMENTS --- */
-    .holiday-banner {
-        background: linear-gradient(90deg, #B01E26, #d42d36, #B01E26);
-        background-size: 200% auto;
-        animation: bannerShimmer 3s linear infinite;
-        color: white;
-        text-align: center;
-        height: 35px; /* Fixed height to prevent shifting */
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 0.85rem;
-        font-weight: 700;
-        letter-spacing: 0.5px;
-        z-index: 1001;
-        position: relative;
-    }
-
-    @keyframes bannerShimmer {
-        to { background-position: 200% center; }
-    }
-
-    .snowflake {
-        display: inline-block;
-        animation: spin 4s linear infinite;
-        margin: 0 8px;
-    }
-
-    @keyframes spin {
-        from { transform: rotate(0deg); }
-        to { transform: rotate(360deg); }
-    }
-
-    /* Precise Santa Hat positioning */
-    .festive-logo {
-        position: relative;
-        display: inline-block;
-        font-size: 1.1rem; /* Matched to your photo preference */
-        margin-left: 10px;
-    }
-
-    .festive-logo::before {
-        content: "🎅";
-        position: absolute;
-        top: -14px; /* Sits right on top of the text */
-        left: -10px;
-        font-size: 1.1rem;
-        transform: rotate(-10deg);
-        filter: drop-shadow(1px 1px 1px rgba(0,0,0,0.1));
-    }
-
     /* --- MAIN HEADER STRUCTURE --- */
     header {
-        background-color: var(--color-white);
-        /* Festive Green & Red bottom border */
-        border-bottom: 4px solid transparent;
-        border-image: linear-gradient(to right, #007A33, #B01E26, #007A33, #B01E26) 1;
+        background-color: var(--color-white, #ffffff);
+        /* Replaced festive gradient with standard brand green border */
+        border-bottom: 4px solid var(--color-primary, #007A33);
         box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
         padding: 10px 0; /* Slimmer padding to save vertical space */
         position: sticky;
@@ -139,12 +81,19 @@
 
     .logo-link {
         text-decoration: none;
-        color: var(--color-text-dark);
+        color: var(--color-dark, #1a1a1a);
         white-space: nowrap;
     }
 
+    .logo-text {
+        position: relative;
+        display: inline-block;
+        font-size: 1.1rem;
+        margin: 0;
+    }
+
     .accent-ke-green {
-        color: #8B1620; /* Your specific dark red from original code */
+        color: var(--color-primary, #007A33);
         font-weight: 800;
     }
 
@@ -159,7 +108,7 @@
 
     .main-nav a {
         text-decoration: none;
-        color: var(--color-text-dark);
+        color: var(--color-dark, #1a1a1a);
         font-weight: 600;
         padding: 4px 2px;
         transition: all 0.3s ease;
@@ -168,13 +117,12 @@
     }
 
     .main-nav a:hover {
-        color: #B01E26;
-        text-decoration: underline wavy #007A33;
+        color: var(--color-primary, #007A33);
     }
 
     .main-nav a.active {
-        color: var(--color-primary-accent);
-        border-bottom: 2px solid var(--color-primary-accent);
+        color: var(--color-primary, #007A33);
+        border-bottom: 2px solid var(--color-primary, #007A33);
     }
 
     /* --- MOBILE STYLES --- */
@@ -182,7 +130,7 @@
         display: none;
         background: none;
         border: none;
-        color: var(--color-text-dark);
+        color: var(--color-dark, #1a1a1a);
         font-size: 2em;
         cursor: pointer;
         padding: 0 5px;
@@ -192,7 +140,7 @@
 
     .mobile-menu {
         position: fixed;
-        top: 95px; /* Banner height + Header height */
+        top: 60px; /* Adjusted for header height without banner */
         left: 0;
         width: 100%;
         background-color: #1a1a1a;
@@ -218,19 +166,17 @@
     }
 
     .mobile-nav-link:hover, .mobile-nav-link.active {
-        background-color: #B01E26;
+        background-color: var(--color-primary, #007A33);
         color: white;
     }
 
     /* --- BREAKPOINT ADJUSTMENTS --- */
-    /* Switched to mobile menu earlier to prevent text overlapping */
     @media (max-width: 1180px) {
         .main-nav { display: none; }
         .menu-toggle { display: block; }
     }
     
     @media (max-width: 600px) {
-         .festive-logo { font-size: 1rem; }
-         .festive-logo::before { top: -12px; font-size: 1rem; }
+         .logo-text { font-size: 1rem; }
     }
 </style>
