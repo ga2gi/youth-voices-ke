@@ -1,92 +1,80 @@
-// src/routes/vote/+page.server.js
 import { fail } from '@sveltejs/kit';
 import { supabase } from '$lib/supabaseClient';
-import { fetchGroupedSubmissions } from '$lib/server/db'; 
 
-/** @type {import('./$types').PageServerLoad} */
-export async function load() {
-    // Use the robust helper function to fetch and group data, now including vote counts
-    const submissions = await fetchGroupedSubmissions();
+export async function load({ cookies }) {
+    const voter_id = cookies.get('vote_session_id');
 
-    if (submissions.length === 0) {
-        return { submissions: [] };
+    // Fetch solutions
+    const { data: solutions } = await supabase
+        .from('solutions')
+        .select('id, challenge_id, challenge_title, solution_text')
+        .eq('is_featured', true);
+
+    // Grouping logic
+    const groupedChallenges = solutions?.reduce((acc, sol) => {
+        const key = sol.challenge_id;
+        if (!acc[key]) {
+            acc[key] = { id: key, title: sol.challenge_title, options: [] };
+        }
+        acc[key].options.push(sol);
+        return acc;
+    }, {}) || {};
+
+    // Get votes to disable buttons
+    let userVotes = [];
+    if (voter_id) {
+        const { data } = await supabase
+            .from('votes')
+            .select('challenge_id')
+            .eq('voter_id', voter_id);
+        userVotes = data || [];
     }
 
-    return { submissions };
+    return { 
+        challenges: Object.values(groupedChallenges), 
+        userVotes 
+    };
 }
 
-/** @type {import('./$types').Actions} */
 export const actions = {
-    vote: async ({ request, cookies }) => { 
+    vote: async ({ request, cookies }) => {
         const formData = await request.formData();
-        const submission_id = formData.get('submission_id');
+        const solution_id = formData.get('solution_id');
+        const challenge_id = formData.get('challenge_id');
 
-        if (!submission_id) {
-            return fail(400, { error: 'Invalid submission selected.' });
+        if (!solution_id || !challenge_id) {
+            return fail(400, { error: 'Invalid selection.' });
         }
-        
-        // --- Voter ID Logic ---
+
+        // Handle Voter ID Cookie
         let voter_id = cookies.get('vote_session_id');
         if (!voter_id) {
-            voter_id = crypto.randomUUID(); 
+            voter_id = crypto.randomUUID();
             cookies.set('vote_session_id', voter_id, {
                 path: '/',
                 maxAge: 60 * 60 * 24 * 30,
                 httpOnly: true,
-                sameSite: 'strict',
+                sameSite: 'strict'
             });
         }
-        
-        // --- Submission Challenge Lookup ---
-        // Get the challenge ID associated with the submission ID
-        const { data: submissionData, error: lookupError } = await supabase
-            .from('submissions')
-            .select('challenge_id')
-            .eq('id', submission_id)
-            .single();
 
-        if (lookupError || !submissionData) {
-            return fail(500, { error: 'Could not find the associated challenge.' });
-        }
-        
-        const challenge_id = submissionData.challenge_id;
-
-        // --- One Vote Per Challenge Check (The Fix) ---
-        // Find any existing vote by this voter_id where the submission's challenge_id matches the current challenge_id.
-        const { data: existingVote, error: voteCheckError } = await supabase
-            .from('votes')
-            .select(`
-                id, 
-                submission_id!inner(challenge_id) 
-            `)
-            .eq('voter_id', voter_id)
-            .eq('submission_id.challenge_id', challenge_id) // <-- Using the foreign key relationship filter
-            .limit(1)
-            .single();
-
-        if (existingVote) {
-             return fail(409, { error: `You have already voted on a solution for this challenge.`, voted_id: submission_id });
-        }
-
-        if (voteCheckError && voteCheckError.code !== 'PGRST116') {
-             console.error('Vote check error:', voteCheckError);
-             return fail(500, { error: 'Failed to verify existing votes.' });
-        }
-
-        // --- Insert New Vote ---
-        const { error: insertError } = await supabase
+        // Database Insert
+        const { error } = await supabase
             .from('votes')
             .insert({
-                submission_id: submission_id,
-                voter_id: voter_id,
-                is_upvote: true
+                submission_id: solution_id,
+                challenge_id: challenge_id,
+                voter_id: voter_id
             });
 
-        if (insertError) {
-            console.error('Supabase Vote Insertion Error:', insertError);
-            return fail(500, { error: 'Could not record vote due to a server error.' });
+        if (error) {
+            console.error("Supabase Error:", error.message);
+            if (error.code === '23505') {
+                return fail(409, { error: 'You have already voted on this challenge.' });
+            }
+            return fail(500, { error: 'System error. Please try again.' });
         }
-        
-        return { success: true, voted_id: submission_id };
+
+        return { success: true };
     }
 };

@@ -1,179 +1,139 @@
 <script>
-    import SubmissionVoteCard from '$lib/components/SubmissionVoteCard.svelte';
-    // SvelteKit's stores are not strictly necessary here but are good practice for future use
-    // import { page } from '$app/stores'; 
-
-    /** @type {import('./$types').PageData} */
+    import { enhance } from '$app/forms';
     export let data;
 
-    /** @type {import('./$types').ActionData} */
-    export let form;
+    // Track which solution is selected for each challenge
+    // Structure: { challengeId: selectedSolutionId }
+    let selections = {};
 
-    // --- Data Grouping Logic ---
-    // Group submissions by challenge title for easy display
-    $: groupedSubmissions = data.submissions.reduce((groups, submission) => {
-        const title = submission.challenge_title;
-        if (!groups[title]) {
-            groups[title] = {
-                title: title,
-                id: submission.challenge_id, // Use the challenge ID for the key
-                submissions: []
-            };
-        }
-        groups[title].submissions.push(submission);
-        return groups;
-    }, {});
-    
-    // Convert the object into an array for easy iteration in the template
-    $: challengeGroups = Object.values(groupedSubmissions);
+    function selectSolution(challengeId, solutionId) {
+        selections[challengeId] = solutionId;
+        selections = selections; // Trigger reactivity
+    }
 
+    $: hasVoted = (cId) => data.userVotes.some(v => v.challenge_id === cId);
 </script>
 
-<svelte:head>
-    <title>Voting Phase - Youth Voices KE</title>
-</svelte:head>
-
-<div class="container">
-    <div class="hero">
-        <h1 class="page-title">Community Voting: Select the Best Ideas</h1>
-        <p class="page-subtitle">Review the submitted policy solutions below and cast your vote for the most impactful idea.</p>
-    </div>
-
-    <section class="voting-instructions">
-        <h2>🗳️ Your Vote Shapes Policy</h2>
-        <div class="instructions-content">
-            <div class="instruction-box">
-                <h3>Why Vote?</h3>
-                <p>Your vote directly contributes to the final selection of policy proposals. Final policy briefs selection incorporates both committee evaluation and community voting.</p>
-            </div>
-            <div class="instruction-box">
-                <h3>How to Vote</h3>
-                <p>We feature solutions for challenges each month. You get one vote per challenge. Select the solution you believe is the most relevant, feasible, and impactful, and click 'Upvote This Solution'.</p>
-                <p class="rule">Note: Once you vote on a challenge, you cannot vote on another solution within that same challenge.</p>
-            </div>
-            <div class="instruction-box">
-                <h3>What Happens Next?</h3>
-                <p>The shortlisted submissions, informed by your voting and our expert review, will be used by Youth Voices KE and its Stakeholders to produce final policy briefs.</p>
-            </div>
-        </div>
-    </section>
-
-    {#if data.submissions.length > 0}
-        {#each challengeGroups as challengeGroup, index (challengeGroup.id)}
-            <section class="challenge-group">
-                <h2 class="challenge-group-title">Challenge {index + 1}: {challengeGroup.title}</h2>
-                <div class="submissions-grid">
-                    {#each challengeGroup.submissions as submission (submission.id)}
-                        <SubmissionVoteCard 
-                            {submission} 
-                            {form} 
-                        />
-                    {/each}
+<div class="page-wrapper">
+    <header class="hero-section">
+        <div class="container">
+            <div class="vote-badge">🗳️ Your Vote Shapes Policy</div>
+            <h1>Voting Phase</h1>
+            <p class="hero-intro">Review the submitted policy solutions below and cast your vote for the most impactful idea.</p>
+            
+            <div class="guidelines-grid">
+                <div class="guideline-card">
+                    <h3>Why Vote?</h3>
+                    <p>Your vote directly contributes to the final selection of policy proposals. Final policy briefs selection incorporates both committee evaluation and community voting.</p>
                 </div>
-            </section>
-        {:else}
-            <p class="empty-state">No Submissions are ready for voting under this challenge yet. Check back soon!</p>
-        {/each}
-    {:else}
-        <div class="empty-state">
-            <p>No Solutions Ready for Voting Yet</p>
-            <p>We are still collecting submissions or shortlisting. Check back soon!</p>
+                <div class="guideline-card">
+                    <h3>How to Vote</h3>
+                    <p>We feature solutions for challenges each month. You get one vote per challenge. Select the solution you believe is the most relevant and click 'Vote'.</p>
+                </div>
+                <div class="guideline-card full-width">
+                    <h3>What Happens Next?</h3>
+                    <p>The shortlisted submissions, informed by your voting and our expert review, will be used by Youth Voices KE and its Stakeholders to produce final policy briefs.</p>
+                </div>
+            </div>
+            
+            <p class="disclaimer">
+                <strong>Note:</strong> Once you vote on a challenge, you cannot vote on another solution within that same challenge.
+            </p>
         </div>
-    {/if}
+    </header>
+
+    <main class="container">
+        {#each data.challenges as challenge}
+            <section class="challenge-card">
+                <div class="challenge-header">
+                    <h2>{challenge.title}</h2>
+                </div>
+
+                {#if hasVoted(challenge.id)}
+                    <div class="voted-banner">
+                        <p>✅ Your vote has been recorded for this challenge. Thank you!</p>
+                    </div>
+                {:else}
+                    <div class="options-list">
+                        {#each challenge.options as sol}
+                            <button 
+                                type="button"
+                                class="option-btn"
+                                class:is-active={selections[challenge.id] === sol.id}
+                                on:click={() => selectSolution(challenge.id, sol.id)}
+                            >
+                                <div class="radio-circle">
+                                    {#if selections[challenge.id] === sol.id}
+                                        <div class="dot"></div>
+                                    {/if}
+                                </div>
+                                <span class="solution-text">{sol.solution_text}</span>
+                            </button>
+                        {/each}
+                    </div>
+
+                    <div class="vote-footer">
+                        <form method="POST" action="?/vote" use:enhance>
+                            <input type="hidden" name="challenge_id" value={challenge.id} />
+                            <input type="hidden" name="solution_id" value={selections[challenge.id] || ''} />
+                            
+                            <button 
+                                type="submit" 
+                                class="green-vote-btn" 
+                                disabled={!selections[challenge.id]}
+                            >
+                                Vote
+                            </button>
+                        </form>
+                    </div>
+                {/if}
+            </section>
+        {/each}
+    </main>
 </div>
 
 <style>
-    /* Hero/Title Styles */
-    .hero {
-        text-align: center;
-        padding: 40px 0 20px;
-    }
+    :global(body) { background-color: #f9fafb; margin: 0; font-family: 'Inter', sans-serif; color: #111827; }
+    .container { max-width: 1000px; margin: 0 auto; padding: 0 1.5rem; }
 
-    .page-title {
-        font-size: 2.5em;
-        color: var(--color-primary-accent, #007A33);
-        margin-bottom: 5px;
-        font-weight: 700;
-    }
+    /* Hero Styling */
+    .hero-section { background: white; padding: 4rem 0; border-bottom: 1px solid #e5e7eb; margin-bottom: 3rem; text-align: center; }
+    .vote-badge { background: #ecfdf5; color: #059669; padding: 6px 16px; border-radius: 99px; font-weight: 700; display: inline-block; margin-bottom: 1rem; font-size: 0.9rem; }
+    h1 { font-size: 2.5rem; margin: 0; font-weight: 800; }
+    .hero-intro { color: #4b5563; font-size: 1.1rem; margin-top: 1rem; }
 
-    .page-subtitle {
-        font-size: 1.1em;
-        color: var(--color-text-dark, #333333);
-    }
-    
-    /* Instruction Styles */
-    .voting-instructions {
-        background-color: var(--color-white, #FFFFFF);
-        border: 1px solid var(--color-border-light, #DDDDDD);
-        border-radius: 8px;
-        padding: 25px;
-        margin-bottom: 40px;
-        text-align: center;
-    }
-    
-    .voting-instructions h2 {
-        color: var(--color-primary-accent, #007A33);
-        font-size: 1.8em;
-        margin-bottom: 20px;
-    }
+    .guidelines-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 2.5rem; text-align: left; }
+    .guideline-card { background: #f8fafc; padding: 1.5rem; border-radius: 12px; border: 1px solid #e2e8f0; }
+    .guideline-card h3 { margin-top: 0; font-size: 1rem; color: #1e293b; border-bottom: 2px solid #10b981; display: inline-block; padding-bottom: 4px; }
+    .guideline-card p { font-size: 0.9rem; color: #64748b; line-height: 1.6; margin-bottom: 0; }
+    .full-width { grid-column: span 2; }
+    .disclaimer { margin-top: 2rem; font-size: 0.85rem; color: #9ca3af; font-style: italic; }
 
-    .instructions-content {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-        gap: 20px;
-        text-align: left;
-    }
+    /* Challenge Card Styling */
+    .challenge-card { background: white; border-radius: 16px; padding: 2rem; margin-bottom: 2.5rem; border: 1px solid #e5e7eb; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); }
+    .challenge-header { border-bottom: 1px solid #f3f4f6; margin-bottom: 1.5rem; padding-bottom: 1rem; }
+    .challenge-header h2 { margin: 0; font-size: 1.5rem; }
 
-    .instruction-box {
-        background-color: var(--color-background-light, #F9F9F9);
-        padding: 15px;
-        border-left: 4px solid var(--color-primary-accent, #007A33);
-        border-radius: 4px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    .options-list { display: flex; flex-direction: column; gap: 0.75rem; }
+    .option-btn { 
+        display: flex; align-items: center; padding: 1.25rem; background: white; 
+        border: 2px solid #f3f4f6; border-radius: 10px; cursor: pointer; text-align: left; transition: 0.2s;
     }
+    .option-btn:hover { border-color: #d1d5db; }
+    .option-btn.is-active { border-color: #10b981; background: #f0fdf4; }
 
-    .instruction-box h3 {
-        color: var(--color-text-dark, #333333);
-        font-size: 1.2em;
-        margin-bottom: 10px;
-    }
-    
-    .instruction-box p {
-        color: var(--color-text-dark, #333333);
-        font-size: 0.95em;
-    }
-    
-    .rule {
-        margin-top: 10px;
-        /* Using the secondary red accent for a warning/rule */
-        color: var(--color-secondary-accent, #B01E26); 
-        font-weight: 600;
-    }
+    .radio-circle { width: 22px; height: 22px; border: 2px solid #d1d5db; border-radius: 50%; margin-right: 1rem; flex-shrink: 0; display: flex; align-items: center; justify-content: center; background: white; }
+    .is-active .radio-circle { border-color: #10b981; }
+    .dot { width: 12px; height: 12px; background: #10b981; border-radius: 50%; }
 
-    /* Grouping Styles */
-    .challenge-group {
-        margin-bottom: 50px;
+    /* Footer Action */
+    .vote-footer { margin-top: 2rem; text-align: right; border-top: 1px solid #f3f4f6; padding-top: 1.5rem; }
+    .green-vote-btn { 
+        background: #059669; color: white; border: none; padding: 0.8rem 3.5rem; 
+        border-radius: 8px; font-weight: 700; cursor: pointer; transition: 0.2s; font-size: 1rem;
     }
+    .green-vote-btn:hover:not(:disabled) { background: #047857; transform: translateY(-1px); }
+    .green-vote-btn:disabled { background: #9ca3af; cursor: not-allowed; }
 
-    .challenge-group-title {
-        font-size: 2em;
-        color: var(--color-text-dark, #333333);
-        border-bottom: 3px solid var(--color-primary-accent, #007A33);
-        padding-bottom: 10px;
-        margin-bottom: 25px;
-        font-weight: 600;
-    }
-
-    .submissions-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-        gap: 30px;
-    }
-    
-    .empty-state {
-        text-align: center;
-        padding: 80px 0;
-        font-size: 1.2em;
-        color: var(--color-text-light, #666666);
-    }
+    .voted-banner { background: #f0fdf4; color: #166534; padding: 1.5rem; border-radius: 12px; text-align: center; border: 1px solid #bbf7d0; font-weight: 600; }
 </style>

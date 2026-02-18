@@ -7,7 +7,7 @@
 
     // Hardcoded metrics for immediate display to bypass dynamic loading issues
     const metrics = {
-        totalSubmissions: 2, 
+        totalSubmissions: 8, 
         totalBriefs: 0,
         implementedBriefs: 0
     };
@@ -28,7 +28,7 @@
                 <a href="/get-involved" class="button-get-involved large-btn">
                     Join the Movement 🤝
                 </a>
-                <a href="/solutions" class="button-secondary large-btn">
+                <a href="/vote" class="button-secondary large-btn">
                     Vote on Ideas 👍
                 </a>
             </div>
@@ -42,7 +42,7 @@
                 <div class="card-header">
                     <h3>{featuredChallenge.title}</h3>
                     <span class="solution-count">
-                        {featuredChallenge.submission_count || 2} Solution(s) Submitted
+                        {featuredChallenge.submission_count || 8} Solution(s) Submitted
                     </span>
                 </div>
                 
