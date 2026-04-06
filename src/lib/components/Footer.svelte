@@ -5,10 +5,10 @@
 <footer class="main-footer">
     <div class="container footer-content">
         <div class="footer-brand">
-            <span class="logo-text">Youth Voices KE</span>
+            <span class="logo-text">Policy Bridge KE</span>
             <p>Empowering the youth to be co-creators of policy.</p>
-            <p class="footer-url">www.youthvoiceske.org</p>
-            <p>&copy; {currentYear} Youth Voices KE. All rights reserved.</p>
+            <p class="footer-url">www.policybridgeke.org</p>
+            <p>&copy; {currentYear} Policy Bridge KE. All rights reserved.</p>
         </div>
         
         <div class="footer-links">
@@ -37,8 +37,8 @@
             <ul>
                 <li><a href="/terms">Terms of Use</a></li>
                 <li><a href="/privacy">Privacy Policy</a></li>
-                <li class="contact-info">📧 info@youthvoiceske.org</li>
-                <li class="social-tag">📱 Follow us: @youthvoiceske</li>
+                <li class="contact-info">📧 info@policybridgeke.org</li>
+                <li class="social-tag">📱 Follow us: @policybridgeke</li>
             </ul>
         </div>
     </div>
@@ -50,7 +50,6 @@
         background-color: #1a1a1a; /* Sleek dark background */
         color: var(--color-white);
         padding: 60px 0 40px 0;
-        /* Replaced festive gradient with a solid brand accent border */
         border-top: 4px solid var(--color-primary-accent, #007A33);
         font-family: 'Source Sans 3', 'Source Sans Pro', sans-serif;
     }

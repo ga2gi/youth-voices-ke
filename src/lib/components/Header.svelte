@@ -26,7 +26,7 @@
 <header>
     <div class="container header-content">
         <a href="/" class="logo-link">
-            <h1 class="logo-text">Youth Voices <span class="accent-ke-green">KE</span></h1>
+            <h1 class="logo-text">Policy Bridge <span class="accent-ke-green">KE</span></h1>
         </a>
 
         <nav class="main-nav">
@@ -61,10 +61,10 @@
     /* --- MAIN HEADER STRUCTURE --- */
     header {
         background-color: var(--color-white, #ffffff);
-        /* Replaced festive gradient with standard brand green border */
+        /* Standard brand green border maintained */
         border-bottom: 4px solid var(--color-primary, #007A33);
         box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
-        padding: 10px 0; /* Slimmer padding to save vertical space */
+        padding: 10px 0; 
         position: sticky;
         top: 0;
         z-index: 1000;
@@ -101,7 +101,7 @@
     .main-nav ul {
         list-style: none;
         display: flex;
-        gap: 12px; /* Tighter gap to fit all links */
+        gap: 12px; 
         margin: 0;
         padding: 0;
     }
@@ -112,7 +112,7 @@
         font-weight: 600;
         padding: 4px 2px;
         transition: all 0.3s ease;
-        font-size: 0.82rem; /* Adjusted for better fit */
+        font-size: 0.82rem; 
         white-space: nowrap;
     }
 
@@ -140,7 +140,7 @@
 
     .mobile-menu {
         position: fixed;
-        top: 60px; /* Adjusted for header height without banner */
+        top: 60px; 
         left: 0;
         width: 100%;
         background-color: #1a1a1a;

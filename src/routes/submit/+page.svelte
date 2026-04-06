@@ -55,32 +55,31 @@
         };
     };
 
-    // --- UPDATED Challenges of the Month Context (January 2026) ---
+    // --- UPDATED Challenges for Q1 2026 (January - March) ---
     let challengesOfTheMonthContext = [
         {
             id: 1,
-            title: "January 2026 Policy Challenge I: Youth Access to Capital for Self-Employment",
+            title: "Q1 2026 Challenge I: Youth Access to Capital for Self-Employment",
             excerpt: "How can Kenya bridge the KSh 500 Billion credit gap for youth in the informal, creative, and digital sectors?",
             details: `
                 <div class="detailed-context">
-                    <h4>The Context</h4>
-                    <p>Kenya’s unemployment challenge is less about joblessness and more about job quality. With <strong>over 1 million youths</strong> entering the labour market annually, formal employment absorbs less than 15%. Consequently, self-employment is a necessity. However, <strong>80% of youth-led MSMEs fail</strong> within the first three years, primarily due to credit constraints.</p>
+                    <h4>The Context (Jan - Mar 2026)</h4>
+                    <p>Kenya’s unemployment challenge is less about joblessness and more about job quality. With <strong>over 1 million youths</strong> entering the labour market annually, formal employment absorbs less than 15%.</p>
                    
                     <h4>Data & Statistics</h4>
                     <ul>
-                        <li><strong>The Credit Gap:</strong> Unmet demand for MSME financing in Kenya stands at roughly <strong>KSh 500 Billion</strong>.</li>
-                        <li><strong>Risk Aversion:</strong> Traditional banks require collateral (land/logbooks) which <strong>90% of youth (18-35)</strong> do not possess.</li>
-                        <li><strong>The Hustler Sector:</strong> The informal sector represents <strong>83% of total employment</strong>, yet receives less than 5% of total private sector credit.</li>
+                        <li><strong>The Credit Gap:</strong> Unmet demand for MSME financing stands at roughly <strong>KSh 500 Billion</strong>.</li>
+                        <li><strong>Risk Aversion:</strong> Traditional banks require collateral which <strong>90% of youth</strong> do not possess.</li>
+                        <li><strong>The Hustler Sector:</strong> The informal sector represents <strong>83% of total employment</strong>.</li>
                     </ul>
 
                     <h4>The Challenge</h4>
-                    <p>What practical, implementable policy measures can Kenya adopt to improve access to capital across creative, digital, agricultural, and vocational sectors? We are looking for solutions that:</p>
+                    <p>What practical, implementable policy measures can Kenya adopt to improve access to capital? Solutions should:</p>
                     <ul>
-                        <li>Address barriers like <strong>high interest rates</strong> and the lack of physical collateral.</li>
-                        <li>Leverage <strong>blended finance</strong> (public funds + private capital).</li>
-                        <li>Strengthen <strong>transparency and impact tracking</strong> in youth programs like the Hustler Fund or Youth Enterprise Development Fund.</li>
+                        <li>Address <strong>high interest rates</strong> and collateral barriers.</li>
+                        <li>Leverage <strong>blended finance</strong> (public + private capital).</li>
+                        <li>Strengthen <strong>transparency</strong> in programs like the Hustler Fund.</li>
                     </ul>
-                    <p><em>Aligned with: Vision 2030, SDG 1 (No Poverty), and SDG 8 (Decent Work).</em></p>
                 </div>
             `,
             expanded: false,
@@ -88,28 +87,27 @@
         },
         {
             id: 2,
-            title: "January 2026 Policy Challenge II: Youth-Led Solutions For Mental Health",
+            title: "Q1 2026 Challenge II: Youth-Led Solutions For Mental Health",
             excerpt: "With mental health funding at less than 0.05% of the health budget, how do we implement youth-friendly care?",
             details: `
                 <div class="detailed-context">
-                    <h4>The Context</h4>
-                    <p>Mental health is one of Kenya's most under-addressed development hurdles. Rising levels of depression and anxiety among youth are linked to economic stress and the "unemployment trap." Despite the <strong>Mental Health (Amendment) Act 2022</strong>, services remain urban-centered and unaffordable for the average young Kenyan.</p>
+                    <h4>The Context (Jan - Mar 2026)</h4>
+                    <p>Despite the <strong>Mental Health (Amendment) Act 2022</strong>, services remain urban-centered and unaffordable for the average young Kenyan.</p>
                    
                     <h4>Data & Statistics</h4>
                     <ul>
-                        <li><strong>Funding Gap:</strong> Kenya allocates <strong>less than 0.05%</strong> of its total health budget to mental health, far below the global recommendation.</li>
-                        <li><strong>Prevalence:</strong> Approximately <strong>1 in 4 Kenyans</strong> visiting routine health facilities have a mental health condition.</li>
-                        <li><strong>Scarcity:</strong> There is roughly <strong>one psychiatrist for every 500,000 Kenyans</strong>, with most based in Nairobi.</li>
+                        <li><strong>Funding Gap:</strong> Kenya allocates <strong>less than 0.05%</strong> of the health budget to mental health.</li>
+                        <li><strong>Prevalence:</strong> Approximately <strong>1 in 4 Kenyans</strong> visiting routine facilities have a mental health condition.</li>
+                        <li><strong>Scarcity:</strong> Roughly <strong>one psychiatrist for every 500,000 Kenyans</strong>.</li>
                     </ul>
 
                     <h4>The Challenge</h4>
-                    <p>What practical solution(s) can Kenya adopt to improve access to youth-friendly mental health services while advancing SDG 3? Your solution should:</p>
+                    <p>How can we improve access to youth-friendly services? Your solution should:</p>
                     <ul>
-                        <li>Focus on <strong>implementation</strong> within health, education, and community systems.</li>
-                        <li>Integrate mental health into <strong>primary healthcare</strong> to ensure it is accessible at the ward level.</li>
-                        <li>Propose mechanisms to <strong>reduce stigma</strong> and strengthen accountability for funds allocated to mental health.</li>
+                        <li>Integrate mental health into <strong>primary healthcare</strong> at the ward level.</li>
+                        <li>Propose mechanisms to <strong>reduce stigma</strong>.</li>
+                        <li>Strengthen accountability for mental health funds.</li>
                     </ul>
-                    <p><em>Aligned with: Constitution of Kenya 2010, Vision 2030, and SDG 3 (Good Health and Well-Being).</em></p>
                 </div>
             `,
             expanded: false,
@@ -118,7 +116,7 @@
     ];
 
     // Dynamic PDF Link Population
-    challengesOfTheMonthContext = challengesOfTheMonthContext.map(contextChallenge => {
+    $: challengesOfTheMonthContext = challengesOfTheMonthContext.map(contextChallenge => {
         const matchingServerChallenge = serverChallenges?.find(sc => sc.id === contextChallenge.id);
         if (matchingServerChallenge && matchingServerChallenge.pdf_url) {
             return { ...contextChallenge, pdfLink: matchingServerChallenge.pdf_url };
@@ -137,11 +135,11 @@
 <div class="container submit-page">
     <header>
         <h1>📝 Submit Your Actionable Solution</h1>
-        <p class="tagline">Your idea must directly address one of the challenges below or a challenge from the dropdown list.</p>
+        <p class="tagline">Policy Bridge KE: Bridging the gap between youth innovation and legislative action.</p>
     </header>
    
     <section class="challenges-of-month-section">
-        <h2>🔥 Challenges of the Month (Context)</h2>
+        <h2>🔥 Quarterly Policy Challenges (Q1: Jan - Mar 2026)</h2>
         <div class="challenge-cards-wrapper">
             {#each challengesOfTheMonthContext as challenge (challenge.id)}
                 <div class="challenge-card" class:expanded={challenge.expanded}>
@@ -158,7 +156,7 @@
                             </div>
                             {#if challenge.pdfLink}
                                 <a href={challenge.pdfLink} target="_blank" class="pdf-download-link">
-                                    ⬇️ Download Full Challenge PDF
+                                    ⬇️ Download Full Q1 Challenge PDF
                                 </a>
                             {/if}
                         {/if}
@@ -186,7 +184,7 @@
         {/if}
 
         <form method="POST" action="?/submit" use:enhance={handleSubmit} class="single-page-form">
-            <label for="challenge_title">Select the Policy Challenge Area *</label>
+            <label for="challenge_title">Select the Q1 Policy Challenge Area *</label>
             <select id="challenge_title" name="challenge_title" bind:value={challengeTitle} required>
                 <option value="" disabled selected>-- Select a Policy Challenge --</option>
                 {#each serverChallenges as challenge (challenge.id)}
@@ -214,7 +212,7 @@
             {/if}
            
             <label for="implementation_timeline">3. Proposed Implementation Timeline *</label>
-            <input type="text" name="implementation_timeline" bind:value={implementationTimeline} placeholder="e.g., 6 months, 2026 Q1..." required />
+            <input type="text" name="implementation_timeline" bind:value={implementationTimeline} placeholder="e.g., 6 months, 2026 Q2..." required />
 
             <label for="supporting_evidence">4. Supporting Evidence (Optional)</label>
             <textarea name="supporting_evidence" rows="4" bind:value={supportingEvidence} placeholder="Cite data, similar projects, or local examples..."></textarea>
@@ -245,6 +243,7 @@
 </div>
 
 <style>
+    /* Styles preserved and brand primary green (#007a33) used consistently */
     .alert { padding: 15px; margin-bottom: 20px; border-radius: 6px; font-weight: 600; text-align: center; }
     .alert.success { background-color: rgba(0, 122, 51, 0.1); color: #007a33; border: 1px solid #007a33; }
     .alert.error { background-color: rgba(176, 30, 38, 0.1); color: #b01e26; border: 1px solid #b01e26; }
@@ -253,14 +252,12 @@
     h1 { color: #007a33; }
     .submission-content-wrapper { max-width: 700px; margin: 0 auto; background: #fff; padding: 40px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
    
-    /* Challenge Card Styles */
     .challenge-card { border: 2px solid #eee; border-radius: 8px; margin-bottom: 15px; overflow: hidden; }
     .card-header { display: flex; justify-content: space-between; width: 100%; padding: 15px 20px; background: #f9f9f9; border: none; cursor: pointer; text-align: left; }
     .challenge-card.expanded .card-header { background: #007a33; color: white; }
     .card-content { padding: 0 20px; max-height: 0; overflow: hidden; transition: max-height 0.4s ease-out; }
     .challenge-card.expanded .card-content { max-height: 2000px; padding: 15px 20px; }
    
-    /* Detailed Context Styling */
     .detailed-context h4 { margin-top: 15px; color: #b01e26; border-bottom: 1px solid #eee; padding-bottom: 5px; }
     .detailed-context ul { padding-left: 20px; margin-bottom: 15px; }
     .detailed-context li { margin-bottom: 8px; font-size: 0.95rem; line-height: 1.5; }
