@@ -98,13 +98,15 @@
 
     /* Hero Styling */
     .hero-section { background: white; padding: 4rem 0; border-bottom: 1px solid #e5e7eb; margin-bottom: 3rem; text-align: center; }
-    .vote-badge { background: #ecfdf5; color: #059669; padding: 6px 16px; border-radius: 99px; font-weight: 700; display: inline-block; margin-bottom: 1rem; font-size: 0.9rem; }
+    /* Changed to PolicyBridge Green Tint */
+    .vote-badge { background: #f0fdf4; color: #064e3b; padding: 6px 16px; border-radius: 99px; font-weight: 700; display: inline-block; margin-bottom: 1rem; font-size: 0.9rem; border: 1px solid #dcfce7; }
     h1 { font-size: 2.5rem; margin: 0; font-weight: 800; }
     .hero-intro { color: #4b5563; font-size: 1.1rem; margin-top: 1rem; }
 
     .guidelines-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 2.5rem; text-align: left; }
     .guideline-card { background: #f8fafc; padding: 1.5rem; border-radius: 12px; border: 1px solid #e2e8f0; }
-    .guideline-card h3 { margin-top: 0; font-size: 1rem; color: #1e293b; border-bottom: 2px solid #10b981; display: inline-block; padding-bottom: 4px; }
+    /* Border color changed to PolicyBridge Green */
+    .guideline-card h3 { margin-top: 0; font-size: 1rem; color: #1e293b; border-bottom: 2px solid #064e3b; display: inline-block; padding-bottom: 4px; }
     .guideline-card p { font-size: 0.9rem; color: #64748b; line-height: 1.6; margin-bottom: 0; }
     .full-width { grid-column: span 2; }
     .disclaimer { margin-top: 2rem; font-size: 0.85rem; color: #9ca3af; font-style: italic; }
@@ -120,20 +122,23 @@
         border: 2px solid #f3f4f6; border-radius: 10px; cursor: pointer; text-align: left; transition: 0.2s;
     }
     .option-btn:hover { border-color: #d1d5db; }
-    .option-btn.is-active { border-color: #10b981; background: #f0fdf4; }
+    /* Active colors changed to PolicyBridge Green */
+    .option-btn.is-active { border-color: #064e3b; background: #f0fdf4; }
 
     .radio-circle { width: 22px; height: 22px; border: 2px solid #d1d5db; border-radius: 50%; margin-right: 1rem; flex-shrink: 0; display: flex; align-items: center; justify-content: center; background: white; }
-    .is-active .radio-circle { border-color: #10b981; }
-    .dot { width: 12px; height: 12px; background: #10b981; border-radius: 50%; }
+    .is-active .radio-circle { border-color: #064e3b; }
+    .dot { width: 12px; height: 12px; background: #064e3b; border-radius: 50%; }
 
     /* Footer Action */
     .vote-footer { margin-top: 2rem; text-align: right; border-top: 1px solid #f3f4f6; padding-top: 1.5rem; }
+    /* Primary button changed to PolicyBridge Green */
     .green-vote-btn { 
-        background: #059669; color: white; border: none; padding: 0.8rem 3.5rem; 
+        background: #064e3b; color: white; border: none; padding: 0.8rem 3.5rem; 
         border-radius: 8px; font-weight: 700; cursor: pointer; transition: 0.2s; font-size: 1rem;
     }
-    .green-vote-btn:hover:not(:disabled) { background: #047857; transform: translateY(-1px); }
+    .green-vote-btn:hover:not(:disabled) { background: #043d2e; transform: translateY(-1px); }
     .green-vote-btn:disabled { background: #9ca3af; cursor: not-allowed; }
 
-    .voted-banner { background: #f0fdf4; color: #166534; padding: 1.5rem; border-radius: 12px; text-align: center; border: 1px solid #bbf7d0; font-weight: 600; }
+    /* Voted banner colors changed to PolicyBridge Green */
+    .voted-banner { background: #f0fdf4; color: #064e3b; padding: 1.5rem; border-radius: 12px; text-align: center; border: 1px solid #bbf7d0; font-weight: 600; }
 </style>

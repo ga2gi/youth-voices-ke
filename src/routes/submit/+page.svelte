@@ -1,275 +1,305 @@
 <script lang="ts">
     import { enhance } from '$app/forms';
+    import { fade, slide } from 'svelte/transition';
 
-    /** * @type {import('./$types').PageData}
-     * This prop receives the challenges array fetched from +page.server.js.
-     */
-    export let data;
+    export let data; 
+    export let form; 
 
-    // Destructures the 'challenges' array from the server-fetched data.
-    const { challenges: serverChallenges } = data;
-   
-    // State for client-side form data and validation checks
-    let challengeTitle = '';
-    let solutionText = '';
-    let responsibleStakeholder = '';
-    let implementationTimeline = '';
-    let supportingEvidence = '';
-    let optionalContact = '';
-    let declarationChecked = false;
-
-    // --- Hardcoded Stakeholder Options ---
-    const stakeholderOptions = [
-        "National & County Governments",
-        "Civil Society Organizations (CSOs) & NGOs",
-        "Academic & Research Institutions",
-        "Development Partners & Donors",
-        "Private Sector & Tech Ecosystem",
-        "Oversight & Accountability Bodies"
-    ];
-
-    // Reactive variables
-    $: isOtherSelected = responsibleStakeholder === 'Other';
-    $: isDetailedEnough = solutionText.length >= 50;
-
-    // Form submission status
-    let formMessage = { type: 'none', text: '' };
-
-    // --- SVELTE FORM ENHANCEMENT LOGIC ---
-    const handleSubmit = () => {
-        return async ({ update, result }) => {
-            formMessage = { type: 'none', text: '' };
-            await update();
-
-            if (result.type === 'success' && result.data?.success) {
-                formMessage = { type: 'success', text: result.data.message || 'Solution submitted successfully!' };
-                // Reset form
-                challengeTitle = ''; solutionText = ''; responsibleStakeholder = '';
-                implementationTimeline = ''; supportingEvidence = ''; optionalContact = '';
-                declarationChecked = false;
-            } else if (result.type === 'failure' && result.data) {
-                formMessage = { type: 'error', text: result.data.message || 'Submission failed.' };
-            } else if (result.type === 'error') {
-                 formMessage = { type: 'error', text: 'An unexpected server error occurred.' };
-            }
-        };
+    const challengeMetadata = {
+        "youth access to capital": {
+            ref: "PL-ECO-001",
+            sector: "Economic Inclusion",
+            color: "#64748b", // Muted for 'Closed' look
+            icon: "🔒",
+            prompt: "Restructuring credit guarantee schemes (Phase 1 Complete).",
+            stakeholders: "Partnership Pending",
+            status: "Closed",
+            currentStep: 4, 
+            stats: { contributors: 8, ideas: 56 }
+        },
+        "youth-led mental health solutions": {
+            ref: "PL-HEA-002",
+            sector: "Public Health",
+            color: "#6366f1", 
+            icon: "🧠", // Mental health icon
+            prompt: "Framework for ward-level funding utilizing 0.05% of county budgets.",
+            stakeholders: "Partnership Pending",
+            status: "Open for Proposals",
+            currentStep: 1,
+            stats: { contributors: 8, ideas: 18 }
+        }
     };
 
-    // --- UPDATED Challenges for Q1 2026 (January - March) ---
-    let challengesOfTheMonthContext = [
-        {
-            id: 1,
-            title: "Q1 2026 Challenge I: Youth Access to Capital for Self-Employment",
-            excerpt: "How can Kenya bridge the KSh 500 Billion credit gap for youth in the informal, creative, and digital sectors?",
-            details: `
-                <div class="detailed-context">
-                    <h4>The Context (Jan - Mar 2026)</h4>
-                    <p>Kenya’s unemployment challenge is less about joblessness and more about job quality. With <strong>over 1 million youths</strong> entering the labour market annually, formal employment absorbs less than 15%.</p>
-                   
-                    <h4>Data & Statistics</h4>
-                    <ul>
-                        <li><strong>The Credit Gap:</strong> Unmet demand for MSME financing stands at roughly <strong>KSh 500 Billion</strong>.</li>
-                        <li><strong>Risk Aversion:</strong> Traditional banks require collateral which <strong>90% of youth</strong> do not possess.</li>
-                        <li><strong>The Hustler Sector:</strong> The informal sector represents <strong>83% of total employment</strong>.</li>
-                    </ul>
+    const stages = ["Ideation", "Technical Drafting", "Multi-Stakeholder Review", "Policy Synthesis", "Institutional Adoption"];
+    let selectedChallenge = null;
 
-                    <h4>The Challenge</h4>
-                    <p>What practical, implementable policy measures can Kenya adopt to improve access to capital? Solutions should:</p>
-                    <ul>
-                        <li>Address <strong>high interest rates</strong> and collateral barriers.</li>
-                        <li>Leverage <strong>blended finance</strong> (public + private capital).</li>
-                        <li>Strengthen <strong>transparency</strong> in programs like the Hustler Fund.</li>
-                    </ul>
-                </div>
-            `,
-            expanded: false,
-            pdfLink: null
-        },
-        {
-            id: 2,
-            title: "Q1 2026 Challenge II: Youth-Led Solutions For Mental Health",
-            excerpt: "With mental health funding at less than 0.05% of the health budget, how do we implement youth-friendly care?",
-            details: `
-                <div class="detailed-context">
-                    <h4>The Context (Jan - Mar 2026)</h4>
-                    <p>Despite the <strong>Mental Health (Amendment) Act 2022</strong>, services remain urban-centered and unaffordable for the average young Kenyan.</p>
-                   
-                    <h4>Data & Statistics</h4>
-                    <ul>
-                        <li><strong>Funding Gap:</strong> Kenya allocates <strong>less than 0.05%</strong> of the health budget to mental health.</li>
-                        <li><strong>Prevalence:</strong> Approximately <strong>1 in 4 Kenyans</strong> visiting routine facilities have a mental health condition.</li>
-                        <li><strong>Scarcity:</strong> Roughly <strong>one psychiatrist for every 500,000 Kenyans</strong>.</li>
-                    </ul>
+    $: activeChallenges = data.challenges.map(db => {
+        const cleanTitle = db.title.toLowerCase();
+        let meta = null;
 
-                    <h4>The Challenge</h4>
-                    <p>How can we improve access to youth-friendly services? Your solution should:</p>
-                    <ul>
-                        <li>Integrate mental health into <strong>primary healthcare</strong> at the ward level.</li>
-                        <li>Propose mechanisms to <strong>reduce stigma</strong>.</li>
-                        <li>Strengthen accountability for mental health funds.</li>
-                    </ul>
-                </div>
-            `,
-            expanded: false,
-            pdfLink: null
+        for (const [key, value] of Object.entries(challengeMetadata)) {
+            if (cleanTitle.includes(key)) {
+                meta = value;
+                break;
+            }
         }
-    ];
-
-    // Dynamic PDF Link Population
-    $: challengesOfTheMonthContext = challengesOfTheMonthContext.map(contextChallenge => {
-        const matchingServerChallenge = serverChallenges?.find(sc => sc.id === contextChallenge.id);
-        if (matchingServerChallenge && matchingServerChallenge.pdf_url) {
-            return { ...contextChallenge, pdfLink: matchingServerChallenge.pdf_url };
+        
+        if (meta) {
+            return { ...db, ...meta };
         }
-        return contextChallenge;
+
+        return {
+            ...db,
+            ref: "PL-GEN-000",
+            sector: "Inter-Sectoral",
+            color: "#0f172a", 
+            icon: "📁",
+            prompt: db.title,
+            stakeholders: "Partnership Pending",
+            status: "Active",
+            currentStep: 1,
+            stats: { contributors: 8, ideas: 0 }
+        };
     });
 
-    function toggleChallenge(id) {
-        challengesOfTheMonthContext = challengesOfTheMonthContext.map(c => {
-            if (c.id === id) return { ...c, expanded: !c.expanded };
-            return c;
-        });
+    function selectChallenge(challenge) {
+        if (challenge.status.toLowerCase() === 'closed') return;
+        selectedChallenge = challenge;
+        setTimeout(() => {
+            document.getElementById('submission-desk')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 50);
     }
 </script>
 
-<div class="container submit-page">
-    <header>
-        <h1>📝 Submit Your Actionable Solution</h1>
-        <p class="tagline">Policy Bridge KE: Bridging the gap between youth innovation and legislative action.</p>
+<div class="policy-lab">
+    <header class="hero">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <div class="badge">POLICY BRIDGE KE // CO-CREATION HUB</div>
+            <h1>Submit a Solution</h1>
+            <div class="hero-manifesto">
+                <p>
+                    Select an active policy challenge below to contribute your technical insights. 
+                    <strong>Every submission is vetted</strong> and synthesized into formal briefs for legislative advocacy. 
+                    Your expertise is the bridge between grassroots reality and national policy.
+                </p>
+                <p class="barrier-notice">
+                    Peer-reviewed. Data-driven. Direct impact.
+                </p>
+            </div>
+        </div>
     </header>
-   
-    <section class="challenges-of-month-section">
-        <h2>🔥 Quarterly Policy Challenges (Q1: Jan - Mar 2026)</h2>
-        <div class="challenge-cards-wrapper">
-            {#each challengesOfTheMonthContext as challenge (challenge.id)}
-                <div class="challenge-card" class:expanded={challenge.expanded}>
-                    <button class="card-header" on:click={() => toggleChallenge(challenge.id)}>
-                        <h3>{challenge.title}</h3>
-                        <span class="toggle-icon">{challenge.expanded ? '−' : '+'}</span>
-                    </button>
-                   
-                    <div class="card-content">
-                        <p><strong>Overview:</strong> {challenge.excerpt}</p>
-                        {#if challenge.expanded}
-                            <div class="details-content">
-                                {@html challenge.details}
-                            </div>
-                            {#if challenge.pdfLink}
-                                <a href={challenge.pdfLink} target="_blank" class="pdf-download-link">
-                                    ⬇️ Download Full Q1 Challenge PDF
-                                </a>
-                            {/if}
-                        {/if}
+
+    {#if form?.message}
+        <div class="alert" class:success={form.success} transition:fade>
+            {form.message}
+        </div>
+    {/if}
+
+    <div class="challenge-grid">
+        {#each activeChallenges as challenge}
+            <button 
+                class="challenge-card" 
+                class:active={selectedChallenge?.id === challenge.id}
+                class:closed={challenge.status.toLowerCase() === 'closed'}
+                style="--accent-color: {challenge.color}"
+                on:click={() => selectChallenge(challenge)}
+            >
+                <div class="card-inner">
+                    <div class="registry-header">
+                        <span class="mono-ref">{challenge.ref}</span>
+                        <span class="status-pill">{challenge.status}</span>
+                    </div>
+
+                    <div class="portfolio-label">
+                        <span class="icon-small">{challenge.icon}</span>
+                        <span>{challenge.sector} PORTFOLIO</span>
+                    </div>
+
+                    <h3>{challenge.title}</h3>
+                    <p class="brief-desc">{challenge.prompt}</p>
+
+                    <div class="data-table">
+                        <div class="data-row">
+                            <span class="label">CO-CREATION PARTNERS</span>
+                            <span class="value">{challenge.stakeholders}</span>
+                        </div>
+                        <div class="data-row">
+                            <span class="label">ENGAGEMENT STAGE</span>
+                            <span class="value">{stages[challenge.currentStep]}</span>
+                        </div>
+                    </div>
+
+                    <div class="card-footer">
+                        <div class="progress-track">
+                            <div class="progress-bar" style="width: {(challenge.currentStep / 4) * 100}%"></div>
+                        </div>
+                        <div class="action-link">
+                            {challenge.status.toLowerCase() === 'closed' ? 'ARCHIVED' : 'SUBMIT SOLUTION →'}
+                        </div>
                     </div>
                 </div>
-            {/each}
-        </div>
-    </section>
-
-    <div class="submission-content-wrapper">
-        <section class="criteria-section">
-            <h2>💡 Structure of a Strong Solution</h2>
-            <ul>
-                <li><strong>Actionable Proposal:</strong> The specific "how-to".</li>
-                <li><strong>Responsible Stakeholder:</strong> Who should implement this?</li>
-                <li><strong>Proposed Timeline:</strong> How long will it take?</li>
-                <li><strong>Supporting Evidence:</strong> Any data or local examples?</li>
-            </ul>
-        </section>
-       
-        {#if formMessage.type !== 'none'}
-            <div class="alert {formMessage.type}">
-                {formMessage.text}
-            </div>
-        {/if}
-
-        <form method="POST" action="?/submit" use:enhance={handleSubmit} class="single-page-form">
-            <label for="challenge_title">Select the Q1 Policy Challenge Area *</label>
-            <select id="challenge_title" name="challenge_title" bind:value={challengeTitle} required>
-                <option value="" disabled selected>-- Select a Policy Challenge --</option>
-                {#each serverChallenges as challenge (challenge.id)}
-                    <option value={challenge.title}>{challenge.title}</option>
-                {/each}
-            </select>
-           
-            <label for="solution_text">1. Clear, Actionable Proposal *</label>
-            <textarea id="solution_text" name="solution_text" rows="10" bind:value={solutionText} placeholder="Describe your solution in detail..." required></textarea>
-            <p class="char-count" class:valid={isDetailedEnough}>
-                Characters: {solutionText.length} (Minimum 50 required)
-            </p>
-
-            <label for="responsible_stakeholder">2. Responsible Stakeholder *</label>
-            <select id="responsible_stakeholder" name="responsible_stakeholder" bind:value={responsibleStakeholder} required>
-                <option value="" disabled selected>-- Select the Responsible Body --</option>
-                {#each stakeholderOptions as stakeholder}
-                    <option value={stakeholder}>{stakeholder}</option>
-                {/each}
-                <option value="Other">Other</option>
-            </select>
-           
-            {#if isOtherSelected}
-                <input type="text" name="other_stakeholder" placeholder="Specify stakeholder" required />
-            {/if}
-           
-            <label for="implementation_timeline">3. Proposed Implementation Timeline *</label>
-            <input type="text" name="implementation_timeline" bind:value={implementationTimeline} placeholder="e.g., 6 months, 2026 Q2..." required />
-
-            <label for="supporting_evidence">4. Supporting Evidence (Optional)</label>
-            <textarea name="supporting_evidence" rows="4" bind:value={supportingEvidence} placeholder="Cite data, similar projects, or local examples..."></textarea>
-
-            <label for="optional_contact">Contact Information (Optional)</label>
-            <input type="text" name="optional_contact" bind:value={optionalContact} placeholder="Email or Phone number" />
-
-            <div class="declaration">
-                <input
-                    type="checkbox"
-                    id="declaration"
-                    name="declaration"
-                    bind:checked={declarationChecked}
-                    required
-                />
-                <label for="declaration" class="inline-label">I agree to the <a href="/terms">terms of submission</a>.</label>
-            </div>
-           
-            <button
-                type="submit"
-                class="button-primary final-submit-btn"
-                disabled={!isDetailedEnough || !declarationChecked}
-            >
-                Submit Solution to Policy Team
             </button>
-        </form>
+        {/each}
     </div>
+
+    {#if selectedChallenge}
+        <section id="submission-desk" transition:slide={{ duration: 400 }}>
+            <div class="dossier-form">
+                <div class="form-header" style="background: {selectedChallenge.color}">
+                    <div class="header-content">
+                        <span class="kicker">TECHNICAL CO-CREATION PROTOCOL</span>
+                        <h2>{selectedChallenge.ref} // {selectedChallenge.title}</h2>
+                    </div>
+                    <span class="large-icon">{selectedChallenge.icon}</span>
+                </div>
+
+                <div class="form-content">
+                    <form method="POST" action="?/submit" use:enhance class="protocol-form">
+                        <input type="hidden" name="challenge_id" value={selectedChallenge.id} />
+                        <input type="hidden" name="challenge_title" value={selectedChallenge.title} />
+
+                        <div class="form-grid">
+                            <div class="input-group">
+                                <label for="stk">RESPONSIBLE STAKEHOLDER</label>
+                                <select id="stk" name="responsible_stakeholder" required>
+                                    <option value="" disabled selected>Select stakeholder category...</option>
+                                    <option value="National & County Governments">National & County Governments (Implementation & Budget)</option>
+                                    <option value="Civil Society Organizations (CSOs) & NGOs">Civil Society (CSOs) & NGOs (Advocacy & Accountability)</option>
+                                    <option value="Academic & Research Institutions">Academic & Research Institutions (Validation & Analysis)</option>
+                                    <option value="Development Partners & Donors">Development Partners & Donors (Funding & Sustainability)</option>
+                                    <option value="Private Sector & Tech Ecosystem">Private Sector & Tech Ecosystem (Digital & Innovation)</option>
+                                    <option value="Oversight & Accountability Bodies">Oversight & Accountability Bodies (Legitimacy & Follow-through)</option>
+                                </select>
+                            </div>
+                            <div class="input-group">
+                                <label for="tim">IMPLEMENTATION TIMELINE</label>
+                                <select id="tim" name="implementation_timeline" required>
+                                    <option value="Immediate">Immediate (0-6 Months)</option>
+                                    <option value="Short-term">Short-term (1 Year)</option>
+                                    <option value="Medium-term">Medium-term (2-5 Years)</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="sol">SOLUTION TEXT (METHODOLOGY & LOGIC)</label>
+                            <textarea id="sol" name="solution_text" rows="5" placeholder="Outline the fiscal, regulatory, or operational path forward..." required></textarea>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="evid">SUPPORTING EVIDENCE</label>
+                            <textarea id="evid" name="supporting_evidence" rows="2" placeholder="Link to research, existing Acts, or pilot evidence..."></textarea>
+                        </div>
+
+                        <div class="form-actions">
+                            <div class="checkbox-group">
+                                <label>
+                                    <input type="checkbox" name="declaration" required /> 
+                                    I certify that this submission is data-driven and adheres to Policy Bridge KE integrity standards.
+                                </label>
+                            </div>
+                            <button type="submit" class="submit-btn" style="background: {selectedChallenge.color}">
+                                SUBMIT SOLUTION
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+    {/if}
 </div>
 
 <style>
-    /* Styles preserved and brand primary green (#007a33) used consistently */
-    .alert { padding: 15px; margin-bottom: 20px; border-radius: 6px; font-weight: 600; text-align: center; }
-    .alert.success { background-color: rgba(0, 122, 51, 0.1); color: #007a33; border: 1px solid #007a33; }
-    .alert.error { background-color: rgba(176, 30, 38, 0.1); color: #b01e26; border: 1px solid #b01e26; }
-    .submit-page { padding: 40px 0; font-family: 'Source Sans 3', sans-serif; }
-    header { text-align: center; margin-bottom: 40px; }
-    h1 { color: #007a33; }
-    .submission-content-wrapper { max-width: 700px; margin: 0 auto; background: #fff; padding: 40px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
-   
-    .challenge-card { border: 2px solid #eee; border-radius: 8px; margin-bottom: 15px; overflow: hidden; }
-    .card-header { display: flex; justify-content: space-between; width: 100%; padding: 15px 20px; background: #f9f9f9; border: none; cursor: pointer; text-align: left; }
-    .challenge-card.expanded .card-header { background: #007a33; color: white; }
-    .card-content { padding: 0 20px; max-height: 0; overflow: hidden; transition: max-height 0.4s ease-out; }
-    .challenge-card.expanded .card-content { max-height: 2000px; padding: 15px 20px; }
-   
-    .detailed-context h4 { margin-top: 15px; color: #b01e26; border-bottom: 1px solid #eee; padding-bottom: 5px; }
-    .detailed-context ul { padding-left: 20px; margin-bottom: 15px; }
-    .detailed-context li { margin-bottom: 8px; font-size: 0.95rem; line-height: 1.5; }
-   
-    .criteria-section { background: #f4f4f4; padding: 20px; border-left: 5px solid #b01e26; margin-bottom: 30px; }
-    label { display: block; font-weight: 600; margin-top: 15px; }
-    select, textarea, input[type="text"] { width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 4px; margin-top: 5px; box-sizing: border-box; }
-    .final-submit-btn { width: 100%; padding: 15px; background: #007a33; color: white; border: none; cursor: pointer; border-radius: 6px; font-weight: bold; margin-top: 20px; }
-    .final-submit-btn:disabled { opacity: 0.5; cursor: not-allowed; }
-    .char-count { font-size: 0.85rem; color: #666; margin-top: 5px; }
-    .char-count.valid { color: #007a33; font-weight: bold; }
-    .declaration { margin-top: 20px; display: flex; align-items: center; gap: 10px; }
-    .inline-label { margin-top: 0; font-weight: normal; }
-    .pdf-download-link { display: inline-block; margin-top: 15px; color: #b01e26; font-weight: bold; text-decoration: none; border: 1px solid #b01e26; padding: 8px 15px; border-radius: 5px; }
+    @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500&family=Inter:wght@400;500;600;700;800&display=swap');
+
+    :global(body) { background: #f8fafc; color: #0f172a; margin: 0; font-family: 'Inter', sans-serif; }
+
+    .policy-lab { max-width: 1200px; margin: 0 auto; padding: 60px 24px 100px 24px; }
+
+    /* Hero Section with Banner Image */
+    .hero { 
+        position: relative; 
+        margin-bottom: 60px; 
+        padding: 80px 50px; 
+        background-color: #064e3b; 
+        border-radius: 16px; 
+        overflow: hidden; 
+        color: white;
+    }
+    
+    .hero-overlay {
+        position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+        background-image: url('https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&q=80&w=2000');
+        background-size: cover; background-position: center; opacity: 0.15;
+    }
+
+    .hero-content { position: relative; z-index: 1; }
+    .hero h1 { font-size: 3.5rem; font-weight: 800; letter-spacing: -0.04em; margin: 0 0 20px 0; }
+    .hero-manifesto p { font-size: 1.15rem; line-height: 1.6; max-width: 800px; opacity: 0.95; }
+    .barrier-notice { font-weight: 700; color: #10b981; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 0.05em; margin-top: 20px; }
+    .badge { font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; opacity: 0.7; margin-bottom: 12px; font-weight: 600; }
+
+    /* Grid & Cards */
+    .challenge-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(380px, 1fr)); gap: 32px; }
+
+    .challenge-card {
+        background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px;
+        text-align: left; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        cursor: pointer; padding: 0; position: relative;
+    }
+
+    .challenge-card:hover:not(.closed) { transform: translateY(-5px); border-color: var(--accent-color); box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1); }
+    .challenge-card.closed { opacity: 0.6; filter: grayscale(0.5); cursor: not-allowed; }
+    .challenge-card.active { border: 2px solid var(--accent-color); }
+
+    .card-inner { padding: 36px; display: flex; flex-direction: column; height: 100%; box-sizing: border-box;}
+
+    .registry-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
+    .mono-ref { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: #64748b; font-weight: 700; }
+    .status-pill { font-size: 0.7rem; font-weight: 800; padding: 4px 12px; border: 1px solid #e2e8f0; border-radius: 100px; text-transform: uppercase; color: #64748b; }
+
+    .portfolio-label { display: flex; align-items: center; gap: 10px; font-size: 0.7rem; font-weight: 800; color: #94a3b8; letter-spacing: 0.1em; margin-bottom: 16px; }
+    
+    h3 { margin: 0 0 16px 0; font-size: 1.6rem; font-weight: 800; color: #0f172a; line-height: 1.1; }
+    .brief-desc { font-size: 0.95rem; color: #475569; line-height: 1.5; margin-bottom: 32px; flex-grow: 1; }
+
+    .data-table { border-top: 1px solid #f1f5f9; padding-top: 20px; margin-bottom: 28px; }
+    .data-row { display: flex; justify-content: space-between; margin-bottom: 12px; }
+    .data-row .label { font-size: 0.65rem; font-weight: 700; color: #94a3b8; text-transform: uppercase; }
+    .data-row .value { font-size: 0.8rem; font-weight: 600; color: #1e293b; }
+
+    .progress-track { height: 4px; background: #f1f5f9; border-radius: 2px; margin-bottom: 20px; }
+    .progress-bar { height: 100%; background: var(--accent-color); border-radius: 2px; transition: width 0.8s ease; }
+    .action-link { font-size: 0.8rem; font-weight: 800; color: var(--accent-color); text-align: right; text-transform: uppercase; }
+
+    /* Dossier Form */
+    .dossier-form { background: white; border-radius: 16px; overflow: hidden; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15); margin-top: 80px; }
+    .form-header { padding: 50px; color: white; display: flex; justify-content: space-between; align-items: center; }
+    .header-content .kicker { font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; opacity: 0.8; }
+    .header-content h2 { font-size: 2.2rem; margin: 15px 0 0 0; font-weight: 800; }
+    .large-icon { font-size: 4rem; opacity: 0.3; }
+
+    .form-content { padding: 50px; }
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+    .input-group { margin-bottom: 35px; }
+    .input-group label { display: block; font-size: 0.75rem; font-weight: 800; margin-bottom: 12px; color: #64748b; }
+    
+    select, textarea {
+        width: 100%; padding: 18px; border: 1px solid #cbd5e1; border-radius: 8px; font-family: inherit; font-size: 1rem;
+    }
+    select:focus, textarea:focus { outline: none; border-color: #6366f1; }
+
+    .form-actions { display: flex; flex-direction: column; gap: 30px; border-top: 1px solid #f1f5f9; padding-top: 40px; }
+    .checkbox-group label { font-size: 0.95rem; font-weight: 500; display: flex; align-items: center; gap: 14px; cursor: pointer; color: #475569; }
+    
+    .submit-btn { border: none; padding: 22px; color: white; font-weight: 800; cursor: pointer; font-size: 1.1rem; border-radius: 8px; text-transform: uppercase; letter-spacing: 0.05em; }
+
+    .alert { padding: 24px; border-radius: 8px; border: 1px solid #fecaca; background: #fef2f2; color: #991b1b; font-weight: 600; margin-bottom: 40px; }
+    .alert.success { border-color: #bbf7d0; background: #f0fdf4; color: #166534; }
+
+    @media (max-width: 900px) {
+        .form-grid { grid-template-columns: 1fr; }
+        .hero h1 { font-size: 2.5rem; }
+    }
 </style>

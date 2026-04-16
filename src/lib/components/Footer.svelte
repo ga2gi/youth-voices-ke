@@ -37,7 +37,9 @@
             <ul>
                 <li><a href="/terms">Terms of Use</a></li>
                 <li><a href="/privacy">Privacy Policy</a></li>
-                <li class="contact-info">📧 info@policybridgeke.org</li>
+                <li class="contact-info">
+                    <a href="mailto:info@policybridgeke.org">📧 info@policybridgeke.org</a>
+                </li>
                 <li class="social-tag">📱 Follow us: @policybridgeke</li>
             </ul>
         </div>

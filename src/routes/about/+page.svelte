@@ -80,8 +80,6 @@
 
     <section class="policy-cycle-section">
         <h2>Our 6-Step Policy Cycle</h2>
-        
-        
 
         <p class="section-intro">
             Transparency is key. Here is how your solution moves from an idea to a trackable policy document.
@@ -136,34 +134,43 @@
 </div>
 
 <style>
-    /* Styles remain unchanged as per your request to keep the rest of the code the same */
     .about-page { padding-top: 40px; padding-bottom: 60px; }
     header { text-align: center; margin-bottom: 30px; }
     h1 { font-size: 3em; color: var(--color-text-dark); margin-bottom: 10px; font-weight: 800; }
-    .tagline { font-size: 1.2em; color: var(--color-primary-accent); }
+    .tagline { font-size: 1.2em; color: #064e3b; font-weight: 600; } /* Updated color */
     h2 { text-align: center; font-size: 2.2em; color: var(--color-text-dark); margin: 40px 0 20px 0; }
     .section-intro { text-align: center; max-width: 800px; margin: 0 auto 30px auto; color: var(--color-text-light); font-size: 1.1em; }
     .mission-section { background-color: var(--color-text-dark); color: var(--color-white); padding: 40px; border-radius: 10px; }
-    .mission-section h2 { color: var(--color-white); border-bottom: 2px solid var(--color-primary-accent); display: inline-block; padding-bottom: 5px; margin-bottom: 30px; text-align: center; width: 100%; }
+    .mission-section h2 { color: var(--color-white); border-bottom: 2px solid #064e3b; display: inline-block; padding-bottom: 5px; margin-bottom: 30px; text-align: center; width: 100%; } /* Updated color */
     .mission-content { display: flex; gap: 30px; }
     .mission-text { flex: 1; background-color: rgba(255, 255, 255, 0.05); padding: 20px; border-radius: 8px; }
-    .mission-text h3 { color: var(--color-primary-accent); font-size: 1.6em; margin-bottom: 10px; font-weight: 700; }
-    .narrative-section h2 { color: var(--color-primary-accent); }
+    .mission-text h3 { color: #064e3b; font-size: 1.6em; margin-bottom: 10px; font-weight: 700; } /* Updated color */
+    .narrative-section h2 { color: #064e3b; } /* Updated color */
     .policy-cycle-section h2 { color: var(--color-secondary-accent); }
     .cycle-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; margin-top: 30px; }
-    .cycle-step-card { background-color: var(--color-white); padding: 25px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05); border-top: 5px solid var(--color-primary-accent); text-align: center; }
+    .cycle-step-card { background-color: var(--color-white); padding: 25px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05); border-top: 5px solid #064e3b; text-align: center; } /* Updated color */
     .step-icon { font-size: 3em; margin-bottom: 15px; display: block; }
     .cycle-step-card h3 { font-size: 1.4em; color: var(--color-text-dark); margin-bottom: 10px; }
     .cycle-step-card p { color: var(--color-text-light); font-size: 0.95em; margin-bottom: 15px; }
+    
+    /* Link styling for steps */
+    .button-link { color: #064e3b; font-weight: 700; text-decoration: none; display: inline-block; margin-top: 10px; }
+    .button-link:hover { text-decoration: underline; }
+
     .stakeholders-section h2 { color: var(--color-secondary-accent); }
     .stakeholders-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-top: 30px; margin-bottom: 40px; }
-    .partner-card { display: flex; align-items: center; background-color: var(--color-white); padding: 20px; border-radius: 8px; border: 1px solid var(--color-border-light); box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05); border-left: 5px solid #3498DB; }
+    .partner-card { display: flex; align-items: center; background-color: var(--color-white); padding: 20px; border-radius: 8px; border: 1px solid var(--color-border-light); box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05); border-left: 5px solid #064e3b; } /* Updated color */
     .partner-details h4 { font-size: 1.1em; color: var(--color-text-dark); margin-bottom: 5px; }
     .partner-details .role { font-size: 0.9em; color: var(--color-text-dark); font-weight: 600; }
-    .cta-section { text-align: center; padding: 40px; background-color: #e8f5e9; border-radius: 10px; border: 1px solid var(--color-primary-accent); }
+    
+    .cta-section { text-align: center; padding: 40px; background-color: #f0fdf4; border-radius: 10px; border: 1px solid #064e3b; } /* Updated color */
     .cta-section h3 { font-size: 2em; color: var(--color-text-dark); margin-bottom: 15px; }
     .cta-section p { font-size: 1.1em; color: var(--color-text-dark); margin-bottom: 30px; }
-    .large-btn { padding: 15px 30px; font-size: 1.1em; font-weight: 700; text-transform: uppercase; border-radius: 6px; text-decoration: none; transition: transform 0.2s; }
+    
+    .button-primary { background-color: #064e3b; color: white; text-decoration: none; display: inline-block; } /* Applied color */
+    .button-primary:hover { background-color: #043d2e; }
+
+    .large-btn { padding: 15px 30px; font-size: 1.1em; font-weight: 700; text-transform: uppercase; border-radius: 6px; transition: background 0.2s; }
     .email-address { margin-top: 15px; font-size: 1em; color: var(--color-text-light); }
     @media (max-width: 768px) { .mission-content { flex-direction: column; } }
 </style>
