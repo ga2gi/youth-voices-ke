@@ -115,7 +115,7 @@
                                        class="un-btn-primary">
                                         DOWNLOAD FULL POLICY BRIEF (PDF)
                                     </a>
-                                    <p class="legal-footer">© 2026 PolicyBridge KE | Registered Company Limited by Guarantee</p>
+                                    <p class="legal-footer">© 2026 PolicyBridge KE | policy co-creation </p>
                                 </div>
                             </div>
                         {/if}
