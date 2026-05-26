@@ -1,4 +1,6 @@
 export async function GET() {
+    const base = "https://policybridgeke.org";
+
     const pages = [
         { path: '', priority: '1.0', changefreq: 'daily' },
         { path: 'submit', priority: '0.9', changefreq: 'weekly' },
@@ -11,14 +13,17 @@ export async function GET() {
         { path: 'terms', priority: '0.3', changefreq: 'monthly' }
     ];
 
-    // Important: No spaces/tabs before <?xml or inside the loop tags
-    const xml = `<?xml version="1.0" encoding="UTF-8" ?>
+    const lastmod = new Date().toISOString();
+
+    const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${pages.map(page => `  <url>
-    <loc>https://www.youthvoiceske.org/${page.path}</loc>
+${pages.map(page => `
+  <url>
+    <loc>${base}/${page.path ? page.path + '/' : ''}</loc>
+    <lastmod>${lastmod}</lastmod>
     <changefreq>${page.changefreq}</changefreq>
     <priority>${page.priority}</priority>
-  </url>`).join('\n')}
+  </url>`).join('')}
 </urlset>`.trim();
 
     return new Response(xml, {

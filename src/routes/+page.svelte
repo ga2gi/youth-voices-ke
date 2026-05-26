@@ -9,30 +9,61 @@
         communityMembers: "120+"
     };
 
-    // Using a high-res image of youth in a collaborative workshop setting
     const heroBg = "https://images.unsplash.com/photo-1529070538774-1843cb3265df?q=80&w=2000&auto=format&fit=crop";
+
+    export const prerender = true;
 </script>
 
+<svelte:head>
+    <title>Policy Bridge KE | Youth Civic Platform in Kenya for Public Policy & Governance Reform</title>
+
+    <meta name="description" content="Policy Bridge KE is a youth-led civic platform in Kenya transforming grassroots ideas into public policy, governance accountability, and legislative reform through citizen engagement." />
+
+    <meta name="keywords" content="youth civic platform Kenya, civic tech Kenya, public policy Kenya, governance Kenya, youth participation Kenya, legislative reform Kenya, Kenya youth policy, civic engagement Kenya" />
+
+    <meta name="author" content="Policy Bridge KE" />
+
+    <meta name="robots" content="index, follow" />
+
+    <meta property="og:title" content="Policy Bridge KE | Youth Civic Platform in Kenya" />
+    <meta property="og:description" content="Transforming grassroots innovation into public policy and governance reform in Kenya." />
+    <meta property="og:type" content="website" />
+</svelte:head>
+
 <div class="homepage-wrapper">
+
     <section 
         class="hero-section" 
         style="background-image: linear-gradient(rgba(5, 46, 22, 0.85), rgba(5, 46, 22, 0.85)), url({heroBg});"
     >
         <div class="container hero-content">
-            <span class="org-subtext">YOUTH POLICY INITIATIVE | KE</span>
-            <h1>PolicyBridge KE</h1>
+
+            <span class="org-subtext">YOUTH-LED CIVIC PLATFORM | KENYA</span>
+
+            <h1>Policy Bridge KE</h1>
+
             <div class="hero-line"></div>
+
             <p class="tagline">
-                Transforming grassroots innovation into actionable <strong>Public Policy Frameworks</strong>. We bridge the gap between youth expertise and legislative reform.
+                Policy Bridge KE is a youth-led civic platform in Kenya transforming grassroots ideas into actionable public policy and legislative reform.
+                <br><br>
+                We connect young people, communities, and decision-makers to shape evidence-based governance and national development.
             </p>
+
+            <!-- SEO CONTEXT SIGNAL (helps Google understand topic) -->
+            <p style="display:none;">
+                Youth civic platform Kenya focused on governance reform, public policy development, civic engagement, youth participation, and legislative reform in Kenya.
+            </p>
+
             <div class="cta-buttons">
                 <a href="/submit" class="btn btn-primary">Submit Proposal</a>
                 <a href="/briefs" class="btn btn-secondary">Policy Repository</a>
                 <a href="/get-involved" class="btn btn-outline">Get Involved</a>
             </div>
+
         </div>
     </section>
-    
+
     <section class="action-module container">
         <div class="section-header">
             <span class="section-kicker">METHODOLOGY</span>
@@ -47,17 +78,20 @@
             </div>
             
             <div class="pipeline-divider">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M5 12h14M12 5l7 7-7 7"/>
+                </svg>
             </div>
 
             <div class="pipeline-step">
-                <div class="step-num">02</div>
                 <h3>Synthesize</h3>
                 <p>Expert-led refinement into formal, evidence-based legislative briefs.</p>
             </div>
             
             <div class="pipeline-divider">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M5 12h14M12 5l7 7-7 7"/>
+                </svg>
             </div>
 
             <div class="pipeline-step highlight-step">
@@ -91,19 +125,23 @@
             <span class="section-kicker">TRANSPARENCY</span>
             <h2 class="section-title">Governance Metrics</h2>
         </div>
+
         <div class="metrics-grid">
             <div class="metric-card">
                 <span class="metric-value">{metrics.totalSubmissions}</span>
                 <span class="metric-label">Proposals Logged</span>
             </div>
+
             <div class="metric-card active-metric">
                 <span class="metric-value">{metrics.publishedBriefs}</span>
                 <span class="metric-label">Briefs Published</span>
             </div>
+
             <div class="metric-card">
                 <span class="metric-value">{metrics.ongoingResearch}</span>
                 <span class="metric-label">Research Labs</span>
             </div>
+
             <div class="metric-card">
                 <span class="metric-value">{metrics.communityMembers}</span>
                 <span class="metric-label">Youth Advocates</span>
@@ -118,6 +156,7 @@
             </div>
         </div>
     </section>
+
 </div>
 
 <style>
@@ -137,7 +176,6 @@
         padding: 0 24px;
     }
 
-    /* --- Hero Section --- */
     .hero-section {
         position: relative;
         background-color: #052e16;
@@ -183,7 +221,6 @@
         font-weight: 400;
     }
 
-    /* --- Buttons --- */
     .cta-buttons { display: flex; flex-direction: column; gap: 20px; align-items: center; justify-content: center; }
     @media (min-width: 768px) { .cta-buttons { flex-direction: row; } }
 
@@ -213,7 +250,6 @@
     .btn-outline-dark { border: 2px solid #0f172a; color: #0f172a; }
     .btn-outline-dark:hover { background: #0f172a; color: #ffffff; }
 
-    /* --- Pipeline --- */
     .section-header { text-align: center; margin-bottom: 70px; margin-top: 100px;}
     .section-kicker { color: #10b981; font-weight: 800; font-size: 0.75rem; letter-spacing: 3px; }
     .section-title { font-size: 2.5rem; font-weight: 800; margin-top: 12px; letter-spacing: -0.03em; }
@@ -242,7 +278,6 @@
         .pipeline-divider { display: block; }
     }
 
-    /* --- Featured Card --- */
     .featured-highlight { background: #f8fafc; padding: 120px 0; }
     .brief-card {
         background: white; padding: 60px; border-radius: 16px;
@@ -253,7 +288,6 @@
     .text-cta { color: #10b981; text-decoration: none; font-weight: 700; font-size: 0.9rem; margin-top: 32px; }
     .text-cta:hover { text-decoration: underline; }
 
-    /* --- Metrics --- */
     .metrics-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; margin-bottom: 80px; }
     @media (min-width: 768px) { .metrics-grid { grid-template-columns: repeat(4, 1fr); } }
 
