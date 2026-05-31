@@ -1,41 +1,13 @@
 <script>
-    import { enhance } from '$app/forms';
     import { fly } from 'svelte/transition';
 
     /** @type {{id: string, solution_text: string, challenge_title: string, vote_count: number}} */
     export let submission;
-    
-    /** @type {import('../../routes/vote/$types').ActionData} */
-    export let form;
 
     let expanded = false;
-    let isVoted = false;
-    let voteError = null;
-
-    $: isTarget = form && (form.voted_id === submission.id);
-    
-    $: {
-        if (isTarget) {
-            if (form.success) {
-                isVoted = true;
-                voteError = null;
-            } else if (form.error) {
-                voteError = form.error;
-            }
-        }
-    }
-
-    function handleVote({ formData }) {
-        voteError = null;
-        isVoted = false;
-        formData.append('submission_id', submission.id);
-        return async ({ update }) => {
-            await update({ invalidateAll: true });
-        };
-    }
 </script>
 
-<div class="card {isVoted ? 'voted' : ''}">
+<div class="card">
     <div 
         class="header" 
         role="button"
@@ -60,41 +32,15 @@
 
     <div class="footer">
         <div class="vote-info">
-            <span class="vote-count">{submission.vote_count}</span>
-            <span class="vote-label">Votes</span>
+            <span class="vote-count">{submission.vote_count || 0}</span>
+            <span class="vote-label">Votes received</span>
         </div>
         
-        <form 
-            method="POST" 
-            action="?/vote" 
-            use:enhance={handleVote}
-            class="vote-form"
-        >
-            <input type="hidden" name="submission_id" value={submission.id}>
-
-            {#if isVoted}
-                <button class="vote-button voted" disabled>
-                    Voted! 🎉
-                </button>
-            {:else}
-                <button class="vote-button" type="submit">
-                    Cast Your Vote
-                </button>
-            {/if}
-        </form>
+        <span class="voting-closed">Voting Closed</span>
     </div>
-    
-    {#if voteError && isTarget}
-        <p class="error-message" transition:fly={{ y: -5, duration: 200 }}>{voteError}</p>
-    {/if}
 </div>
 
 <style>
-    /* Local variable definition for the success state, ensuring it does not conflict globally */
-    .card {
-        --color-voted-success: #27ae60; /* Use a distinct green for success feedback */
-    }
-
     .card {
         background-color: var(--color-white);
         border: 1px solid var(--color-border-light);
@@ -103,11 +49,6 @@
         display: flex;
         flex-direction: column;
         transition: all 0.2s ease-in-out;
-    }
-    
-    .card.voted {
-        border-color: var(--color-voted-success);
-        box-shadow: 0 0 15px rgba(39, 174, 96, 0.2);
     }
 
     .header {
@@ -121,14 +62,13 @@
     }
 
     .header:hover {
-        /* Use a slight variation of the background for hover feedback */
-        background-color: var(--color-background-light); 
+        background-color: var(--color-background-light);
     }
 
     .challenge-title {
         font-size: 1.1em;
         font-weight: 600;
-        color: var(--color-primary-accent); /* USES YOUR KENYAN GREEN */
+        color: var(--color-primary-accent);
         margin-bottom: 5px;
         flex: 1 1 100%;
     }
@@ -155,8 +95,7 @@
         font-size: 1em;
         line-height: 1.6;
         color: var(--color-text-dark);
-        /* Uses primary accent for the border to match your brand */
-        border-left: 3px solid var(--color-primary-accent); 
+        border-left: 3px solid var(--color-primary-accent);
         padding-left: 15px;
         margin-top: 15px;
     }
@@ -180,7 +119,7 @@
     .vote-count {
         font-size: 1.8em;
         font-weight: 700;
-        color: var(--color-voted-success);
+        color: #64748b;
     }
     
     .vote-label {
@@ -188,35 +127,15 @@
         color: var(--color-text-light);
     }
 
-    .vote-button {
-        background-color: var(--color-primary-accent); /* USES YOUR KENYAN GREEN */
-        color: var(--color-white);
-        padding: 10px 20px;
-        border: none;
-        border-radius: 6px;
-        font-weight: 600;
-        cursor: pointer;
-        transition: background-color 0.2s;
-    }
-
-    .vote-button:hover:not(:disabled) {
-        /* Uses the dark green hex from your app.css hover state */
-        background-color: #005625; 
-    }
-    
-    .vote-button.voted {
-        background-color: var(--color-voted-success);
-        cursor: default;
-        box-shadow: 0 0 10px rgba(39, 174, 96, 0.5);
-    }
-
-    .error-message {
-        background-color: #fcebeb;
-        color: #e74c3c;
-        padding: 10px 20px;
-        border-radius: 0 0 12px 12px;
-        margin-top: -1px;
-        font-size: 0.9em;
-        text-align: center;
+    .voting-closed {
+        font-size: 0.78rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: #94a3b8;
+        background: #f1f5f9;
+        padding: 8px 16px;
+        border-radius: 99px;
+        border: 1px solid #e2e8f0;
     }
 </style>
