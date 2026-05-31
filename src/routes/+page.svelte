@@ -128,11 +128,6 @@
                 <div class="brief-body">
                     <h3>Unlocking Kenya's Youth Access to Capital</h3>
                     <p>A youth-developed strategic framework addressing the KES 500B financing gap via a Five-Pillar reform strategy. Adopted by the National Treasury task force for the 2025 MSME Credit Guarantee Framework review.</p>
-                    <div class="brief-meta">
-                        <span class="brief-stat">12 youth contributors</span>
-                        <span class="brief-stat">56 ideas synthesized</span>
-                        <span class="brief-stat">3 recommendations adopted</span>
-                    </div>
                     <div class="brief-actions">
                         <a href="/briefs" class="text-cta">View Policy Brief <span>→</span></a>
                     </div>
@@ -480,21 +475,6 @@
         line-height: 1.7;
         max-width: 680px;
     }
-    .brief-meta {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 20px;
-        margin-top: 24px;
-    }
-    .brief-stat {
-        font-size: 0.78rem;
-        font-weight: 600;
-        color: #64748b;
-        background: #f8fafc;
-        padding: 6px 14px;
-        border-radius: 99px;
-        border: 1px solid #e2e8f0;
-    }
     .text-cta { 
         display: inline-block;
         color: #10b981; 
@@ -603,8 +583,6 @@
         .manifesto-body { font-size: 0.95rem; }
         .brief-card { padding: 32px 24px; }
         .brief-card h3 { font-size: 1.5rem; }
-        .brief-meta { gap: 10px; }
-        .brief-stat { font-size: 0.7rem; padding: 4px 10px; }
         .metric-value { font-size: 2.2rem; }
         .metric-card { padding: 36px 16px; }
         .section-title { font-size: 1.8rem; }

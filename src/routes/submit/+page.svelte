@@ -16,7 +16,6 @@
             stakeholders: "Partnership Pending",
             status: "Open for Ideas",
             currentStep: 1,
-            stats: { contributors: 8, ideas: 42 },
             category: "active",
             context: "Gender-based violence and femicide remain serious public safety and human rights challenges in Kenya, with most cases linked to intimate or domestic relationships. The issue involves legal, social, institutional, and economic dimensions.",
             keyData: [
@@ -45,7 +44,6 @@
             stakeholders: "Partnership Pending",
             status: "Open for Ideas",
             currentStep: 1,
-            stats: { contributors: 8, ideas: 35 },
             category: "active",
             context: "Kenya's Constitution guarantees public participation in governance, but implementation varies in quality, accessibility, and influence on decision-making.",
             keyData: [
@@ -73,7 +71,6 @@
             stakeholders: "Partnership Pending",
             status: "Open for Ideas",
             currentStep: 1,
-            stats: { contributors: 8, ideas: 29 },
             category: "active",
             context: "Kenya's creative sector is rapidly growing but remains largely informal, underfunded, and under-protected despite its economic potential.",
             keyData: [
@@ -102,7 +99,6 @@
             stakeholders: "Partnership Pending",
             status: "Open for Ideas",
             currentStep: 1,
-            stats: { contributors: 8, ideas: 31 },
             category: "active",
             context: "Environmental management systems face increasing pressure due to urbanization, waste generation, and uneven infrastructure development.",
             keyData: [
@@ -130,7 +126,6 @@
             stakeholders: "Partnership Pending",
             status: "Open for Ideas",
             currentStep: 1,
-            stats: { contributors: 8, ideas: 27 },
             category: "active",
             context: "Kenya is highly vulnerable to climate variability, with recurring droughts affecting agriculture, water access, and livelihoods, especially in ASAL regions.",
             keyData: [
@@ -158,7 +153,6 @@
             stakeholders: "Partnership Pending",
             status: "Open for Proposals",
             currentStep: 1,
-            stats: { contributors: 8, ideas: 18 },
             category: "active",
             context: "Mental health challenges among Kenya's youth have reached crisis levels, with limited access to services, persistent stigma, and inadequate funding. The burden falls disproportionately on young people in underserved communities, where mental health infrastructure is virtually non-existent.",
             keyData: [
@@ -190,7 +184,6 @@
             stakeholders: "National Treasury & CBK",
             status: "Closed",
             currentStep: 4,
-            stats: { contributors: 12, ideas: 56 },
             category: "past",
             context: "Young Kenyan entrepreneurs consistently cite access to affordable capital as their number one barrier to business growth. Traditional lending requirements — collateral, credit history, formal registration — systematically exclude youth from the financial system. Credit guarantee schemes offer a policy lever to bridge this gap.",
             keyData: [
@@ -209,8 +202,7 @@
             ],
             sdg: "SDG 1: No Poverty | SDG 8: Decent Work & Economic Growth | SDG 9: Industry, Innovation & Infrastructure",
             vision2030: "Economic Pillar: MSME development and youth enterprise | Social Pillar: Youth employment and economic empowerment",
-            highlights: "Policy brief submitted to multiple stakeholders , live accountability tracing on stakeholder recognition page",
-            
+            highlights: "Policy brief submitted to multiple stakeholders, live accountability tracking on stakeholder recognition page."
         }
     };
 
@@ -243,7 +235,6 @@
             stakeholders: "Partnership Pending",
             status: "Open for Ideas",
             currentStep: 1,
-            stats: { contributors: 8, ideas: 0 },
             category: "active",
             cleanTitle
         };
@@ -436,13 +427,6 @@
                                 <div class="outcome-box">
                                     <span class="outcome-label">POLICY OUTCOME</span>
                                     <p class="outcome-text">{challenge.highlights}</p>
-                                    {#if challenge.outcomes}
-                                        <ul class="outcome-list">
-                                            {#each challenge.outcomes as outcome}
-                                                <li>{outcome}</li>
-                                            {/each}
-                                        </ul>
-                                    {/if}
                                 </div>
                             {/if}
 
@@ -458,12 +442,12 @@
                                     </div>
                                 {/if}
                                 <div class="data-row">
-                                    <span class="label">CONTRIBUTORS</span>
-                                    <span class="value">{challenge.stats.contributors} Contributors</span>
+                                    <span class="label">STAKEHOLDERS</span>
+                                    <span class="value">{challenge.stakeholders}</span>
                                 </div>
                                 <div class="data-row">
-                                    <span class="label">IDEAS SUBMITTED</span>
-                                    <span class="value">{challenge.stats.ideas} Submissions</span>
+                                    <span class="label">FINAL PHASE</span>
+                                    <span class="value">{stages[challenge.currentStep]}</span>
                                 </div>
                             </div>
 
@@ -971,20 +955,8 @@
         font-size: 0.83rem;
         color: #14532d;
         line-height: 1.5;
-        margin: 0 0 8px 0;
+        margin: 0;
         font-weight: 500;
-    }
-
-    .outcome-list {
-        margin: 8px 0 0 0;
-        padding-left: 18px;
-        font-size: 0.78rem;
-        color: #166534;
-        line-height: 1.5;
-    }
-
-    .outcome-list li {
-        margin-bottom: 4px;
     }
 
     /* Matrix Internal Grid Data Layout */
