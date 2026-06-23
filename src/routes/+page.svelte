@@ -127,7 +127,7 @@
                 <div class="brief-label">LATEST POLICY PUBLICATION</div>
                 <div class="brief-body">
                     <h3>Unlocking Kenya's Youth Access to Capital</h3>
-                    <p>A youth-developed strategic framework addressing the KES 500B financing gap via a Five-Pillar reform strategy. Adopted by the National Treasury task force for the 2025 MSME Credit Guarantee Framework review.</p>
+                    <p>A youth-developed strategic framework addressing the KES 500B financing gap via a Five-Pillar reform strategy.</p>
                     <div class="brief-actions">
                         <a href="/briefs" class="text-cta">View Policy Brief <span>→</span></a>
                     </div>
