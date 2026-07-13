@@ -13,7 +13,7 @@
             children: [
                 { href: '/briefs', label: 'Policy Briefs' },
                 { href: '/articles', label: 'Articles' },
-                { href: '/research', label: 'Research Papers' },
+                { href: '/position', label: 'Position Papers' },
                 { href: '/reports', label: 'Annual Reports' },
             ]
         },
