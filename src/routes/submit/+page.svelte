@@ -1,208 +1,153 @@
 <script lang="ts">
     import { enhance } from '$app/forms';
-    import { fade, slide } from 'svelte/transition';
+    import { fade } from 'svelte/transition';
 
     export let data; 
     export let form; 
 
     const challengeMetadata = {
-        // ==================== ACTIVE CHALLENGES ====================
         "gender-based violence & femicide prevention in kenya": {
             ref: "PL-GEN-001",
             sector: "Gender & Public Safety",
             color: "#7c3aed",
             icon: "⚖️",
-            prompt: "Despite legal frameworks, gaps persist in prevention, reporting systems, institutional coordination, survivor protection, and accountability mechanisms.",
-            stakeholders: "Partnership Pending",
-            status: "Open for Ideas",
-            currentStep: 1,
-            category: "active",
-            context: "Gender-based violence and femicide remain serious public safety and human rights challenges in Kenya, with most cases linked to intimate or domestic relationships. The issue involves legal, social, institutional, and economic dimensions.",
+            prompt: "Despite legal frameworks, gaps persist in prevention, reporting, and accountability mechanisms.",
+            context: "Gender-based violence and femicide remain serious challenges in Kenya, involving legal, social, and institutional dimensions.",
             keyData: [
-                "~13 women killed weekly in Kenya (recent estimates)",
-                "Hundreds of femicide cases reported annually",
-                "Majority of cases involve known perpetrators (intimate partners/family)",
-                "Underreporting remains high due to stigma and weak trust in systems"
+                "~13 women killed weekly (recent estimates)",
+                "Majority of cases involve known perpetrators",
+                "Underreporting remains high due to stigma"
             ],
             guidingQuestions: [
-                "What gaps exist in prevention systems before violence escalates?",
-                "How can reporting and response systems be improved?",
-                "What institutional weaknesses affect accountability?",
-                "What community-level prevention mechanisms are missing?",
-                "What policy reforms are needed?"
+                "What gaps exist in prevention systems?",
+                "How can reporting and response be improved?",
+                "What institutional weaknesses affect accountability?"
             ],
-            sdg: "SDG 5: Gender Equality | SDG 16: Peace, Justice & Strong Institutions",
-            vision2030: "Social Pillar: Gender equality and social protection | Governance Pillar: Rule of law and justice systems",
-            submissionGuide: "When submitting your solution, consider addressing: (1) Specific prevention gaps you've observed or experienced, (2) Concrete improvements to reporting mechanisms, (3) How different institutions (police, health, social services) could coordinate better. Evidence can include personal experiences, community observations, research citations, or links to relevant reports."
+            sdg: "SDG 5: Gender Equality | SDG 16: Peace & Justice",
+            vision2030: "Social Pillar: Gender equality | Governance Pillar: Rule of law",
+            submissionGuide: "Address: (1) Specific prevention gaps, (2) Concrete improvements to reporting, (3) How institutions could coordinate better. Evidence can include personal experiences, research, or relevant reports."
         },
         "public participation & civic awareness in kenya": {
             ref: "PL-GOV-002",
             sector: "Governance & Civic Engagement",
             color: "#0891b2",
             icon: "🗳️",
-            prompt: "Challenges include accessibility, information gaps, weak feedback systems, low trust, and limited youth inclusion.",
-            stakeholders: "Partnership Pending",
-            status: "Open for Ideas",
-            currentStep: 1,
-            category: "active",
-            context: "Kenya's Constitution guarantees public participation in governance, but implementation varies in quality, accessibility, and influence on decision-making.",
+            prompt: "Challenges include accessibility, information gaps, weak feedback systems, and limited youth inclusion.",
+            context: "Kenya's Constitution guarantees public participation, but implementation varies in quality and influence on decision-making.",
             keyData: [
                 "Youth form majority of population",
-                "Participation processes often show low awareness and weak feedback loops",
-                "Limited visibility of how citizen input influences final decisions"
+                "Participation processes show low awareness",
+                "Limited visibility of how input influences decisions"
             ],
             guidingQuestions: [
                 "What barriers prevent meaningful participation?",
                 "How can civic awareness be improved?",
-                "How can feedback loops be strengthened?",
-                "What would make participation more inclusive?",
-                "How can trust in governance be improved?"
+                "How can feedback loops be strengthened?"
             ],
-            sdg: "SDG 16: Peace, Justice & Strong Institutions | SDG 4: Quality Education (civic literacy)",
+            sdg: "SDG 16: Peace & Justice | SDG 4: Quality Education",
             vision2030: "Governance Pillar: Citizen engagement and accountability",
-            submissionGuide: "Focus your solution on practical mechanisms: (1) How would you make participation easier for ordinary citizens?, (2) What digital or offline tools could improve feedback loops?, (3) How should government demonstrate that citizen input was actually used? Examples of successful participation models are valuable evidence."
+            submissionGuide: "Focus on: (1) Making participation easier for citizens, (2) Digital or offline tools for feedback, (3) How government should demonstrate input was used."
         },
         "the creative economy & youth opportunities in kenya": {
             ref: "PL-ECO-003",
             sector: "Creative Economy & Youth Empowerment",
             color: "#f59e0b",
             icon: "🎨",
-            prompt: "Challenges include limited funding, weak IP protection, lack of infrastructure, poor market access, and weak institutional support.",
-            stakeholders: "Partnership Pending",
-            status: "Open for Ideas",
-            currentStep: 1,
-            category: "active",
-            context: "Kenya's creative sector is rapidly growing but remains largely informal, underfunded, and under-protected despite its economic potential.",
+            prompt: "Challenges include limited funding, weak IP protection, poor market access, and weak institutional support.",
+            context: "Kenya's creative sector is rapidly growing but remains largely informal and under-protected.",
             keyData: [
-                "Creative economy contributes ~5% of GDP (varies by estimates)",
+                "Creative economy contributes ~5% of GDP",
                 "Majority of creatives operate informally",
-                "Digital platforms are key income sources",
-                "Weak intellectual property enforcement affects earnings"
+                "Weak IP enforcement affects earnings"
             ],
             guidingQuestions: [
                 "What barriers affect creative livelihoods?",
-                "How can access to markets be improved?",
-                "How can creative work be protected and valued?",
-                "What systems are missing in the sector?",
-                "What policy priorities should be addressed?"
+                "How can market access be improved?",
+                "How can creative work be protected?"
             ],
-            sdg: "SDG 8: Decent Work & Economic Growth | SDG 9: Industry, Innovation & Infrastructure",
-            vision2030: "Economic Pillar: Creative industries & entrepreneurship | Social Pillar: Youth employment",
-            submissionGuide: "Consider solutions around: (1) How to formalize creative work without burdening artists, (2) Practical IP protection mechanisms that work locally, (3) Market access platforms or models that have worked elsewhere. Evidence can include examples from other countries, personal experience as a creative, or economic data."
+            sdg: "SDG 8: Decent Work | SDG 9: Industry & Innovation",
+            vision2030: "Economic Pillar: Creative industries | Social Pillar: Youth employment",
+            submissionGuide: "Consider: (1) Formalizing creative work without burdening artists, (2) Practical IP protection, (3) Market access platforms that work locally."
         },
         "environmental sustainability & waste management in kenya": {
             ref: "PL-ENV-004",
             sector: "Environment & Urban Sustainability",
             color: "#059669",
             icon: "🌱",
-            prompt: "Key issues include weak enforcement, inadequate infrastructure, low recycling adoption, and limited public participation.",
-            stakeholders: "Partnership Pending",
-            status: "Open for Ideas",
-            currentStep: 1,
-            category: "active",
-            context: "Environmental management systems face increasing pressure due to urbanization, waste generation, and uneven infrastructure development.",
+            prompt: "Key issues include weak enforcement, inadequate infrastructure, and low recycling adoption.",
+            context: "Environmental systems face pressure due to urbanization, waste generation, and uneven infrastructure.",
             keyData: [
-                "Waste management systems vary across counties",
+                "Waste management varies across counties",
                 "Recycling systems remain limited",
-                "Urban areas face pollution and disposal challenges"
+                "Urban areas face pollution challenges"
             ],
             guidingQuestions: [
-                "What barriers exist in waste management systems?",
-                "How can recycling and sustainability be improved?",
-                "How can communities participate more effectively?",
-                "What policy gaps exist in environmental management?",
-                "How can urban cleanliness be improved?"
+                "What barriers exist in waste management?",
+                "How can recycling be improved?",
+                "How can communities participate effectively?"
             ],
-            sdg: "SDG 11: Sustainable Cities & Communities | SDG 12: Responsible Consumption & Production | SDG 13: Climate Action",
-            vision2030: "Environmental Pillar: Clean, secure, and sustainable environment",
-            submissionGuide: "Think about: (1) Waste separation at source — how to make it work in Kenyan households?, (2) Incentive models for recycling that have succeeded elsewhere, (3) How county governments could collaborate with informal waste collectors. Photos of local waste challenges, community cleanup case studies, or data from your area are great evidence."
+            sdg: "SDG 11: Sustainable Cities | SDG 12: Responsible Consumption",
+            vision2030: "Environmental Pillar: Clean and sustainable environment",
+            submissionGuide: "Think about: (1) Waste separation at source, (2) Incentive models for recycling, (3) County collaboration with informal collectors."
         },
         "drought, food security & community resilience in kenya": {
             ref: "PL-CLI-005",
             sector: "Climate Resilience & Food Systems",
             color: "#dc2626",
             icon: "🌾",
-            prompt: "Challenges include weak resilience systems, reliance on emergency response, water insecurity, and limited climate adaptation infrastructure.",
-            stakeholders: "Partnership Pending",
-            status: "Open for Ideas",
-            currentStep: 1,
-            category: "active",
-            context: "Kenya is highly vulnerable to climate variability, with recurring droughts affecting agriculture, water access, and livelihoods, especially in ASAL regions.",
+            prompt: "Challenges include weak resilience systems, water insecurity, and limited climate adaptation infrastructure.",
+            context: "Kenya is highly vulnerable to climate variability, with recurring droughts affecting agriculture and livelihoods.",
             keyData: [
                 "Millions affected by periodic food insecurity",
                 "High food poverty levels in ASAL counties",
-                "Climate shocks disrupt agriculture and livestock systems"
+                "Climate shocks disrupt agriculture"
             ],
             guidingQuestions: [
                 "What drives food insecurity in different regions?",
                 "How can resilience systems be strengthened?",
-                "What barriers exist in water and food systems?",
-                "How can communities better prepare for climate shocks?",
-                "What structural gaps exist in current policy approaches?"
+                "What structural gaps exist in current policy?"
             ],
-            sdg: "SDG 2: Zero Hunger | SDG 13: Climate Action | SDG 6: Clean Water & Sanitation",
-            vision2030: "Environmental Pillar: Climate resilience & food security | Economic Pillar: Agricultural transformation",
-            submissionGuide: "Address: (1) Water harvesting or storage solutions appropriate for ASAL regions, (2) How to shift from emergency food aid to long-term resilience building, (3) Drought-resistant agricultural practices or alternative livelihoods. Traditional knowledge, local innovations, or experiences from past droughts are strong evidence."
+            sdg: "SDG 2: Zero Hunger | SDG 13: Climate Action",
+            vision2030: "Environmental Pillar: Climate resilience | Economic Pillar: Agricultural transformation",
+            submissionGuide: "Address: (1) Water harvesting for ASAL regions, (2) Long-term resilience vs emergency aid, (3) Drought-resistant practices or alternative livelihoods."
         },
         "youth-led mental health solutions": {
             ref: "PL-HEA-002",
             sector: "Public Health & Wellbeing",
             color: "#6366f1",
             icon: "🧠",
-            prompt: "Framework for ward-level funding utilizing 0.05% of county budgets to address the growing mental health crisis among young Kenyans.",
-            stakeholders: "Partnership Pending",
-            status: "Open for Proposals",
-            currentStep: 1,
-            category: "active",
-            context: "Mental health challenges among Kenya's youth have reached crisis levels, with limited access to services, persistent stigma, and inadequate funding. The burden falls disproportionately on young people in underserved communities, where mental health infrastructure is virtually non-existent.",
+            prompt: "Framework for ward-level funding to address the growing mental health crisis among young Kenyans.",
+            context: "Mental health challenges among youth have reached crisis levels, with limited access, persistent stigma, and inadequate funding.",
             keyData: [
-                "Kenya has ~100 psychiatrists for 50+ million population",
-                "Mental health receives <0.5% of national health budget",
-                "Youth (15-24) show highest rates of depression and anxiety",
-                "75% of Kenyans with mental health conditions lack access to care",
-                "Suicide is the 4th leading cause of death among 15-29 year olds globally"
+                "~100 psychiatrists for 50+ million population",
+                "Mental health receives <0.5% of health budget",
+                "75% of those with conditions lack access to care"
             ],
             guidingQuestions: [
-                "How can ward-level mental health funding be structured for maximum impact?",
-                "What community-based interventions are most effective for youth mental health?",
-                "How can stigma be reduced through policy and community action?",
-                "What role can schools and universities play in early intervention?",
-                "How can peer support networks be formally integrated into the health system?"
+                "How can ward-level funding be structured for impact?",
+                "What community-based interventions are effective?",
+                "How can peer support be integrated into health systems?"
             ],
-            sdg: "SDG 3: Good Health & Wellbeing | SDG 10: Reduced Inequalities",
-            vision2030: "Social Pillar: Health access and quality | Governance Pillar: Decentralized service delivery",
-            submissionGuide: "Focus on: (1) Practical mechanisms for disbursing and accounting for ward-level mental health funds, (2) Integration of mental health into primary care and school systems, (3) Community-based models that reduce stigma and improve access. Evidence from pilot programs, community health models in other countries, or personal experience with mental health systems is valuable."
+            sdg: "SDG 3: Good Health | SDG 10: Reduced Inequalities",
+            vision2030: "Social Pillar: Health access | Governance Pillar: Decentralized services",
+            submissionGuide: "Focus on: (1) Mechanisms for ward-level funds, (2) Mental health in primary care and schools, (3) Community models that reduce stigma."
         },
-        
-        // ==================== PAST / CLOSED CHALLENGES ====================
         "youth access to capital": {
             ref: "PL-ECO-001",
             sector: "Economic Inclusion & Finance",
             color: "#78716c",
             icon: "🏦",
-            prompt: "Restructuring credit guarantee schemes to unlock capital for youth-led enterprises — Phase 1 Complete, policy recommendations submitted.",
-            stakeholders: "National Treasury & CBK",
-            status: "Closed",
-            currentStep: 4,
-            category: "past",
-            context: "Young Kenyan entrepreneurs consistently cite access to affordable capital as their number one barrier to business growth. Traditional lending requirements — collateral, credit history, formal registration — systematically exclude youth from the financial system. Credit guarantee schemes offer a policy lever to bridge this gap.",
+            prompt: "Restructuring credit guarantee schemes to unlock capital for youth-led enterprises.",
+            context: "Young entrepreneurs cite access to affordable capital as their number one barrier to business growth.",
             keyData: [
-                "Youth unemployment rate estimated at 35-40%",
-                "~80% of youth-led enterprises operate informally",
-                "Only 15% of young entrepreneurs access formal credit",
-                "Existing credit guarantee schemes reach <5% of target MSMEs",
-                "Women youth entrepreneurs face double barriers to capital access"
+                "Youth unemployment ~35-40%",
+                "~80% of youth enterprises operate informally",
+                "Only 15% of young entrepreneurs access formal credit"
             ],
-            guidingQuestions: [
-                "How should credit guarantee schemes be restructured to serve youth better?",
-                "What role can mobile lending and fintech play in youth capital access?",
-                "How can informal businesses be graduated into the formal credit system?",
-                "What alternative collateral models could work for young entrepreneurs?",
-                "How should government de-risk lending to youth-led enterprises?"
-            ],
-            sdg: "SDG 1: No Poverty | SDG 8: Decent Work & Economic Growth | SDG 9: Industry, Innovation & Infrastructure",
-            vision2030: "Economic Pillar: MSME development and youth enterprise | Social Pillar: Youth employment and economic empowerment",
-            highlights: "Policy brief submitted to multiple stakeholders, live accountability tracking on stakeholder recognition page."
+            sdg: "SDG 1: No Poverty | SDG 8: Decent Work",
+            vision2030: "Economic Pillar: MSME development | Social Pillar: Youth employment",
+            highlights: "Policy brief submitted to multiple stakeholders. Live accountability tracking available.",
+            status: "Closed"
         }
     };
 
@@ -221,271 +166,142 @@
             }
         }
         
-        if (meta) {
-            return { ...db, ...meta, cleanTitle };
-        }
-
-        return {
-            ...db,
-            ref: "PL-GEN-000",
-            sector: "Inter-Sectoral",
-            color: "#0f172a",
-            icon: "📁",
-            prompt: db.title,
-            stakeholders: "Partnership Pending",
-            status: "Open for Ideas",
-            currentStep: 1,
-            category: "active",
-            cleanTitle
-        };
+        return meta 
+            ? { ...db, ...meta, cleanTitle }
+            : {
+                ...db,
+                ref: "PL-GEN-000",
+                sector: "Inter-Sectoral",
+                color: "#0f172a",
+                icon: "📁",
+                prompt: db.title,
+                status: "Open for Ideas",
+                cleanTitle
+            };
     });
 
-    $: activeChallenges = allChallenges.filter(c => c.category === 'active');
-    $: pastChallenges = allChallenges.filter(c => c.category === 'past');
+    $: activeChallenges = allChallenges.filter(c => c.status !== 'Closed');
+    $: pastChallenges = allChallenges.filter(c => c.status === 'Closed');
 
     function selectChallenge(challenge) {
-        if (challenge.status?.toLowerCase() === 'closed') return;
+        if (challenge.status === 'Closed') return;
         selectedChallenge = challenge;
         showSubmissionGuide = false;
         setTimeout(() => {
             document.getElementById('submission-desk')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }, 50);
     }
-
-    function toggleGuide() {
-        showSubmissionGuide = !showSubmissionGuide;
-    }
 </script>
 
-<div class="policy-lab">
-    <header class="hero">
-        <div class="hero-overlay"></div>
-        <div class="hero-content">
-            <div class="badge">POLICY BRIDGE KE // CO-CREATION HUB</div>
-
-            <h1>Share Your Solution</h1>
-
-            <div class="hero-manifesto">
-                <p>
-                    Choose a challenge below and contribute your ideas, research, or lived experience.
-                    <strong>Your submission is reviewed, refined, and turned into policy briefs</strong> that can influence real governance decisions in Kenya.
-                </p>
-
-                <p>
-                    You don't need perfect language — just clear thinking, evidence, or practical insight.
-                    We help structure the rest.
-                </p>
-
-                <p class="barrier-notice">
-                    Active Challenges. Real Impact. Your Voice Matters.
-                </p>
-            </div>
-        </div>
-    </header>
+<div class="submit-page">
+    <!-- Header -->
+    <section class="page-header">
+        <h1>Submit Your Solution</h1>
+        <p>Choose a challenge below and contribute your ideas. Your submission is reviewed and may inform real policy recommendations. You don't need perfect language — just clear thinking and practical insight.</p>
+    </section>
 
     {#if form?.message}
         <div class="alert" class:success={form.success} transition:fade>
-            <span class="alert-icon">{form.success ? '✓' : '⚠️'}</span>
+            <span>{form.success ? '✓' : '⚠️'}</span>
             <p>{form.message}</p>
         </div>
     {/if}
 
-    <!-- ==================== ACTIVE CHALLENGES ==================== -->
-    <section class="challenge-section">
+    <!-- Active Challenges -->
+    <section class="section">
         <div class="section-header">
-            <span class="section-badge active-badge">● LIVE</span>
-            <h2 class="section-title">Active Co-Creation Challenges</h2>
-            <p class="section-subtitle">Open for contributions. Your ideas shape policy.</p>
+            <h2>Active Challenges</h2>
+            <span class="badge active">● Open for Submissions</span>
         </div>
 
         <div class="challenge-grid">
             {#each activeChallenges as challenge}
-                <div 
+                <button 
                     class="challenge-card" 
-                    class:active={selectedChallenge?.id === challenge.id}
-                    style="--accent-color: {challenge.color}"
-                    role="button"
-                    tabindex="0"
+                    class:selected={selectedChallenge?.id === challenge.id}
+                    style="--accent: {challenge.color}"
                     on:click={() => selectChallenge(challenge)}
-                    on:keydown={(e) => e.key === 'Enter' && selectChallenge(challenge)}
                 >
-                    <div class="card-inner">
-                        <div class="registry-header">
-                            <span class="mono-ref">{challenge.ref}</span>
-                            <span class="status-pill active-pill">{challenge.status}</span>
-                        </div>
-
-                        <div class="portfolio-label">
-                            <span class="icon-small">{challenge.icon}</span>
-                            <span>{challenge.sector} PORTFOLIO</span>
-                        </div>
-
-                        <h3>{challenge.title}</h3>
-                        <p class="brief-desc">{challenge.prompt}</p>
-
-                        {#if challenge.context}
-                            <div class="context-section">
-                                <p class="context-text">{challenge.context}</p>
-                                {#if challenge.keyData}
-                                    <div class="key-data">
-                                        <span class="data-label">Key Data Points:</span>
-                                        <ul class="data-list">
-                                            {#each challenge.keyData as point}
-                                                <li>{point}</li>
-                                            {/each}
-                                        </ul>
-                                    </div>
-                                {/if}
-                            </div>
-                        {/if}
-
-                        <div class="data-table">
-                            <div class="data-row">
-                                <span class="label">SDG ALIGNMENT</span>
-                                <span class="value">{challenge.sdg || 'Multiple SDGs'}</span>
-                            </div>
-                            {#if challenge.vision2030}
-                                <div class="data-row">
-                                    <span class="label">VISION 2030</span>
-                                    <span class="value">{challenge.vision2030}</span>
-                                </div>
-                            {/if}
-                            <div class="data-row">
-                                <span class="label">COLLABORATION STATUS</span>
-                                <span class="value">{challenge.stakeholders}</span>
-                            </div>
-                            <div class="data-row">
-                                <span class="label">CURRENT PHASE</span>
-                                <span class="value">{stages[challenge.currentStep]}</span>
-                            </div>
-                        </div>
-
-                        <div class="card-footer">
-                            <div class="progress-container">
-                                <div class="progress-track">
-                                    <div class="progress-bar" style="width: {(challenge.currentStep / 4) * 100}%"></div>
-                                </div>
-                                <span class="progress-percent">{Math.round((challenge.currentStep / 4) * 100)}%</span>
-                            </div>
-
-                            <div class="action-link">
-                                CONTRIBUTE YOUR SOLUTION →
-                            </div>
-                        </div>
+                    <div class="card-top">
+                        <span class="ref">{challenge.ref}</span>
+                        <span class="icon">{challenge.icon}</span>
                     </div>
-                </div>
+                    <h3>{challenge.title}</h3>
+                    <p class="desc">{challenge.prompt}</p>
+                    
+                    {#if challenge.context}
+                        <div class="context">
+                            <p>{challenge.context}</p>
+                            {#if challenge.keyData}
+                                <ul class="data-points">
+                                    {#each challenge.keyData as point}
+                                        <li>{point}</li>
+                                    {/each}
+                                </ul>
+                            {/if}
+                        </div>
+                    {/if}
+
+                    <div class="meta">
+                        <span>{challenge.sdg}</span>
+                    </div>
+
+                    <span class="cta">Contribute →</span>
+                </button>
             {/each}
         </div>
     </section>
 
-    <!-- ==================== PAST CHALLENGES ==================== -->
+    <!-- Past Challenges -->
     {#if pastChallenges.length > 0}
-        <section class="challenge-section past-section">
+        <section class="section past">
             <div class="section-header">
-                <span class="section-badge past-badge">◉ COMPLETED</span>
-                <h2 class="section-title">Past Challenges & Policy Outcomes</h2>
-                <p class="section-subtitle">Archived challenges with policy impact summaries.</p>
+                <h2>Past Challenges</h2>
+                <span class="badge closed">◉ Completed</span>
             </div>
 
-            <div class="challenge-grid past-grid">
+            <div class="challenge-grid">
                 {#each pastChallenges as challenge}
-                    <div 
-                        class="challenge-card closed past-card"
-                        style="--accent-color: {challenge.color}"
-                    >
-                        <div class="card-inner">
-                            <div class="registry-header">
-                                <span class="mono-ref">{challenge.ref}</span>
-                                <span class="status-pill closed-pill">{challenge.status}</span>
-                            </div>
-
-                            <div class="portfolio-label">
-                                <span class="icon-small">{challenge.icon}</span>
-                                <span>{challenge.sector} PORTFOLIO</span>
-                            </div>
-
-                            <h3>{challenge.title}</h3>
-                            <p class="brief-desc">{challenge.prompt}</p>
-
-                            {#if challenge.context}
-                                <div class="context-section past-context">
-                                    <p class="context-text">{challenge.context}</p>
-                                    {#if challenge.keyData}
-                                        <div class="key-data">
-                                            <span class="data-label">Key Data Points:</span>
-                                            <ul class="data-list">
-                                                {#each challenge.keyData as point}
-                                                    <li>{point}</li>
-                                                {/each}
-                                            </ul>
-                                        </div>
-                                    {/if}
-                                </div>
-                            {/if}
-
-                            {#if challenge.highlights}
-                                <div class="outcome-box">
-                                    <span class="outcome-label">POLICY OUTCOME</span>
-                                    <p class="outcome-text">{challenge.highlights}</p>
-                                </div>
-                            {/if}
-
-                            <div class="data-table">
-                                <div class="data-row">
-                                    <span class="label">SDG ALIGNMENT</span>
-                                    <span class="value">{challenge.sdg || 'Multiple SDGs'}</span>
-                                </div>
-                                {#if challenge.vision2030}
-                                    <div class="data-row">
-                                        <span class="label">VISION 2030</span>
-                                        <span class="value">{challenge.vision2030}</span>
-                                    </div>
-                                {/if}
-                                <div class="data-row">
-                                    <span class="label">STAKEHOLDERS</span>
-                                    <span class="value">{challenge.stakeholders}</span>
-                                </div>
-                                <div class="data-row">
-                                    <span class="label">FINAL PHASE</span>
-                                    <span class="value">{stages[challenge.currentStep]}</span>
-                                </div>
-                            </div>
-
-                            <div class="card-footer">
-                                <div class="progress-container">
-                                    <div class="progress-track completed-track">
-                                        <div class="progress-bar" style="width: 100%"></div>
-                                    </div>
-                                    <span class="progress-percent">100%</span>
-                                </div>
-
-                                <div class="action-link closed-link">
-                                    POLICY BRIEF PUBLISHED ✓
-                                </div>
-                            </div>
+                    <div class="challenge-card closed" style="--accent: {challenge.color}">
+                        <div class="card-top">
+                            <span class="ref">{challenge.ref}</span>
+                            <span class="icon">{challenge.icon}</span>
                         </div>
+                        <h3>{challenge.title}</h3>
+                        <p class="desc">{challenge.prompt}</p>
+                        
+                        {#if challenge.highlights}
+                            <div class="outcome">
+                                <span class="outcome-label">Outcome</span>
+                                <p>{challenge.highlights}</p>
+                            </div>
+                        {/if}
+
+                        <div class="meta">
+                            <span>{challenge.sdg}</span>
+                        </div>
+
+                        <span class="cta completed">Policy Brief Published ✓</span>
                     </div>
                 {/each}
             </div>
         </section>
     {/if}
 
+    <!-- Submission Form -->
     {#if selectedChallenge}
-        <section id="submission-desk" transition:slide={{ duration: 400 }}>
-            <div class="dossier-form">
+        <section id="submission-desk" class="form-section" transition:fade>
+            <div class="form-container">
                 <div class="form-header" style="background: {selectedChallenge.color}">
-                    <div class="header-content">
-                        <span class="kicker">SUBMISSION WORKSPACE</span>
-                        <h2>{selectedChallenge.ref} // {selectedChallenge.title}</h2>
-
-                        <p class="form-context-p">
-                            You are now contributing to a live policy pipeline. Your input will be reviewed and may inform national or county-level recommendations.
-                        </p>
-
+                    <div>
+                        <span class="form-ref">{selectedChallenge.ref}</span>
+                        <h2>{selectedChallenge.title}</h2>
+                        <p>Your input will be reviewed and may inform national or county-level policy recommendations.</p>
+                        
                         {#if selectedChallenge.guidingQuestions}
-                            <div class="guiding-questions">
-                                <span class="gq-label">Guiding Questions:</span>
-                                <ul class="gq-list">
+                            <div class="questions">
+                                <span>Guiding Questions:</span>
+                                <ul>
                                     {#each selectedChallenge.guidingQuestions as question}
                                         <li>{question}</li>
                                     {/each}
@@ -493,134 +309,117 @@
                             </div>
                         {/if}
                     </div>
-                    <span class="large-icon">{selectedChallenge.icon}</span>
+                    <span class="form-icon">{selectedChallenge.icon}</span>
                 </div>
 
-                <div class="form-content">
+                <div class="form-body">
                     {#if selectedChallenge.submissionGuide}
-                        <div class="guide-toggle-container">
-                            <button 
-                                type="button" 
-                                class="guide-toggle-btn" 
-                                on:click={toggleGuide}
-                                style="--guide-accent: {selectedChallenge.color}"
-                            >
-                                <span class="guide-icon">{showSubmissionGuide ? '▾' : '▸'}</span>
-                                <span>{showSubmissionGuide ? 'Hide' : 'Show'} Submission Guide & Examples</span>
-                            </button>
-                            
-                            {#if showSubmissionGuide}
-                                <div class="submission-guide" transition:slide={{ duration: 250 }}>
-                                    <div class="guide-content">
-                                        <span class="guide-label">HOW TO WRITE AN EFFECTIVE SUBMISSION:</span>
-                                        <p>{selectedChallenge.submissionGuide}</p>
-                                        <div class="guide-tips">
-                                            <span class="guide-label">TIPS:</span>
-                                            <ul>
-                                                <li><strong>Be specific</strong> — "Increase funding" is vague; "Allocate 2% of county budgets to..." is actionable.</li>
-                                                <li><strong>Include who</strong> — Which institution, ministry, or body should implement your idea?</li>
-                                                <li><strong>Evidence matters</strong> — Personal experience, news articles, academic papers, or examples from other counties/countries all count.</li>
-                                                <li><strong>Optional contact</strong> — Leave your email if you're open to follow-up questions from reviewers (not published).</li>
-                                            </ul>
-                                        </div>
-                                    </div>
+                        <button 
+                            type="button" 
+                            class="guide-toggle" 
+                            on:click={() => showSubmissionGuide = !showSubmissionGuide}
+                        >
+                            <span>{showSubmissionGuide ? '▾' : '▸'}</span>
+                            {showSubmissionGuide ? 'Hide' : 'Show'} Submission Guide
+                        </button>
+                        
+                        {#if showSubmissionGuide}
+                            <div class="guide-content" transition:fade>
+                                <p>{selectedChallenge.submissionGuide}</p>
+                                <div class="guide-tips">
+                                    <span>Tips:</span>
+                                    <ul>
+                                        <li><strong>Be specific</strong> — "Allocate 2% of county budgets to..." is actionable.</li>
+                                        <li><strong>Include who</strong> — Which institution should implement your idea?</li>
+                                        <li><strong>Evidence matters</strong> — Personal experience, research, or examples all count.</li>
+                                        <li><strong>Optional contact</strong> — Leave your email for follow-up (not published).</li>
+                                    </ul>
                                 </div>
-                            {/if}
-                        </div>
+                            </div>
+                        {/if}
                     {/if}
 
-                    <form method="POST" action="?/submit" use:enhance class="protocol-form">
+                    <form method="POST" action="?/submit" use:enhance class="form">
                         <input type="hidden" name="challenge_id" value={selectedChallenge.id} />
                         <input type="hidden" name="challenge_title" value={selectedChallenge.title} />
 
-                        <div class="form-grid">
-                            <div class="input-group">
-                                <label for="stk">RESPONSIBLE STAKEHOLDER</label>
-                                <span class="field-hint">Who should implement this solution?</span>
-                                <div class="select-wrapper">
-                                    <select id="stk" name="responsible_stakeholder" required>
-                                        <option value="" disabled selected>Select stakeholder category...</option>
-                                        <option value="National Government (Ministries, Departments, Agencies)">National Government (Ministries, Departments, Agencies)</option>
-                                        <option value="County Government">County Government</option>
-                                        <option value="Civil Society Organizations (CSOs) & NGOs">Civil Society Organizations (CSOs) & NGOs</option>
-                                        <option value="Academic & Research Institutions">Academic & Research Institutions</option>
-                                        <option value="Development Partners & Donors">Development Partners & Donors</option>
-                                        <option value="Private Sector & Tech Ecosystem">Private Sector & Tech Ecosystem</option>
-                                        <option value="Oversight & Accountability Bodies">Oversight & Accountability Bodies</option>
-                                        <option value="Community-Based Organizations">Community-Based Organizations</option>
-                                        <option value="Multi-Stakeholder Partnership">Multi-Stakeholder Partnership</option>
-                                    </select>
-                                </div>
+                        <div class="form-row">
+                            <div class="field">
+                                <label for="stk">Responsible Stakeholder</label>
+                                <p class="hint">Who should implement this solution?</p>
+                                <select id="stk" name="responsible_stakeholder" required>
+                                    <option value="" disabled selected>Select stakeholder...</option>
+                                    <option value="National Government">National Government (Ministries & Agencies)</option>
+                                    <option value="County Government">County Government</option>
+                                    <option value="Civil Society & NGOs">Civil Society Organizations & NGOs</option>
+                                    <option value="Academic & Research">Academic & Research Institutions</option>
+                                    <option value="Development Partners">Development Partners & Donors</option>
+                                    <option value="Private Sector">Private Sector & Tech Ecosystem</option>
+                                    <option value="Community-Based">Community-Based Organizations</option>
+                                    <option value="Multi-Stakeholder">Multi-Stakeholder Partnership</option>
+                                </select>
                             </div>
 
-                            <div class="input-group">
-                                <label for="tim">IMPLEMENTATION TIMELINE</label>
-                                <span class="field-hint">Realistic timeframe for your solution</span>
-                                <div class="select-wrapper">
-                                    <select id="tim" name="implementation_timeline" required>
-                                        <option value="" disabled selected>Select timeline...</option>
-                                        <option value="Immediate (0–6 Months)">Immediate (0–6 Months)</option>
-                                        <option value="Short-term (6–12 Months)">Short-term (6–12 Months)</option>
-                                        <option value="Medium-term (1–3 Years)">Medium-term (1–3 Years)</option>
-                                        <option value="Long-term (3–5 Years)">Long-term (3–5 Years)</option>
-                                        <option value="Ongoing/Continuous">Ongoing/Continuous</option>
-                                    </select>
-                                </div>
+                            <div class="field">
+                                <label for="tim">Implementation Timeline</label>
+                                <p class="hint">Realistic timeframe for your solution</p>
+                                <select id="tim" name="implementation_timeline" required>
+                                    <option value="" disabled selected>Select timeline...</option>
+                                    <option value="Immediate (0–6 Months)">Immediate (0–6 Months)</option>
+                                    <option value="Short-term (6–12 Months)">Short-term (6–12 Months)</option>
+                                    <option value="Medium-term (1–3 Years)">Medium-term (1–3 Years)</option>
+                                    <option value="Long-term (3–5 Years)">Long-term (3–5 Years)</option>
+                                    <option value="Ongoing">Ongoing/Continuous</option>
+                                </select>
                             </div>
                         </div>
 
-                        <div class="input-group">
-                            <label for="sol">YOUR SOLUTION <span class="required-mark">*</span></label>
-                            <span class="field-hint">Explain your idea clearly. What should change and how?</span>
+                        <div class="field">
+                            <label for="sol">Your Solution <span class="required">*</span></label>
+                            <p class="hint">Explain your idea clearly. What should change and how?</p>
                             <textarea 
                                 id="sol" 
                                 name="solution_text" 
                                 rows="6" 
-                                placeholder="Describe your policy solution here. Be specific about:
+                                placeholder="Describe your policy solution:
 • What needs to change (the specific policy, system, or practice)
-• How it should be implemented (the mechanism or approach)
-• Who is responsible (which institution or body)
+• How it should be implemented
+• Who is responsible
 • Who benefits and how"
                                 required
                             ></textarea>
                         </div>
 
-                        <div class="input-group">
-                            <label for="evid">EVIDENCE OR SUPPORTING CONTEXT</label>
-                            <span class="field-hint">Optional — any links, research, lived experience, or examples that support your solution</span>
+                        <div class="field">
+                            <label for="evid">Supporting Evidence</label>
+                            <p class="hint">Optional — links, research, lived experience, or examples</p>
                             <textarea 
                                 id="evid" 
                                 name="supporting_evidence" 
                                 rows="3" 
-                                placeholder="Examples of evidence you can include:
-• Personal or community experience with this issue
-• Links to news articles, reports, or research
-• Examples of similar solutions that worked elsewhere
-• Data or statistics you've gathered"
+                                placeholder="Examples: personal experience, news articles, research, similar solutions from elsewhere"
                             ></textarea>
                         </div>
 
-                        <div class="input-group">
-                            <label for="cont">OPTIONAL CONTACT</label>
-                            <span class="field-hint">Leave your email or phone if you're open to follow-up from our policy team (will not be published)</span>
+                        <div class="field">
+                            <label for="cont">Contact (Optional)</label>
+                            <p class="hint">Email or phone for follow-up — will not be published</p>
                             <input 
                                 type="text" 
                                 id="cont" 
                                 name="optional_contact" 
-                                placeholder="Email or phone number (optional)"
+                                placeholder="Email or phone number"
                             />
                         </div>
 
-                        <div class="form-actions">
-                            <div class="checkbox-group">
-                                <label class="checkbox-label">
-                                    <input type="checkbox" name="declaration" required /> 
-                                    <span class="checkbox-text">I understand my submission will be reviewed and may be refined into a public policy brief for civic impact. I confirm this is my original contribution.</span>
-                                </label>
-                            </div>
+                        <div class="form-footer">
+                            <label class="checkbox">
+                                <input type="checkbox" name="declaration" required />
+                                <span>I confirm this is my original contribution and understand it may be refined into a public policy brief.</span>
+                            </label>
 
-                            <button type="submit" class="submit-btn" style="background: {selectedChallenge.color}; --hover-color: {selectedChallenge.color}cc">
-                                SUBMIT YOUR SOLUTION
+                            <button type="submit" class="submit-btn" style="background: {selectedChallenge.color}">
+                                Submit Solution
                             </button>
                         </div>
                     </form>
@@ -631,708 +430,504 @@
 </div>
 
 <style>
-    /* Premium High-Contrast System Font Stack */
-    .policy-lab { 
-        font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-        max-width: 1240px; 
-        margin: 0 auto; 
-        padding: 40px 24px 120px 24px; 
-        color: #0f172a;
-        -webkit-font-smoothing: antialiased;
+    .submit-page {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 48px 24px 80px;
+        font-family: system-ui, -apple-system, sans-serif;
+        color: #1a1a1a;
     }
 
-    /* Hero Component Blueprint */
-    .hero { 
-        position: relative; 
-        margin-bottom: 48px; 
-        padding: 64px 48px; 
-        background-color: #042e16; 
-        border-radius: 16px; 
-        overflow: hidden; 
-        color: white;
-        box-shadow: 0 10px 25px -5px rgba(4, 46, 22, 0.15);
-    }
-    
-    .hero-overlay {
-        position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-        background-image: url('https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&q=80&w=2000');
-        background-size: cover; background-position: center; opacity: 0.08;
-        mix-blend-mode: overlay;
+    /* Header */
+    .page-header {
+        text-align: center;
+        margin-bottom: 48px;
     }
 
-    .hero-content { position: relative; z-index: 1; }
-
-    .hero h1 { 
-        font-size: clamp(2.2rem, 5vw, 3.5rem); 
-        font-weight: 800; 
-        letter-spacing: -0.04em; 
-        margin: 0 0 24px 0; 
-        line-height: 1.1;
+    .page-header h1 {
+        font-size: 2.25rem;
+        font-weight: 800;
+        letter-spacing: -0.02em;
+        margin-bottom: 12px;
     }
 
-    .hero-manifesto p { 
-        font-size: clamp(1rem, 2vw, 1.15rem); 
-        line-height: 1.7; 
-        max-width: 820px; 
-        color: #e2e8f0;
-        margin: 0 0 16px 0;
-    }
-    .hero-manifesto strong { color: #ffffff; font-weight: 600; }
-
-    .barrier-notice { 
-        font-weight: 700; 
-        color: #34d399; 
-        text-transform: uppercase; 
-        font-size: 0.85rem; 
-        letter-spacing: 0.08em; 
-        margin-top: 28px !important; 
+    .page-header p {
+        font-size: 1rem;
+        color: #555;
+        max-width: 640px;
+        margin: 0 auto;
+        line-height: 1.6;
     }
 
-    .badge { 
-        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; 
-        font-size: 0.75rem; 
-        color: #34d399;
-        margin-bottom: 16px; 
-        font-weight: 700; 
-        letter-spacing: 0.05em;
-    }
-
-    /* Alert / Flash Infrastructure */
-    .alert { 
-        display: flex; 
-        align-items: flex-start; 
-        gap: 16px; 
-        padding: 20px 24px; 
-        border-radius: 12px; 
-        margin-bottom: 40px; 
-        border: 1px solid #e2e8f0;
+    /* Alert */
+    .alert {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 16px 20px;
+        border-radius: 8px;
+        margin-bottom: 32px;
         background: #f8fafc;
+        border: 1px solid #e2e8f0;
+        font-size: 0.9rem;
     }
-    .alert.success { 
-        background: #f0fdf4; 
-        color: #14532d; 
-        border-color: #bbf7d0; 
+    .alert.success {
+        background: #f0fdf4;
+        color: #14532d;
+        border-color: #bbf7d0;
     }
-    .alert p { margin: 0; font-size: 0.95rem; font-weight: 500; line-height: 1.5; }
-    .alert-icon { font-size: 1.25rem; line-height: 1; }
+    .alert p { margin: 0; }
 
-    /* ==================== SECTION HEADERS ==================== */
-    .challenge-section {
-        margin-bottom: 64px;
+    /* Sections */
+    .section {
+        margin-bottom: 56px;
     }
-
-    .past-section {
-        margin-top: 16px;
+    .section.past {
         padding-top: 48px;
-        border-top: 2px solid #e2e8f0;
+        border-top: 1px solid #e5e7eb;
     }
 
     .section-header {
-        margin-bottom: 32px;
-        text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 24px;
+        flex-wrap: wrap;
+        gap: 12px;
     }
 
-    .section-badge {
-        display: inline-block;
-        font-family: ui-monospace, SFMono-Regular, monospace;
-        font-size: 0.7rem;
+    .section-header h2 {
+        font-size: 1.5rem;
+        font-weight: 700;
+        margin: 0;
+    }
+
+    .badge {
+        font-size: 0.75rem;
         font-weight: 700;
         text-transform: uppercase;
-        letter-spacing: 0.08em;
+        letter-spacing: 0.04em;
         padding: 4px 12px;
         border-radius: 100px;
-        margin-bottom: 12px;
     }
-
-    .active-badge {
+    .badge.active {
         background: #dcfce7;
         color: #166534;
     }
-
-    .past-badge {
+    .badge.closed {
         background: #f1f5f9;
         color: #64748b;
     }
 
-    .section-title {
-        font-size: 1.75rem;
-        font-weight: 800;
-        letter-spacing: -0.02em;
-        color: #0f172a;
-        margin: 0 0 8px 0;
-    }
-
-    .section-subtitle {
-        font-size: 0.9rem;
-        color: #64748b;
-        margin: 0;
-    }
-
-    /* ==================== CHALLENGE GRID ==================== */
-    .challenge-grid { 
-        display: grid; 
-        grid-template-columns: repeat(auto-fill, minmax(360px, 1fr)); 
-        gap: 28px; 
+    /* Challenge Grid */
+    .challenge-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+        gap: 20px;
     }
 
     .challenge-card {
-        background: #ffffff; 
-        border: 1px solid #e2e8f0; 
-        border-radius: 14px;
-        text-align: left; 
-        transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-        padding: 0;
-        position: relative;
-        outline: none;
+        background: white;
+        border: 1px solid #e5e7eb;
+        border-radius: 12px;
+        padding: 24px;
+        text-align: left;
         cursor: pointer;
-    }
-
-    .challenge-card:focus-visible {
-        box-shadow: 0 0 0 3px #ffffff, 0 0 0 6px var(--accent-color);
+        transition: all 0.2s;
+        font-family: inherit;
+        width: 100%;
     }
 
     .challenge-card:hover:not(.closed) {
-        transform: translateY(-4px);
-        border-color: var(--accent-color);
-        box-shadow: 0 16px 32px -8px rgba(15, 23, 42, 0.08);
+        border-color: var(--accent);
+        transform: translateY(-2px);
+        box-shadow: 0 8px 24px rgba(0,0,0,0.06);
     }
 
-    .challenge-card.closed { 
-        opacity: 0.8; 
-        cursor: default; 
-        background: #fafafa;
+    .challenge-card.selected {
+        border: 2px solid var(--accent);
     }
 
-    .challenge-card.closed:hover {
-        transform: none;
-        border-color: #e2e8f0;
-        box-shadow: none;
+    .challenge-card.closed {
+        opacity: 0.75;
+        cursor: default;
     }
 
-    .challenge-card.active { 
-        border: 2px solid var(--accent-color); 
-        box-shadow: 0 8px 24px -6px rgba(15, 23, 42, 0.04);
-    }
-
-    .card-inner { 
-        padding: 32px; 
-        display: flex; 
-        flex-direction: column; 
-        height: 100%; 
-        box-sizing: border-box;
-    }
-
-    .registry-header { 
-        display: flex; 
-        justify-content: space-between; 
-        align-items: center;
-        margin-bottom: 20px; 
-    }
-
-    .mono-ref {
-        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-        font-weight: 700;
-        font-size: 0.8rem;
-        background: #f1f5f9;
-        padding: 4px 8px;
-        border-radius: 6px;
-        color: #475569;
-    }
-
-    .status-pill {
-        font-size: 0.7rem;
-        font-weight: 700;
-        text-transform: uppercase;
-        letter-spacing: 0.02em;
-        padding: 4px 10px;
-        border-radius: 100px;
-    }
-
-    .active-pill {
-        background: #e0f2fe;
-        color: #0369a1;
-    }
-
-    .closed-pill {
-        background: #f1f5f9;
-        color: #94a3b8;
-    }
-
-    .portfolio-label {
+    .card-top {
         display: flex;
+        justify-content: space-between;
         align-items: center;
-        gap: 8px;
-        font-size: 0.75rem;
-        font-weight: 700;
-        color: #64748b;
-        letter-spacing: 0.05em;
         margin-bottom: 12px;
     }
-    
-    .challenge-card h3 { 
-        font-size: 1.35rem; 
-        font-weight: 700; 
-        line-height: 1.3; 
-        margin: 0 0 10px 0; 
-        color: #0f172a;
-        letter-spacing: -0.01em;
+
+    .ref {
+        font-family: ui-monospace, monospace;
+        font-size: 0.7rem;
+        font-weight: 700;
+        background: #f1f5f9;
+        padding: 3px 8px;
+        border-radius: 4px;
+        color: #64748b;
     }
 
-    .brief-desc { 
-        font-size: 0.95rem; 
-        color: #475569; 
-        margin: 0 0 16px 0; 
+    .icon {
+        font-size: 1.5rem;
+    }
+
+    .challenge-card h3 {
+        font-size: 1.1rem;
+        font-weight: 700;
+        margin: 0 0 8px 0;
+        line-height: 1.3;
+    }
+
+    .desc {
+        font-size: 0.85rem;
+        color: #555;
+        margin: 0 0 14px 0;
         line-height: 1.5;
     }
 
-    /* Context Section Styling */
-    .context-section {
+    .context {
         background: #f8fafc;
-        border-left: 3px solid var(--accent-color);
-        padding: 14px 16px;
-        margin-bottom: 18px;
-        border-radius: 0 8px 8px 0;
-    }
-
-    .past-context {
-        border-left-color: #94a3b8;
-        background: #fafafa;
-    }
-
-    .context-text {
-        font-size: 0.85rem;
-        color: #475569;
-        line-height: 1.6;
-        margin: 0 0 12px 0;
-    }
-
-    .key-data {
-        margin-top: 8px;
-    }
-
-    .data-label {
-        font-size: 0.7rem;
-        font-weight: 700;
-        text-transform: uppercase;
-        letter-spacing: 0.05em;
-        color: #64748b;
-        display: block;
-        margin-bottom: 6px;
-    }
-
-    .data-list {
-        margin: 0;
-        padding-left: 18px;
+        border-left: 3px solid var(--accent);
+        padding: 12px 14px;
+        margin-bottom: 14px;
+        border-radius: 0 6px 6px 0;
         font-size: 0.8rem;
-        color: #334155;
-        line-height: 1.6;
+        color: #475569;
+        line-height: 1.5;
+    }
+    .context p { margin: 0 0 8px 0; }
+
+    .data-points {
+        margin: 0;
+        padding-left: 16px;
+        font-size: 0.78rem;
+        color: #64748b;
+        line-height: 1.5;
     }
 
-    .data-list li {
-        margin-bottom: 3px;
+    .meta {
+        font-size: 0.7rem;
+        color: #94a3b8;
+        margin-bottom: 12px;
     }
 
-    /* Outcome Box for Past Challenges */
-    .outcome-box {
-        background: linear-gradient(135deg, #f0fdf4, #fafafa);
+    .outcome {
+        background: #f0fdf4;
         border: 1px solid #bbf7d0;
-        border-radius: 8px;
-        padding: 14px 16px;
-        margin-bottom: 18px;
+        border-radius: 6px;
+        padding: 10px 14px;
+        margin-bottom: 14px;
     }
 
     .outcome-label {
         font-size: 0.65rem;
         font-weight: 700;
         text-transform: uppercase;
-        letter-spacing: 0.08em;
+        letter-spacing: 0.05em;
         color: #166534;
         display: block;
-        margin-bottom: 6px;
+        margin-bottom: 4px;
     }
 
-    .outcome-text {
-        font-size: 0.83rem;
+    .outcome p {
+        font-size: 0.8rem;
         color: #14532d;
-        line-height: 1.5;
         margin: 0;
-        font-weight: 500;
-    }
-
-    /* Matrix Internal Grid Data Layout */
-    .data-table { 
-        border-top: 1px dashed #e2e8f0; 
-        padding-top: 18px;
-        margin-bottom: 24px;
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-    }
-    
-    .data-row { 
-        display: flex; 
-        justify-content: space-between; 
-        font-size: 0.7rem; 
         line-height: 1.4;
     }
-    .data-row .label { color: #64748b; font-weight: 600; }
-    .data-row .value { color: #0f172a; font-weight: 700; text-align: right; max-width: 65%; }
 
-    .card-footer { 
-        margin-top: auto;
-        display: flex;
-        flex-direction: column;
-        gap: 14px;
-    }
-
-    .progress-container {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-    }
-
-    .progress-track {
-        flex-grow: 1;
-        height: 6px;
-        background: #f1f5f9;
-        border-radius: 100px;
-        overflow: hidden;
-    }
-
-    .completed-track {
-        background: #dcfce7;
-    }
-
-    .progress-bar {
-        height: 100%;
-        background: var(--accent-color);
-        border-radius: 100px;
-        transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    .progress-percent {
-        font-family: ui-monospace, SFMono-Regular, monospace;
-        font-size: 0.75rem;
+    .cta {
+        font-size: 0.8rem;
         font-weight: 700;
-        color: #64748b;
+        color: var(--accent);
     }
-
-    .action-link { 
-        font-size: 0.8rem; 
-        font-weight: 700; 
-        color: var(--accent-color); 
-        text-align: right; 
-        letter-spacing: 0.02em;
-    }
-
-    .closed-link {
+    .cta.completed {
         color: #94a3b8;
     }
 
-    /* Submission Workspace Area */
-    #submission-desk { margin-top: 64px; }
+    /* Form Section */
+    .form-section {
+        margin-top: 48px;
+    }
 
-    .dossier-form {
-        background: #ffffff;
-        border-radius: 16px;
-        border: 1px solid #e2e8f0;
-        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05);
+    .form-container {
+        background: white;
+        border: 1px solid #e5e7eb;
+        border-radius: 12px;
         overflow: hidden;
     }
 
     .form-header {
-        padding: 40px;
+        padding: 32px;
         color: white;
         display: flex;
         justify-content: space-between;
         align-items: flex-start;
-        gap: 24px;
-        position: relative;
+        gap: 20px;
     }
 
-    .form-header .kicker {
-        font-size: 0.75rem;
-        font-weight: 800;
-        letter-spacing: 0.1em;
+    .form-ref {
+        font-family: ui-monospace, monospace;
+        font-size: 0.7rem;
+        font-weight: 700;
         opacity: 0.8;
-        display: block;
-        margin-bottom: 8px;
+        letter-spacing: 0.04em;
     }
 
     .form-header h2 {
-        font-size: 1.75rem;
-        font-weight: 800;
-        margin: 0;
-        letter-spacing: -0.02em;
+        font-size: 1.5rem;
+        font-weight: 700;
+        margin: 4px 0 8px 0;
         line-height: 1.2;
     }
 
-    .form-context-p { 
-        margin: 12px 0 0 0; 
-        opacity: 0.85; 
-        font-size: 0.95rem; 
-        max-width: 720px; 
-        line-height: 1.6; 
+    .form-header p {
+        font-size: 0.9rem;
+        opacity: 0.9;
+        margin: 0;
+        line-height: 1.5;
     }
 
-    /* Guiding Questions in Form */
-    .guiding-questions {
-        margin-top: 20px;
-        padding: 16px;
-        background: rgba(255, 255, 255, 0.1);
-        border-radius: 8px;
-        backdrop-filter: blur(4px);
+    .questions {
+        margin-top: 16px;
+        padding: 12px;
+        background: rgba(255,255,255,0.1);
+        border-radius: 6px;
     }
 
-    .gq-label {
+    .questions span {
         font-size: 0.7rem;
         font-weight: 700;
         text-transform: uppercase;
-        letter-spacing: 0.05em;
-        opacity: 0.9;
-        display: block;
-        margin-bottom: 8px;
-    }
-
-    .gq-list {
-        margin: 0;
-        padding-left: 20px;
-        font-size: 0.85rem;
-        line-height: 1.6;
+        letter-spacing: 0.04em;
         opacity: 0.9;
     }
 
-    .gq-list li {
-        margin-bottom: 4px;
+    .questions ul {
+        margin: 6px 0 0 0;
+        padding-left: 18px;
+        font-size: 0.83rem;
+        opacity: 0.9;
+        line-height: 1.5;
     }
 
-    .large-icon { font-size: 3rem; opacity: 0.25; line-height: 1; }
-
-    .form-content { padding: 40px; }
-
-    /* Submission Guide Styles */
-    .guide-toggle-container {
-        margin-bottom: 28px;
-        border: 1px solid #e2e8f0;
-        border-radius: 10px;
-        overflow: hidden;
+    .form-icon {
+        font-size: 2.5rem;
+        opacity: 0.3;
+        flex-shrink: 0;
     }
 
-    .guide-toggle-btn {
+    .form-body {
+        padding: 32px;
+    }
+
+    /* Guide Toggle */
+    .guide-toggle {
         width: 100%;
-        padding: 14px 18px;
+        padding: 12px 16px;
         background: #f8fafc;
-        border: none;
+        border: 1px solid #e5e7eb;
+        border-radius: 8px;
         cursor: pointer;
         font-family: inherit;
         font-size: 0.85rem;
         font-weight: 600;
         color: #475569;
+        text-align: left;
+        margin-bottom: 24px;
         display: flex;
         align-items: center;
-        gap: 10px;
-        transition: background 0.2s ease;
-        text-align: left;
+        gap: 8px;
     }
 
-    .guide-toggle-btn:hover {
+    .guide-toggle:hover {
         background: #f1f5f9;
     }
 
-    .guide-icon {
-        font-size: 0.7rem;
-        color: var(--guide-accent, #475569);
-        transition: transform 0.2s ease;
-    }
-
-    .submission-guide {
-        border-top: 1px solid #e2e8f0;
-        background: #fafafa;
-    }
-
     .guide-content {
-        padding: 20px 18px;
-    }
-
-    .guide-label {
-        font-size: 0.7rem;
-        font-weight: 700;
-        text-transform: uppercase;
-        letter-spacing: 0.05em;
-        color: #64748b;
-        display: block;
-        margin-bottom: 8px;
+        background: #fafafa;
+        border: 1px solid #e5e7eb;
+        border-radius: 8px;
+        padding: 20px;
+        margin-bottom: 24px;
     }
 
     .guide-content p {
-        font-size: 0.88rem;
-        line-height: 1.65;
+        font-size: 0.85rem;
         color: #475569;
-        margin: 0 0 16px 0;
+        line-height: 1.6;
+        margin: 0 0 14px 0;
     }
 
     .guide-tips {
-        background: #ffffff;
-        border: 1px solid #e2e8f0;
-        border-radius: 8px;
-        padding: 14px 16px;
+        background: white;
+        border: 1px solid #e5e7eb;
+        border-radius: 6px;
+        padding: 12px 16px;
+    }
+
+    .guide-tips span {
+        font-size: 0.7rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+        color: #64748b;
     }
 
     .guide-tips ul {
-        margin: 8px 0 0 0;
-        padding-left: 18px;
-        font-size: 0.83rem;
+        margin: 6px 0 0 0;
+        padding-left: 16px;
+        font-size: 0.8rem;
         color: #475569;
-        line-height: 1.6;
+        line-height: 1.5;
     }
 
-    .guide-tips ul li {
-        margin-bottom: 5px;
+    /* Form Fields */
+    .form {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
     }
 
-    .guide-tips ul li strong {
-        color: #0f172a;
-    }
-
-    .protocol-form { display: flex; flex-direction: column; gap: 24px; }
-
-    .form-grid {
+    .form-row {
         display: grid;
-        grid-template-columns: 1fr;
-        gap: 24px;
-    }
-    @media (min-width: 768px) {
-        .form-grid { grid-template-columns: repeat(2, 1fr); }
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
     }
 
-    /* Structured Layout Controls Inputs */
-    .input-group { display: flex; flex-direction: column; gap: 6px; }
+    .field {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+    }
 
-    .input-group label {
-        font-size: 0.75rem;
+    .field label {
+        font-size: 0.8rem;
         font-weight: 700;
         color: #475569;
-        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        letter-spacing: 0.03em;
     }
 
-    .required-mark {
+    .required {
         color: #dc2626;
         font-weight: 400;
     }
 
-    .field-hint {
+    .hint {
         font-size: 0.75rem;
         color: #94a3b8;
-        line-height: 1.3;
-        margin-bottom: 2px;
+        margin: 0 0 4px 0;
     }
 
-    .select-wrapper { position: relative; }
-
     select, textarea, input[type="text"] {
-        width: 100%;
-        padding: 14px 16px;
+        padding: 12px 14px;
         background: #f8fafc;
         border: 1px solid #cbd5e1;
         border-radius: 8px;
         font-family: inherit;
-        font-size: 0.95rem;
-        color: #0f172a;
-        box-sizing: border-box;
-        transition: all 0.2s ease;
+        font-size: 0.9rem;
+        color: #1a1a1a;
+        transition: all 0.2s;
     }
 
     select {
         appearance: none;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%2364748b' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10z'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 14px center;
+        padding-right: 36px;
         cursor: pointer;
-        padding-right: 40px;
-    }
-
-    .select-wrapper::after {
-        content: "▾";
-        position: absolute;
-        right: 16px;
-        top: 50%;
-        transform: translateY(-50%);
-        color: #64748b;
-        pointer-events: none;
-        font-size: 1rem;
     }
 
     textarea { resize: vertical; }
-    input[type="text"] { padding: 14px 16px; }
 
-    select:focus, textarea:focus, input[type="text"]:focus {
+    select:focus, textarea:focus, input:focus {
         outline: none;
-        background: #ffffff;
-        border-color: var(--accent-color);
-        box-shadow: 0 0 0 4px rgba(15, 23, 42, 0.05);
+        background: white;
+        border-color: var(--accent, #0f172a);
+        box-shadow: 0 0 0 3px rgba(15, 23, 42, 0.04);
     }
 
-    textarea::placeholder, input[type="text"]::placeholder {
+    textarea::placeholder, input::placeholder {
         color: #94a3b8;
-        font-size: 0.85rem;
+        font-size: 0.83rem;
         line-height: 1.5;
     }
 
-    /* Operations Matrix Action Bar */
-    .form-actions {
+    .form-footer {
         display: flex;
-        flex-direction: column;
-        gap: 24px;
-        margin-top: 12px;
-        padding-top: 24px;
-        border-top: 1px solid #e2e8f0;
-    }
-    @media (min-width: 768px) {
-        .form-actions {
-            flex-direction: row;
-            justify-content: space-between;
-            align-items: center;
-        }
+        justify-content: space-between;
+        align-items: center;
+        gap: 20px;
+        padding-top: 20px;
+        border-top: 1px solid #e5e7eb;
+        flex-wrap: wrap;
     }
 
-    .checkbox-group { max-width: 520px; }
-    
-    .checkbox-label {
+    .checkbox {
         display: flex;
         align-items: flex-start;
-        gap: 12px;
+        gap: 10px;
         cursor: pointer;
+        font-size: 0.83rem;
+        color: #475569;
+        line-height: 1.4;
+        max-width: 440px;
     }
 
-    .checkbox-label input {
-        margin-top: 3px;
+    .checkbox input {
+        margin-top: 2px;
         width: 16px;
         height: 16px;
-        accent-color: var(--accent-color);
-        cursor: pointer;
+        accent-color: var(--accent);
         flex-shrink: 0;
     }
 
-    .checkbox-text { font-size: 0.85rem; color: #475569; line-height: 1.5; font-weight: 500; }
-
     .submit-btn {
-        border: none;
-        padding: 16px 32px;
+        padding: 14px 28px;
         color: white;
         font-weight: 700;
         font-size: 0.85rem;
-        letter-spacing: 0.05em;
-        cursor: pointer;
+        letter-spacing: 0.03em;
+        border: none;
         border-radius: 8px;
-        text-transform: uppercase;
-        transition: all 0.2s ease;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        cursor: pointer;
+        transition: opacity 0.2s;
         white-space: nowrap;
-        align-self: flex-start;
     }
-    @media (min-width: 768px) { .submit-btn { align-self: auto; } }
 
     .submit-btn:hover {
-        background: var(--hover-color) !important;
-        transform: translateY(-1px);
-        box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+        opacity: 0.9;
     }
-    .submit-btn:active { transform: translateY(0); }
+
+    @media (max-width: 768px) {
+        .page-header h1 {
+            font-size: 1.75rem;
+        }
+
+        .form-row {
+            grid-template-columns: 1fr;
+        }
+
+        .form-header {
+            flex-direction: column;
+        }
+
+        .form-footer {
+            flex-direction: column;
+            align-items: stretch;
+        }
+
+        .submit-btn {
+            text-align: center;
+        }
+
+        .challenge-grid {
+            grid-template-columns: 1fr;
+        }
+    }
 </style>

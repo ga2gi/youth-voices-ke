@@ -2,273 +2,427 @@
     /** @type {import('./$types').PageData} */
     export let data;
     
-    // Grouped opportunities from the server load function
     const { groupedOpportunities } = data;
 
-    // Define the structure and display order for the main sections.
-    // The key in 'groupedOpportunities' must match the item.category value in your database.
     const sections = [
         { 
             id: 'engage', 
-            title: '🤝 Engage with Youth Voices KE & Partners (Non-Monetary)', 
-            description: 'Opportunities for hands-on involvement, skill-sharing, and community impact.'
+            title: 'Engage & Volunteer', 
+            description: 'Hands-on involvement, skill-sharing, and community impact opportunities.' 
         },
         { 
             id: 'develop', 
-            title: '🎓 Youth Programs & Fellowships (Development)', 
-            description: 'Structured programs, training, and small grants for professional and leadership growth.' 
+            title: 'Programs & Fellowships', 
+            description: 'Structured training, leadership development, and small grants for professional growth.' 
         },
         { 
             id: 'financial', 
-            title: '💰 Scholarships & Academic Aid (Financial)', 
-            description: 'Financial support and academic opportunities for continuing your education.' 
+            title: 'Scholarships & Academic Aid', 
+            description: 'Financial support and academic opportunities to continue your education.' 
         },
     ];
 
-    /**
-     * Helper function to determine which opportunities belong to which main section.
-     * @param {string} category The category name from the database (e.g., 'Scholarship')
-     * @returns {string} The ID of the main section ('engage', 'develop', or 'financial')
-     */
     function getMainSectionId(category) {
-        if (['Volunteer', 'Community Work', 'CSR Initiatives'].includes(category)) {
-            return 'engage';
-        }
-        if (['Leadership Programs', 'Grants & Fellowships', 'Mentorship'].includes(category)) {
-            return 'develop';
-        }
-        if (['Scholarship', 'Academic Aid'].includes(category)) {
-            return 'financial';
-        }
-        return 'other'; // Fallback
+        if (['Volunteer', 'Community Work', 'CSR Initiatives'].includes(category)) return 'engage';
+        if (['Leadership Programs', 'Grants & Fellowships', 'Mentorship'].includes(category)) return 'develop';
+        if (['Scholarship', 'Academic Aid'].includes(category)) return 'financial';
+        return 'other';
     }
 
-    /**
-     * Function to format the deadline date.
-     * @param {string | null} dateString 
-     * @returns {string}
-     */
     function formatDeadline(dateString) {
         if (!dateString) return 'Ongoing';
-        
         const date = new Date(dateString);
         if (isNaN(date)) return 'Check Link';
-
-        return date.toLocaleDateString('en-KE', { 
-            year: 'numeric', 
-            month: 'short', 
-            day: 'numeric' 
-        });
+        return date.toLocaleDateString('en-KE', { year: 'numeric', month: 'short', day: 'numeric' });
     }
+
+    $: hasAnyOpportunities = Object.values(groupedOpportunities).some(arr => arr.length > 0);
 </script>
 
-<div class="opportunities-page-wrapper container">
-    <header class="page-header">
-        <h1>Youth Opportunities Hub</h1>
-        <p class="tagline">
-            Your centralized resource for scholarships, volunteer work, youth programs, and community engagement in Kenya.
-        </p>
-    </header>
+<div class="page">
+    <!-- Header -->
+    <section class="page-header">
+        <h1>Youth Opportunities</h1>
+        <p>A curated directory of scholarships, programs, and engagement opportunities for young Kenyans.</p>
+    </section>
 
-    {#each sections as section}
-        <section id={section.id} class="opportunity-section">
-            <h2 class="section-title">{section.title}</h2>
-            <p class="section-description">{section.description}</p>
-            
-            <div class="category-grid">
-                {#each Object.entries(groupedOpportunities) as [categoryName, opportunitiesList]}
-                    {#if getMainSectionId(categoryName) === section.id}
-                        <div class="opportunity-category">
-                            <h3 class="category-header">{categoryName}</h3>
-                            
-                            {#if opportunitiesList.length > 0}
-                                <ul class="opportunity-list">
-                                    {#each opportunitiesList as opportunity}
-                                        <li class="opportunity-item">
-                                            <h4>{opportunity.title}</h4>
-                                            <p>{opportunity.description}</p>
-                                            
-                                            <div class="item-footer">
-                                                <span class="deadline-tag">
-                                                    Deadline: <strong>{formatDeadline(opportunity.application_deadline)}</strong>
-                                                </span>
-                                                <a 
-                                                    href={opportunity.link_url} 
-                                                    target="_blank" 
-                                                    rel="noopener noreferrer" 
-                                                    class="button-small button-primary"
-                                                >
-                                                    View & Apply →
-                                                </a>
-                                            </div>
-                                        </li>
-                                    {/each}
-                                </ul>
-                            {:else}
-                                <p class="no-opportunities">No active opportunities in this category right now. Check back soon!</p>
-                            {/if}
-                        </div>
-                    {/if}
-                {/each}
-            </div>
-            
-            {#if Object.keys(groupedOpportunities).length === 0 && section.id === 'engage'}
-                <div class="no-data-alert">
-                    <p>We are currently updating our opportunities list. Please ensure your internet connection is stable, or check back shortly.</p>
+    {#if hasAnyOpportunities}
+        {#each sections as section}
+            {@const sectionOpportunities = Object.entries(groupedOpportunities).filter(([cat]) => getMainSectionId(cat) === section.id)}
+            <section class="section">
+                <div class="section-header">
+                    <h2>{section.title}</h2>
+                    <p>{section.description}</p>
                 </div>
-            {/if}
-        </section>
-        <hr>
-    {/each}
+
+                <!-- Campus Ambassador Program - Featured Card -->
+                {#if section.id === 'engage'}
+                    <div class="featured-card">
+                        <div class="featured-badge">Featured</div>
+                        <div class="featured-content">
+                            <div class="featured-text">
+                                <h3>PolicyBridge Campus Ambassador Program</h3>
+                                <p>Represent PolicyBridge Kenya at your university or college. Coordinate policy labs, mobilize students, and transform campus ideas into national policy solutions. Join a national network of young leaders shaping Kenya's future.</p>
+                                <ul class="featured-details">
+                                    <li>Lead policy dialogues on campus</li>
+                                    <li>Organize solution submission drives</li>
+                                    <li>Connect students to national policy processes</li>
+                                    <li>Build leadership and advocacy skills</li>
+                                </ul>
+                            </div>
+                            <div class="featured-action">
+                                <a 
+                                    href="https://forms.gle/J2icK2FxxwFeA22z8" 
+                                    target="_blank" 
+                                    rel="noopener noreferrer" 
+                                    class="featured-link"
+                                >
+                                    Apply Now →
+                                </a>
+                                <span class="deadline-text">Rolling applications</span>
+                            </div>
+                        </div>
+                    </div>
+                {/if}
+
+                {#if sectionOpportunities.length > 0}
+                    <div class="grid">
+                        {#each sectionOpportunities as [categoryName, opportunitiesList]}
+                            {#if opportunitiesList.length > 0}
+                                <div class="category-block">
+                                    <h3 class="category-title">{categoryName}</h3>
+                                    
+                                    <div class="opportunities">
+                                        {#each opportunitiesList as opportunity}
+                                            <div class="card">
+                                                <div class="card-body">
+                                                    <h4>{opportunity.title}</h4>
+                                                    <p>{opportunity.description}</p>
+                                                </div>
+                                                <div class="card-footer">
+                                                    <span class="deadline">
+                                                        Deadline: <strong>{formatDeadline(opportunity.application_deadline)}</strong>
+                                                    </span>
+                                                    <a 
+                                                        href={opportunity.link_url} 
+                                                        target="_blank" 
+                                                        rel="noopener noreferrer" 
+                                                        class="link"
+                                                    >
+                                                        View & Apply →
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        {/each}
+                                    </div>
+                                </div>
+                            {/if}
+                        {/each}
+                    </div>
+                {:else if section.id !== 'engage'}
+                    <div class="empty-section">
+                        <p>No active opportunities in this category right now. Check back soon.</p>
+                    </div>
+                {/if}
+            </section>
+        {/each}
+    {:else}
+        <div class="empty">
+            <h3>No Opportunities Available</h3>
+            <p>We're updating our listings. Check back soon or ensure you have a stable internet connection.</p>
+        </div>
+    {/if}
 </div>
 
 <style>
-    /* --- General Layout --- */
-    .container {
+    .page {
         max-width: 1100px;
         margin: 0 auto;
-        padding: 0 20px;
-    }
-    
-    .opportunities-page-wrapper {
-        padding-top: 40px;
-        padding-bottom: 80px;
-    }
-    
-    hr {
-        margin: 50px 0;
-        border: 0;
-        border-top: 1px dashed var(--color-border-light);
+        padding: 56px 24px 80px;
+        font-family: system-ui, -apple-system, sans-serif;
+        color: #1a1a1a;
     }
 
-    /* --- Page Header --- */
+    /* Header */
     .page-header {
         text-align: center;
-        margin-bottom: 50px;
-        padding-bottom: 20px;
-        border-bottom: 3px solid var(--color-primary-accent);
+        margin-bottom: 56px;
     }
-    
+
     .page-header h1 {
-        font-size: 3em;
-        margin-bottom: 10px;
-        color: var(--color-text-dark);
+        font-size: 2.25rem;
+        font-weight: 800;
+        letter-spacing: -0.02em;
+        margin: 0 0 10px;
     }
-    
-    .tagline {
-        font-size: 1.2em;
-        color: var(--color-text-light);
-        max-width: 700px;
+
+    .page-header p {
+        font-size: 1rem;
+        color: #555;
+        max-width: 540px;
         margin: 0 auto;
+        line-height: 1.5;
     }
 
-    /* --- Section Styling --- */
-    .opportunity-section {
-        margin-bottom: 40px;
+    /* Section */
+    .section {
+        margin-bottom: 56px;
     }
 
-    .section-title {
-        font-size: 2.2em;
-        color: var(--color-secondary-accent);
-        margin-bottom: 10px;
-        text-align: center;
+    .section-header {
+        margin-bottom: 28px;
     }
 
-    .section-description {
-        text-align: center;
-        color: var(--color-text-light);
-        margin-bottom: 40px;
-        font-size: 1.1em;
+    .section-header h2 {
+        font-size: 1.35rem;
+        font-weight: 700;
+        margin: 0 0 6px;
+        color: #064e3b;
     }
 
-    /* --- Category Grid --- */
-    .category-grid {
+    .section-header p {
+        font-size: 0.9rem;
+        color: #64748b;
+        margin: 0;
+    }
+
+    /* Featured Card */
+    .featured-card {
+        background: linear-gradient(135deg, #f0fdf4 0%, #ecfdf5 100%);
+        border: 2px solid #064e3b;
+        border-radius: 12px;
+        padding: 28px;
+        margin-bottom: 24px;
+        position: relative;
+    }
+
+    .featured-badge {
+        position: absolute;
+        top: -12px;
+        left: 24px;
+        background: #064e3b;
+        color: white;
+        padding: 4px 14px;
+        border-radius: 100px;
+        font-size: 0.7rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+    }
+
+    .featured-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 32px;
+    }
+
+    .featured-text {
+        flex: 1;
+    }
+
+    .featured-text h3 {
+        font-size: 1.2rem;
+        font-weight: 700;
+        margin: 0 0 10px;
+        color: #064e3b;
+    }
+
+    .featured-text p {
+        font-size: 0.9rem;
+        color: #475569;
+        line-height: 1.6;
+        margin: 0 0 16px;
+    }
+
+    .featured-details {
+        margin: 0;
+        padding-left: 18px;
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        gap: 30px;
+        grid-template-columns: 1fr 1fr;
+        gap: 6px 24px;
     }
 
-    .opportunity-category {
-        background-color: var(--color-background-light);
-        padding: 20px;
-        border-radius: 8px;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-        border-left: 5px solid var(--color-primary-accent);
+    .featured-details li {
+        font-size: 0.83rem;
+        color: #475569;
+        line-height: 1.5;
     }
 
-    .category-header {
-        font-size: 1.5em;
-        color: var(--color-text-dark);
-        margin-top: 0;
-        margin-bottom: 15px;
-        padding-bottom: 5px;
-        border-bottom: 1px solid var(--color-border-light);
-    }
-
-    /* --- Opportunity List --- */
-    .opportunity-list {
-        list-style: none;
-        padding: 0;
+    .featured-action {
         display: flex;
         flex-direction: column;
+        align-items: center;
+        gap: 8px;
+        flex-shrink: 0;
+    }
+
+    .featured-link {
+        display: inline-block;
+        padding: 14px 28px;
+        background: #064e3b;
+        color: white;
+        text-decoration: none;
+        font-weight: 700;
+        font-size: 0.9rem;
+        border-radius: 8px;
+        white-space: nowrap;
+        transition: background 0.15s;
+    }
+
+    .featured-link:hover {
+        background: #043d2e;
+    }
+
+    .deadline-text {
+        font-size: 0.75rem;
+        color: #64748b;
+    }
+
+    /* Grid */
+    .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
         gap: 20px;
     }
 
-    .opportunity-item {
-        background-color: var(--color-white);
-        padding: 15px;
-        border-radius: 6px;
-        border: 1px solid var(--color-border-light);
+    /* Category Block */
+    .category-block {
+        background: #f8fafc;
+        border: 1px solid #e5e7eb;
+        border-radius: 10px;
+        padding: 20px;
     }
 
-    .opportunity-item h4 {
-        font-size: 1.2em;
-        color: var(--color-text-dark);
-        margin-top: 0;
-        margin-bottom: 5px;
+    .category-title {
+        font-size: 0.85rem;
         font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+        color: #475569;
+        margin: 0 0 16px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid #e5e7eb;
     }
 
-    .opportunity-item p {
-        font-size: 0.95em;
-        color: var(--color-text-light);
-        margin-bottom: 10px;
+    /* Cards */
+    .opportunities {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
     }
 
-    .item-footer {
+    .card {
+        background: white;
+        border: 1px solid #e5e7eb;
+        border-radius: 8px;
+        overflow: hidden;
+    }
+
+    .card-body {
+        padding: 16px;
+    }
+
+    .card-body h4 {
+        font-size: 0.95rem;
+        font-weight: 700;
+        margin: 0 0 6px;
+        line-height: 1.3;
+    }
+
+    .card-body p {
+        font-size: 0.83rem;
+        color: #555;
+        margin: 0;
+        line-height: 1.5;
+    }
+
+    .card-footer {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        margin-top: 10px;
-        padding-top: 10px;
-        border-top: 1px dashed var(--color-border-light);
+        padding: 12px 16px;
+        background: #fafafa;
+        border-top: 1px solid #e5e7eb;
     }
-    
-    .deadline-tag {
-        font-size: 0.9em;
-        color: var(--color-text-light);
+
+    .deadline {
+        font-size: 0.75rem;
+        color: #64748b;
     }
-    
-    .deadline-tag strong {
-        color: var(--color-secondary-accent);
+
+    .deadline strong {
+        color: #1a1a1a;
         font-weight: 600;
     }
 
-    /* --- Utility & Fallback --- */
-    .no-opportunities, .no-data-alert {
-        padding: 15px;
-        background-color: rgba(255, 193, 7, 0.1);
-        color: #856404; /* Darker yellow/gold color */
-        border: 1px solid #ffeeba;
-        border-radius: 4px;
-        text-align: center;
-        font-weight: 500;
+    .link {
+        font-size: 0.8rem;
+        font-weight: 600;
+        color: #064e3b;
+        text-decoration: none;
+        white-space: nowrap;
     }
-    
-    /* Responsive adjustment */
+
+    .link:hover {
+        text-decoration: underline;
+    }
+
+    /* Empty States */
+    .empty, .empty-section {
+        text-align: center;
+        padding: 40px 24px;
+        background: #f8fafc;
+        border: 1px solid #e5e7eb;
+        border-radius: 10px;
+        color: #64748b;
+    }
+
+    .empty h3 {
+        font-size: 1.15rem;
+        color: #1a1a1a;
+        margin: 0 0 8px;
+    }
+
+    .empty p, .empty-section p {
+        font-size: 0.9rem;
+        margin: 0;
+    }
+
     @media (max-width: 768px) {
-        .category-grid {
+        .page {
+            padding: 40px 16px 60px;
+        }
+
+        .page-header h1 {
+            font-size: 1.75rem;
+        }
+
+        .featured-content {
+            flex-direction: column;
+        }
+
+        .featured-details {
             grid-template-columns: 1fr;
+        }
+
+        .featured-action {
+            width: 100%;
+        }
+
+        .featured-link {
+            text-align: center;
+            width: 100%;
+        }
+
+        .grid {
+            grid-template-columns: 1fr;
+        }
+
+        .card-footer {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 8px;
         }
     }
 </style>

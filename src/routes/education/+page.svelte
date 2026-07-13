@@ -29,49 +29,50 @@
 </script>
 
 <svelte:head>
-    <title>Civic Education Hub — Policy Bridge KE</title>
+    <title>Civic Education — PolicyBridge Kenya</title>
     <meta name="description" content="Learn about governance, devolution, your rights, and how to participate in Kenya's policy-making process." />
 </svelte:head>
 
-<div class="education-page-container">
-    <header class="hub-header" in:fade>
-        <div class="header-content">
-            <span class="academy-tag">Policy Bridge Academy</span>
-            <h2>Civic Education Hub</h2>
-            <p class="subtitle">
-                Master the mechanics of governance, devolution, and policy-making. 
-                Learn your rights, access essential services, and build practical skills for civic engagement.
-            </p>
+<div class="page">
+    <!-- Header -->
+    <section class="page-header" in:fade>
+        <div class="header-main">
+            <span class="label">PolicyBridge Academy</span>
+            <h1>Civic Education</h1>
+            <p>Understand governance, devolution, and policy-making in Kenya. Learn your rights and build practical skills for meaningful civic engagement.</p>
         </div>
-        
-        <div class="progress-card">
-            <div class="progress-info">
-                <span class="percentage">{progressPercent}%</span>
-                <p class="progress-label">Mastery</p>
-            </div>
-            <div class="progress-bar-bg">
-                <div class="progress-bar-fill" style="width: {progressPercent}%"></div>
-            </div>
-            <p class="stats">{completedCount} of {totalLessons} Resources Completed</p>
-        </div>
-    </header>
 
+        <div class="progress-widget">
+            <div class="progress-ring">
+                <svg viewBox="0 0 100 100">
+                    <circle cx="50" cy="50" r="42" fill="none" stroke="#e5e7eb" stroke-width="8"/>
+                    <circle 
+                        cx="50" cy="50" r="42" 
+                        fill="none" 
+                        stroke="#064e3b" 
+                        stroke-width="8"
+                        stroke-linecap="round"
+                        stroke-dasharray={`${progressPercent * 2.64} 264`}
+                        transform="rotate(-90 50 50)"
+                    />
+                </svg>
+                <span class="ring-text">{progressPercent}%</span>
+            </div>
+            <p class="progress-detail">{completedCount} of {totalLessons} completed</p>
+        </div>
+    </section>
+
+    <!-- Content -->
     {#if categories.length > 0}
-        <div class="learning-path">
+        <div class="content">
             {#each categories as category, i}
-                <section class="category-section" in:fly={{ y: 30, delay: i * 150 }}>
+                <section class="category" in:fly={{ y: 20, delay: i * 100 }}>
                     <div class="category-header">
-                        <div class="level-badge">
-                            <span class="label">LEVEL</span>
-                            <span class="number">0{i + 1}</span>
-                        </div>
-                        <div class="header-text">
-                            <h3 class="category-heading">{category}</h3>
-                            <div class="divider"></div>
-                        </div>
+                        <span class="category-number">{i + 1}</span>
+                        <h2>{category}</h2>
                     </div>
                     
-                    <div class="grid-layout">
+                    <div class="grid">
                         {#each categorizedContent[category] as item (item.id)}
                             <EducationItem 
                                 {item} 
@@ -83,202 +84,207 @@
             {/each}
         </div>
     {:else}
-        <div class="empty-state">
-            <div class="empty-icon">📖</div>
-            <h3>Curating Curriculum</h3>
-            <p>Our policy team is finalizing these modules. Check back shortly for structured learning paths on governance, rights, and civic engagement.</p>
+        <div class="empty">
+            <h3>Curriculum in Development</h3>
+            <p>Our policy team is preparing these modules. Check back soon for structured learning paths on governance, rights, and civic engagement.</p>
         </div>
     {/if}
 
-    <footer class="education-footer">
-        <p><strong>Disclaimer:</strong> This educational content is for informational purposes and does not constitute legal advice. 
-        For specific legal matters, contact a qualified advocate or the organizations listed in our service directories.</p>
-        <p>Content last updated: 2025. Contact numbers verified where possible. Please report any outdated information.</p>
+    <!-- Footer -->
+    <footer class="footer">
+        <p><strong>Disclaimer:</strong> This content is for informational purposes and does not constitute legal advice. For specific legal matters, consult a qualified advocate or the organizations listed in our directories.</p>
+        <p>Last updated: 2025. Please report any outdated information.</p>
     </footer>
 </div>
 
 <style>
-    .education-page-container { 
-        padding: 80px 24px; 
-        max-width: 1240px; 
-        margin: 0 auto; 
-        font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-        color: #0f172a;
+    .page {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 64px 24px 80px;
+        font-family: system-ui, -apple-system, sans-serif;
+        color: #1a1a1a;
     }
-    
-    .hub-header { 
-        display: flex; 
-        justify-content: space-between; 
-        align-items: flex-end; 
-        gap: 40px; 
-        margin-bottom: 80px; 
-        border-left: 6px solid #064e3b; 
-        padding-left: 40px; 
+
+    /* Header */
+    .page-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 40px;
+        margin-bottom: 64px;
         flex-wrap: wrap;
     }
 
-    .academy-tag { 
-        background: #064e3b; 
-        color: white; 
-        padding: 6px 12px; 
-        font-size: 0.7rem; 
-        font-weight: 700; 
-        text-transform: uppercase; 
-        letter-spacing: 0.05em;
+    .header-main {
+        flex: 1;
+        min-width: 300px;
     }
 
-    h2 { 
-        font-size: 3.5rem; 
-        color: #064e3b; 
-        margin: 20px 0 10px; 
-        font-weight: 800; 
-        letter-spacing: -0.05em; 
+    .label {
+        font-size: 0.7rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        color: #064e3b;
+        display: inline-block;
+        margin-bottom: 12px;
+        padding: 4px 10px;
+        background: #f0fdf4;
+        border-radius: 4px;
     }
 
-    .subtitle { 
-        color: #475569; 
-        font-size: 1.1rem; 
-        max-width: 600px; 
+    .header-main h1 {
+        font-size: 2.5rem;
+        font-weight: 800;
+        letter-spacing: -0.03em;
+        margin: 0 0 12px 0;
+    }
+
+    .header-main p {
+        font-size: 1rem;
+        color: #555;
         line-height: 1.6;
-    }
-
-    .progress-card { 
-        background: white; 
-        padding: 30px; 
-        border: 3px solid #0f172a; 
-        width: 320px; 
-        box-shadow: 10px 10px 0 #064e3b; 
-        flex-shrink: 0;
-    }
-
-    .percentage { 
-        font-size: 2.5rem; 
-        font-weight: 800; 
-        color: #064e3b; 
-    }
-
-    .progress-label { 
-        font-size: 0.75rem; 
-        font-weight: 700; 
-        text-transform: uppercase; 
-        color: #64748b; 
-        margin: 0 0 4px 0;
-    }
-
-    .progress-bar-bg { 
-        background: #f1f5f9; 
-        height: 10px; 
-        margin: 15px 0; 
-        border: 1px solid #0f172a; 
-        border-radius: 99px;
-        overflow: hidden;
-    }
-
-    .progress-bar-fill { 
-        background: #064e3b; 
-        height: 100%; 
-        transition: width 0.5s ease; 
-        border-radius: 99px;
-    }
-
-    .stats { 
-        font-size: 0.8rem; 
-        color: #64748b; 
-        font-weight: 600; 
+        max-width: 560px;
         margin: 0;
     }
 
-    .category-section { 
-        margin-bottom: 80px; 
+    /* Progress Widget */
+    .progress-widget {
+        flex-shrink: 0;
+        text-align: center;
     }
 
-    .category-header { 
-        display: flex; 
-        align-items: center; 
-        gap: 20px; 
-        margin-bottom: 40px; 
+    .progress-ring {
+        position: relative;
+        width: 100px;
+        height: 100px;
+        margin: 0 auto 8px;
     }
 
-    .level-badge { 
-        background: #0f172a; 
-        color: white; 
-        padding: 10px; 
-        text-align: center; 
-        min-width: 60px; 
+    .progress-ring svg {
+        width: 100%;
+        height: 100%;
     }
 
-    .level-badge .label { 
-        font-size: 0.6rem; 
-        font-weight: 700; 
-        display: block; 
-        text-transform: uppercase; 
-        letter-spacing: 0.05em;
+    .ring-text {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 1.3rem;
+        font-weight: 700;
+        color: #064e3b;
     }
 
-    .level-badge .number { 
-        font-size: 1.5rem; 
-        font-weight: 800; 
-        display: block; 
-        line-height: 1;
+    .progress-detail {
+        font-size: 0.78rem;
+        color: #64748b;
+        margin: 0;
     }
 
-    .category-heading { 
-        font-size: 1.8rem; 
-        font-weight: 800; 
-        text-transform: uppercase; 
-        margin: 0; 
-        letter-spacing: -0.02em;
+    /* Categories */
+    .content {
+        display: flex;
+        flex-direction: column;
+        gap: 56px;
     }
 
-    .divider { 
-        height: 4px; 
-        width: 50px; 
-        background: #064e3b; 
-        margin-top: 8px; 
+    .category-header {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        margin-bottom: 24px;
     }
 
-    .grid-layout { 
-        display: grid; 
-        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); 
-        gap: 30px; 
+    .category-number {
+        width: 32px;
+        height: 32px;
+        background: #064e3b;
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        font-size: 0.85rem;
+        border-radius: 6px;
+        flex-shrink: 0;
+    }
+
+    .category-header h2 {
+        font-size: 1.35rem;
+        font-weight: 700;
+        margin: 0;
+        color: #1a1a1a;
+    }
+
+    .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+        gap: 20px;
     }
 
     /* Empty State */
-    .empty-state {
+    .empty {
         text-align: center;
-        padding: 80px 24px;
+        padding: 64px 24px;
         color: #64748b;
     }
-    .empty-icon { font-size: 3rem; margin-bottom: 16px; }
-    .empty-state h3 { font-size: 1.5rem; color: #0f172a; margin: 0 0 8px; }
-    .empty-state p { font-size: 1rem; max-width: 500px; margin: 0 auto; line-height: 1.6; }
+
+    .empty h3 {
+        font-size: 1.25rem;
+        color: #1a1a1a;
+        margin: 0 0 8px;
+    }
+
+    .empty p {
+        font-size: 0.95rem;
+        max-width: 480px;
+        margin: 0 auto;
+        line-height: 1.6;
+    }
 
     /* Footer */
-    .education-footer {
+    .footer {
         margin-top: 80px;
-        padding: 24px;
+        padding: 20px 24px;
         background: #f8fafc;
-        border-radius: 12px;
-        border: 1px solid #e2e8f0;
-        font-size: 0.82rem;
+        border: 1px solid #e5e7eb;
+        border-radius: 8px;
+        font-size: 0.8rem;
         color: #64748b;
         line-height: 1.6;
         text-align: center;
     }
-    .education-footer p { margin: 0 0 8px; }
-    .education-footer p:last-child { margin-bottom: 0; }
+
+    .footer p {
+        margin: 0 0 6px;
+    }
+
+    .footer p:last-child {
+        margin-bottom: 0;
+    }
 
     @media (max-width: 768px) {
-        .education-page-container { padding: 40px 16px; }
-        h2 { font-size: 2.2rem; }
-        .hub-header { 
-            flex-direction: column; 
-            align-items: flex-start; 
-            padding-left: 24px; 
+        .page {
+            padding: 40px 16px 60px;
+        }
+
+        .page-header {
+            flex-direction: column;
             gap: 24px;
         }
-        .progress-card { width: 100%; }
-        .category-heading { font-size: 1.3rem; }
-        .grid-layout { grid-template-columns: 1fr; }
+
+        .header-main h1 {
+            font-size: 2rem;
+        }
+
+        .grid {
+            grid-template-columns: 1fr;
+        }
+
+        .progress-widget {
+            align-self: flex-start;
+        }
     }
 </style>
