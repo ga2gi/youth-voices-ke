@@ -14,40 +14,25 @@
 </script>
 
 <svelte:head>
-    <title>Policy Bridge KE | Youth Civic Platform in Kenya for Public Policy & Governance Reform</title>
-
-    <meta name="description" content="Policy Bridge KE is a youth-led civic platform in Kenya transforming grassroots ideas into public policy, governance accountability, and legislative reform through citizen engagement." />
-
-    <meta name="keywords" content="youth civic platform Kenya, civic tech Kenya, public policy Kenya, governance Kenya, youth participation Kenya, legislative reform Kenya, Kenya youth policy, civic engagement Kenya" />
-
-    <meta name="author" content="Policy Bridge KE" />
-
-    <meta name="robots" content="index, follow" />
-
-    <meta property="og:title" content="Policy Bridge KE | Youth Civic Platform in Kenya" />
-    <meta property="og:description" content="Transforming grassroots innovation into public policy and governance reform in Kenya." />
+    <title>PolicyBridge Kenya — Youth-Led Public Policy & Civic Engagement</title>
+    <meta name="description" content="PolicyBridge Kenya is a youth-led civic platform strengthening youth participation in governance through crowdsourced solutions and evidence-based policy briefs." />
+    <meta property="og:title" content="PolicyBridge Kenya — Youth-Led Public Policy" />
+    <meta property="og:description" content="Strengthening meaningful youth participation in governance and policy making." />
     <meta property="og:type" content="website" />
 </svelte:head>
 
-<div class="homepage-wrapper">
+<div class="page">
 
-    <!-- ==================== HERO ==================== -->
-    <section 
-        class="hero-section" 
-        style="background-image: linear-gradient(rgba(5, 46, 22, 0.85), rgba(5, 46, 22, 0.85)), url({heroBg});"
-    >
-        <div class="container hero-content">
-            <span class="org-subtext">YOUTH-LED CIVIC PLATFORM | KENYA</span>
-            <h1>Policy Bridge KE</h1>
+    <!-- Hero -->
+    <section class="hero" style="background-image: linear-gradient(rgba(5, 46, 22, 0.9), rgba(5, 46, 22, 0.9)), url({heroBg});">
+        <div class="container">
+            <span class="hero-kicker">Youth-Led Public Policy & Civic Engagement</span>
+            <h1>PolicyBridge <span class="text-green-light">KE</span></h1>
             <div class="hero-line"></div>
-
-            <p class="tagline">
-                Policy Bridge KE is a youth-led civic platform in Kenya transforming grassroots ideas into actionable public policy and legislative reform.
-                <br><br>
-                We connect young people, communities, and decision-makers to shape evidence-based governance and national development.
+            <p class="hero-desc">
+                PolicyBridge KE is a youth-led public policy and civic engagement organization dedicated to strengthening meaningful youth participation in governance and policy making. Through our Policy Lab model, we crowdsource youth-generated solutions, facilitate community participation, and synthesize ideas into evidence-based briefs for institutional engagement.
             </p>
-
-            <div class="cta-buttons">
+            <div class="hero-actions">
                 <a href="/submit" class="btn btn-primary">Contribute Your Solution</a>
                 <a href="/briefs" class="btn btn-secondary">Policy Repository</a>
                 <a href="/get-involved" class="btn btn-outline">Get Involved</a>
@@ -55,120 +40,95 @@
         </div>
     </section>
 
-    <!-- ==================== MANIFESTO ==================== -->
-    <section class="manifesto-section">
+    <!-- Manifesto -->
+    <section class="manifesto">
         <div class="container">
             <div class="manifesto-card">
-                <div class="manifesto-badge">OUR BELIEF</div>
-                <h2 class="manifesto-headline">
-                    Youth as Policy Co-Creators.<br>
-                    <span class="headline-emphasis">Not voices in the crowd.</span>
-                </h2>
-                <div class="manifesto-divider"></div>
-                <p class="manifesto-body">
-                    We empower young Kenyans to shape public policy by proposing practical, 
-                    actionable solutions — then deliver them directly to decision-makers with 
-                    transparency and accountability.
-                </p>
-                <p class="manifesto-closing">
-                    Simple. Open. Credible.
-                </p>
+                <span class="kicker">Our Belief</span>
+                <h2>Youth as Policy Co-Creators.<br><span class="text-green">Not voices in the crowd.</span></h2>
+                <div class="divider"></div>
+                <p>We empower young Kenyans to shape public policy by proposing practical, actionable solutions — then deliver them directly to decision-makers with transparency and accountability.</p>
+                <p class="closing">Simple. Open. Credible.</p>
             </div>
         </div>
     </section>
 
-    <!-- ==================== PIPELINE ==================== -->
-    <section class="action-module container">
-        <div class="section-header">
-            <span class="section-kicker">METHODOLOGY</span>
-            <h2 class="section-title">The Policy Lab Pipeline</h2>
-        </div>
-        
-        <div class="pipeline-grid">
-            <div class="pipeline-step">
-                <div class="step-num">01</div>
-                <h3>Propose</h3>
-                <p>Young Kenyans submit practical solutions to live policy challenges — no jargon, just clear thinking and evidence.</p>
-            </div>
-            
-            <div class="pipeline-divider">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M5 12h14M12 5l7 7-7 7"/>
-                </svg>
-            </div>
-
-            <div class="pipeline-step">
-                <div class="step-num">02</div>
-                <h3>Synthesize</h3>
-                <p>Expert-led refinement of community ideas into formal, evidence-based policy briefs ready for decision-makers.</p>
-            </div>
-            
-            <div class="pipeline-divider">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M5 12h14M12 5l7 7-7 7"/>
-                </svg>
-            </div>
-
-            <div class="pipeline-step highlight-step">
-                <div class="step-num">03</div>
-                <div class="step-header">
-                    <h3>Advocate & Track</h3>
-                    <span class="live-pulse">LIVE</span>
-                </div>
-                <p>Direct delivery to stakeholders with real-time <strong>Accountability Tracking</strong> — so you see who responded and who hasn't.</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- ==================== FEATURED BRIEF ==================== -->
-    <section class="featured-highlight">
+    <!-- Pipeline -->
+    <section class="pipeline">
         <div class="container">
-            <div class="brief-card">
-                <div class="brief-label">LATEST POLICY PUBLICATION</div>
-                <div class="brief-body">
-                    <h3>Unlocking Kenya's Youth Access to Capital</h3>
-                    <p>A youth-developed strategic framework addressing the KES 500B financing gap via a Five-Pillar reform strategy.</p>
-                    <div class="brief-actions">
-                        <a href="/briefs" class="text-cta">View Policy Brief <span>→</span></a>
-                    </div>
+            <div class="section-header">
+                <span class="kicker">Methodology</span>
+                <h2>The Policy Lab Pipeline</h2>
+            </div>
+
+            <div class="pipeline-grid">
+                <div class="pipeline-step">
+                    <span class="step-num">01</span>
+                    <h3>Crowdsource</h3>
+                    <p>Young Kenyans submit practical solutions to live policy challenges through our platform, surveys, and community dialogues.</p>
+                </div>
+                <div class="pipeline-step">
+                    <span class="step-num">02</span>
+                    <h3>Synthesize</h3>
+                    <p>Community ideas are refined into formal, evidence-based policy briefs ready for institutional engagement.</p>
+                </div>
+                <div class="pipeline-step">
+                    <span class="step-num">03</span>
+                    <h3>Advocate & Track</h3>
+                    <p>Briefs are delivered to government and stakeholders with public accountability tracking — so you see who responds.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- ==================== METRICS ==================== -->
-    <section class="impact-snapshot container">
-        <div class="section-header">
-            <span class="section-kicker">TRANSPARENCY</span>
-            <h2 class="section-title">Governance Metrics</h2>
-            <p class="section-subtitle">Real-time indicators tracking our policy impact and community growth.</p>
-        </div>
-
-        <div class="metrics-grid">
-            <div class="metric-card active-metric">
-                <span class="metric-value">{metrics.publishedBriefs}</span>
-                <span class="metric-label">Policy Brief Published</span>
-                <p class="metric-desc">Youth Access to Capital Framework</p>
-            </div>
-
-            <div class="metric-card">
-                <span class="metric-value">{metrics.liveChallenges}</span>
-                <span class="metric-label">Live Policy Challenges</span>
-                <p class="metric-desc">Open for youth-led solutions</p>
-            </div>
-
-            <div class="metric-card">
-                <span class="metric-value">{metrics.communityMembers}</span>
-                <span class="metric-label">Youth Contributors</span>
-                <p class="metric-desc">Growing community of co-creators</p>
+    <!-- Featured Brief -->
+    <section class="featured">
+        <div class="container">
+            <div class="featured-card">
+                <span class="featured-label">Latest Policy Publication</span>
+                <h3>Unlocking Kenya's Youth Access to Capital</h3>
+                <p>A youth-developed strategic framework addressing the KES 500B financing gap via a Five-Pillar reform strategy.</p>
+                <a href="/briefs" class="featured-link">View Policy Brief →</a>
             </div>
         </div>
-        
-        <div class="bottom-cta">
+    </section>
+
+    <!-- Metrics -->
+    <section class="metrics">
+        <div class="container">
+            <div class="section-header">
+                <span class="kicker">Transparency</span>
+                <h2>Governance Metrics</h2>
+                <p class="section-subtitle">Real-time indicators tracking our policy impact and community growth.</p>
+            </div>
+
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <span class="metric-value">{metrics.publishedBriefs}</span>
+                    <span class="metric-label">Policy Brief Published</span>
+                    <p class="metric-desc">Youth Access to Capital Framework</p>
+                </div>
+                <div class="metric-card dark">
+                    <span class="metric-value">{metrics.liveChallenges}</span>
+                    <span class="metric-label">Live Policy Challenges</span>
+                    <p class="metric-desc">Open for youth-led solutions</p>
+                </div>
+                <div class="metric-card">
+                    <span class="metric-value">{metrics.communityMembers}</span>
+                    <span class="metric-label">Youth Contributors</span>
+                    <p class="metric-desc">Growing community of co-creators</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Bottom CTA -->
+    <section class="bottom-cta">
+        <div class="container">
             <p>You see the issues. You live the challenges. <strong>You design the solutions.</strong></p>
-            <div class="cta-group">
+            <div class="cta-actions">
                 <a href="/submit" class="btn btn-primary">Contribute Your Solution</a>
-                <a href="/get-involved" class="btn btn-outline-dark">Join the Community</a>
+                <a href="/get-involved" class="btn btn-dark-outline">Join the Community</a>
             </div>
         </div>
     </section>
@@ -176,417 +136,428 @@
 </div>
 
 <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
-
-    .homepage-wrapper {
-        font-family: 'Inter', sans-serif;
+    .page {
+        font-family: system-ui, -apple-system, sans-serif;
         color: #0f172a;
-        line-height: 1.6;
-        padding-bottom: 120px;
         background: #ffffff;
     }
 
     .container {
-        max-width: 1200px;
+        max-width: 1100px;
         margin: 0 auto;
         padding: 0 24px;
     }
 
-    /* ==================== HERO ==================== */
-    .hero-section {
-        position: relative;
-        background-color: #052e16;
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
-        color: #ffffff;
-        padding: 140px 0 100px 0;
+    .kicker {
+        font-size: 0.7rem;
+        font-weight: 800;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        color: #064e3b;
+    }
+
+    .text-green { color: #064e3b; }
+    .text-green-light { color: #6ee7b7; }
+
+    .section-header {
+        text-align: center;
+        margin-bottom: 48px;
+    }
+
+    .section-header h2 {
+        font-size: 2rem;
+        font-weight: 800;
+        letter-spacing: -0.03em;
+        margin: 8px 0;
+    }
+
+    .section-subtitle {
+        color: #64748b;
+        font-size: 0.95rem;
+        margin: 8px 0 0;
+    }
+
+    .divider {
+        width: 48px;
+        height: 3px;
+        background: #064e3b;
+        margin: 24px auto;
+    }
+
+    /* Buttons */
+    .btn {
+        display: inline-block;
+        padding: 16px 28px;
+        font-weight: 700;
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        text-decoration: none;
+        border-radius: 6px;
+        transition: all 0.15s;
         text-align: center;
     }
 
-    .hero-content { position: relative; z-index: 1; }
-
-    .org-subtext {
-        display: block;
-        font-size: 0.7rem;
-        font-weight: 800;
-        letter-spacing: 4px;
-        color: #10b981;
-        margin-bottom: 1.5rem;
+    .btn-primary {
+        background: #dc2626;
+        color: white;
     }
 
-    h1 {
+    .btn-primary:hover {
+        background: #b91c1c;
+    }
+
+    .btn-secondary {
+        background: #064e3b;
+        color: white;
+    }
+
+    .btn-secondary:hover {
+        background: #043d2e;
+    }
+
+    .btn-outline {
+        border: 2px solid rgba(255, 255, 255, 0.5);
+        color: white;
+    }
+
+    .btn-outline:hover {
+        background: white;
+        color: #064e3b;
+    }
+
+    .btn-dark-outline {
+        border: 2px solid #0f172a;
+        color: #0f172a;
+    }
+
+    .btn-dark-outline:hover {
+        background: #0f172a;
+        color: white;
+    }
+
+    /* Hero */
+    .hero {
+        background-size: cover;
+        background-position: center;
+        padding: 100px 0;
+        text-align: center;
+        color: white;
+    }
+
+    .hero-kicker {
+        font-size: 0.72rem;
+        font-weight: 700;
+        letter-spacing: 3px;
+        color: #6ee7b7;
+        text-transform: uppercase;
+    }
+
+    .hero h1 {
+        font-size: clamp(2.5rem, 7vw, 4rem);
         font-weight: 800;
-        font-size: clamp(2.5rem, 8vw, 4.5rem);
-        margin: 0;
-        line-height: 1.1;
-        letter-spacing: -0.05em;
+        letter-spacing: -0.04em;
+        margin: 16px 0;
     }
 
     .hero-line {
-        height: 4px; 
-        width: 80px;
-        background: #10b981;
-        margin: 32px auto;
+        width: 60px;
+        height: 3px;
+        background: #6ee7b7;
+        margin: 24px auto;
     }
 
-    .tagline {
-        font-size: clamp(1.05rem, 2vw, 1.2rem);
-        max-width: 720px;
-        margin: 0 auto 48px;
-        color: rgba(255,255,255,0.85);
-        font-weight: 400;
+    .hero-desc {
+        font-size: 1.05rem;
+        max-width: 680px;
+        margin: 0 auto 36px;
+        color: rgba(255, 255, 255, 0.85);
         line-height: 1.7;
     }
 
-    .cta-buttons { 
-        display: flex; 
-        flex-direction: column; 
-        gap: 16px; 
-        align-items: center; 
-        justify-content: center; 
-    }
-    @media (min-width: 768px) { 
-        .cta-buttons { flex-direction: row; gap: 20px; } 
+    .hero-actions {
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+        align-items: center;
+        justify-content: center;
     }
 
-    .btn {
-        display: inline-block;
-        padding: 18px 32px;
-        font-weight: 700;
-        text-transform: uppercase;
-        font-size: 0.8rem;
-        letter-spacing: 1px;
-        text-decoration: none;
-        transition: all 0.3s ease;
-        border-radius: 8px;
-        min-width: 220px;
-        text-align: center;
+    @media (min-width: 768px) {
+        .hero-actions {
+            flex-direction: row;
+            gap: 18px;
+        }
+        .hero {
+            padding: 120px 0;
+        }
     }
 
-    .btn-primary { background: #10b981; color: white; border: none; }
-    .btn-primary:hover { background: #059669; transform: translateY(-3px); box-shadow: 0 10px 20px rgba(16,185,129,0.2); }
-
-    .btn-secondary { background: #ef4444; color: white; border: none; }
-    .btn-secondary:hover { background: #dc2626; transform: translateY(-3px); }
-
-    .btn-outline { border: 2px solid rgba(255,255,255,0.4); color: #ffffff; }
-    .btn-outline:hover { background: #ffffff; color: #064e3b; border-color: #ffffff; }
-
-    .btn-outline-dark { border: 2px solid #0f172a; color: #0f172a; }
-    .btn-outline-dark:hover { background: #0f172a; color: #ffffff; }
-
-    /* ==================== MANIFESTO ==================== */
-    .manifesto-section {
-        padding: 0 0 0 0;
+    /* Manifesto */
+    .manifesto {
         margin-top: -40px;
         position: relative;
         z-index: 2;
+        padding-bottom: 80px;
     }
 
     .manifesto-card {
-        background: #ffffff;
-        border: 2px solid #0f172a;
-        border-radius: 16px;
-        padding: 56px 48px;
+        background: white;
+        border: 1px solid #e5e7eb;
+        border-radius: 12px;
+        padding: 48px;
         text-align: center;
-        box-shadow: 0 20px 40px rgba(5, 46, 22, 0.12);
-        max-width: 800px;
+        max-width: 760px;
+        margin: 0 auto;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.06);
+    }
+
+    .manifesto-card h2 {
+        font-size: clamp(1.5rem, 3vw, 2rem);
+        font-weight: 800;
+        line-height: 1.3;
+        letter-spacing: -0.02em;
+        margin: 12px 0 0;
+    }
+
+    .manifesto-card p {
+        font-size: 1rem;
+        color: #555;
+        line-height: 1.7;
+        max-width: 520px;
         margin: 0 auto;
     }
 
-    .manifesto-badge {
-        display: inline-block;
-        font-size: 0.68rem;
-        font-weight: 800;
-        letter-spacing: 3px;
-        color: #10b981;
-        margin-bottom: 20px;
-    }
-
-    .manifesto-headline {
-        font-size: clamp(1.6rem, 3vw, 2.2rem);
-        font-weight: 800;
-        line-height: 1.3;
-        letter-spacing: -0.03em;
-        color: #0f172a;
-        margin: 0 0 24px 0;
-    }
-
-    .headline-emphasis {
-        color: #10b981;
-    }
-
-    .manifesto-divider {
-        width: 48px;
-        height: 3px;
-        background: #10b981;
-        margin: 0 auto 28px;
-    }
-
-    .manifesto-body {
-        font-size: 1.08rem;
-        color: #475569;
-        line-height: 1.75;
-        max-width: 600px;
-        margin: 0 auto 20px;
-    }
-
-    .manifesto-closing {
-        font-size: 0.85rem;
+    .closing {
+        font-size: 0.78rem;
         font-weight: 700;
         letter-spacing: 4px;
         text-transform: uppercase;
         color: #94a3b8;
+        margin-top: 20px !important;
+    }
+
+    /* Pipeline */
+    .pipeline {
+        padding: 80px 0;
+        background: #f8fafc;
+    }
+
+    .pipeline-grid {
+        display: grid;
+        gap: 28px;
+    }
+
+    @media (min-width: 900px) {
+        .pipeline-grid {
+            grid-template-columns: repeat(3, 1fr);
+        }
+    }
+
+    .pipeline-step {
+        background: white;
+        padding: 32px;
+        border-radius: 10px;
+        border: 1px solid #e5e7eb;
+        border-top: 3px solid #064e3b;
+    }
+
+    .step-num {
+        font-weight: 800;
+        color: #d1d5db;
+        font-size: 2.8rem;
+        line-height: 1;
+        display: block;
+        margin-bottom: 16px;
+    }
+
+    .pipeline-step h3 {
+        font-size: 1.2rem;
+        font-weight: 700;
+        margin: 0 0 8px;
+        color: #1a1a1a;
+    }
+
+    .pipeline-step p {
+        color: #555;
+        font-size: 0.9rem;
         margin: 0;
-    }
-
-    /* ==================== SECTION HEADERS ==================== */
-    .section-header { 
-        text-align: center; 
-        margin-bottom: 64px; 
-        margin-top: 100px;
-    }
-    .section-kicker { 
-        color: #10b981; 
-        font-weight: 800; 
-        font-size: 0.75rem; 
-        letter-spacing: 3px; 
-    }
-    .section-title { 
-        font-size: 2.5rem; 
-        font-weight: 800; 
-        margin-top: 12px; 
-        margin-bottom: 8px;
-        letter-spacing: -0.03em; 
-    }
-    .section-subtitle {
-        color: #64748b;
-        font-size: 1.05rem;
-        margin: 0;
-    }
-
-    /* ==================== PIPELINE ==================== */
-    .pipeline-grid { 
-        display: grid; 
-        gap: 32px; 
-        margin: 60px 0 100px 0; 
-    }
-
-    .pipeline-step { 
-        padding: 40px; 
-        border-radius: 12px; 
-        background: #ffffff; 
-        border: 1px solid #e2e8f0; 
-        transition: border-color 0.3s ease;
-    }
-    
-    .step-num { 
-        font-weight: 800; 
-        color: #f1f5f9; 
-        font-size: 3.5rem; 
-        line-height: 1; 
-        margin-bottom: 20px; 
-    }
-    .pipeline-step h3 { 
-        margin: 0 0 12px 0; 
-        font-size: 1.5rem; 
-        font-weight: 700; 
-        color: #1e293b; 
-    }
-    .pipeline-step p { 
-        color: #64748b; 
-        font-size: 1rem; 
-        margin: 0; 
         line-height: 1.6;
     }
-    
-    .step-header {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        margin-bottom: 12px;
-    }
-    .step-header h3 { margin: 0; }
 
-    .live-pulse {
-        font-size: 0.65rem; 
-        font-weight: 800; 
-        color: #059669; 
-        background: #ecfdf5;
-        padding: 4px 10px; 
-        border-radius: 100px; 
-        border: 1px solid #059669;
-        animation: livePulse 2s infinite;
+    /* Featured */
+    .featured {
+        padding: 80px 0;
     }
 
-    @keyframes livePulse {
-        0%, 100% { opacity: 1; }
-        50% { opacity: 0.6; }
+    .featured-card {
+        background: white;
+        border: 1px solid #e5e7eb;
+        border-radius: 12px;
+        padding: 40px;
+        border-left: 5px solid #064e3b;
     }
 
-    .highlight-step { 
-        border: 2px solid #10b981; 
-        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05); 
-    }
-    .pipeline-divider { 
-        display: none; 
-        align-self: center; 
-        color: #cbd5e1; 
+    .featured-label {
+        font-size: 0.7rem;
+        font-weight: 800;
+        letter-spacing: 2px;
+        color: #064e3b;
+        text-transform: uppercase;
     }
 
-    @media (min-width: 1024px) {
-        .pipeline-grid { 
-            grid-template-columns: 1fr auto 1fr auto 1fr; 
-            align-items: stretch; 
-        }
-        .pipeline-divider { display: block; }
-    }
-
-    /* ==================== FEATURED BRIEF ==================== */
-    .featured-highlight { 
-        background: #f8fafc; 
-        padding: 120px 0; 
-    }
-    .brief-card {
-        background: white; 
-        padding: 56px; 
-        border-radius: 16px;
-        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); 
-        border-left: 8px solid #ef4444;
-    }
-    .brief-label { 
-        color: #ef4444; 
-        font-weight: 800; 
-        font-size: 0.72rem; 
-        letter-spacing: 2px; 
-        margin-bottom: 20px; 
-    }
-    .brief-card h3 { 
-        font-size: 2.2rem; 
-        font-weight: 800; 
-        margin-bottom: 16px; 
-        letter-spacing: -0.02em; 
+    .featured-card h3 {
+        font-size: 1.6rem;
+        font-weight: 800;
+        margin: 10px 0;
+        letter-spacing: -0.02em;
         line-height: 1.2;
     }
-    .brief-card p {
-        color: #475569;
-        font-size: 1.05rem;
-        line-height: 1.7;
-        max-width: 680px;
-    }
-    .text-cta { 
-        display: inline-block;
-        color: #10b981; 
-        text-decoration: none; 
-        font-weight: 700; 
-        font-size: 0.9rem; 
-        margin-top: 28px; 
-    }
-    .text-cta:hover { text-decoration: underline; }
-    .text-cta span { transition: transform 0.2s ease; display: inline-block; }
-    .text-cta:hover span { transform: translateX(4px); }
 
-    /* ==================== METRICS ==================== */
-    .metrics-grid { 
-        display: grid; 
-        grid-template-columns: 1fr; 
-        gap: 24px; 
-        margin-bottom: 80px; 
-    }
-    @media (min-width: 640px) { 
-        .metrics-grid { grid-template-columns: repeat(3, 1fr); } 
+    .featured-card p {
+        color: #555;
+        font-size: 1rem;
+        line-height: 1.6;
+        max-width: 560px;
+        margin: 0 0 20px;
     }
 
-    .metric-card { 
-        background: #ffffff; 
-        padding: 50px 24px; 
-        text-align: center; 
-        border: 1px solid #e2e8f0; 
-        border-radius: 12px;
-        transition: all 0.3s ease;
-    }
-    .metric-card:hover {
-        border-color: #cbd5e1;
-        box-shadow: 0 8px 24px rgba(0,0,0,0.04);
+    .featured-link {
+        font-size: 0.85rem;
+        font-weight: 700;
+        color: #064e3b;
+        text-decoration: none;
     }
 
-    .active-metric { 
-        background: #0f172a; 
-        color: white; 
-        border: none; 
+    .featured-link:hover {
+        color: #043d2e;
+        text-decoration: underline;
     }
-    .active-metric:hover {
-        box-shadow: 0 12px 32px rgba(15, 23, 42, 0.2);
-    }
-    .active-metric .metric-label { color: #94a3b8; }
-    .active-metric .metric-desc { color: #cbd5e1; }
 
-    .metric-value { 
-        display: block; 
-        font-size: 3rem; 
-        font-weight: 800; 
-        margin-bottom: 8px; 
-        letter-spacing: -0.05em; 
-        line-height: 1;
+    /* Metrics */
+    .metrics {
+        padding: 80px 0;
+        background: #f8fafc;
     }
-    .metric-label { 
-        font-size: 0.7rem; 
-        font-weight: 700; 
-        color: #94a3b8; 
-        text-transform: uppercase; 
-        letter-spacing: 2px; 
+
+    .metrics-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    @media (min-width: 640px) {
+        .metrics-grid {
+            grid-template-columns: repeat(3, 1fr);
+        }
+    }
+
+    .metric-card {
+        background: white;
+        padding: 36px 20px;
+        text-align: center;
+        border: 1px solid #e5e7eb;
+        border-radius: 10px;
+    }
+
+    .metric-card.dark {
+        background: #0f172a;
+        color: white;
+        border: none;
+    }
+
+    .metric-card.dark .metric-label {
+        color: #94a3b8;
+    }
+
+    .metric-card.dark .metric-desc {
+        color: #cbd5e1;
+    }
+
+    .metric-value {
+        display: block;
+        font-size: 2.5rem;
+        font-weight: 800;
+        letter-spacing: -0.04em;
+        margin-bottom: 6px;
+        color: #064e3b;
+    }
+
+    .metric-card.dark .metric-value {
+        color: white;
+    }
+
+    .metric-label {
+        font-size: 0.7rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        color: #94a3b8;
         display: block;
         margin-bottom: 6px;
     }
+
     .metric-desc {
         font-size: 0.8rem;
         color: #64748b;
         margin: 0;
-        font-weight: 500;
     }
 
-    /* ==================== BOTTOM CTA ==================== */
-    .bottom-cta { 
-        text-align: center; 
-        margin-top: 80px; 
-        padding: 80px 40px; 
-        background: #f1f5f9; 
-        border-radius: 20px; 
+    /* Bottom CTA */
+    .bottom-cta {
+        text-align: center;
+        padding: 80px 0;
     }
-    .bottom-cta p { 
-        font-size: 1.2rem; 
-        color: #334155; 
-        margin-bottom: 40px; 
-        font-weight: 500; 
-        line-height: 1.6;
+
+    .bottom-cta p {
+        font-size: 1.15rem;
+        color: #334155;
+        margin: 0 0 32px;
+        line-height: 1.5;
     }
+
     .bottom-cta p strong {
         color: #0f172a;
     }
-    .cta-group { 
-        display: flex; 
-        flex-direction: column; 
-        gap: 16px; 
-        align-items: center; 
-        justify-content: center; 
-    }
-    @media (min-width: 640px) { 
-        .cta-group { flex-direction: row; gap: 20px; } 
+
+    .cta-actions {
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+        align-items: center;
+        justify-content: center;
     }
 
-    /* ==================== RESPONSIVE ==================== */
+    @media (min-width: 640px) {
+        .cta-actions {
+            flex-direction: row;
+            gap: 18px;
+        }
+    }
+
+    /* Responsive */
     @media (max-width: 768px) {
-        .hero-section { padding: 100px 0 80px 0; }
-        .manifesto-card { padding: 40px 24px; margin: 0 16px; }
-        .manifesto-headline { font-size: 1.4rem; }
-        .manifesto-body { font-size: 0.95rem; }
-        .brief-card { padding: 32px 24px; }
-        .brief-card h3 { font-size: 1.5rem; }
-        .metric-value { font-size: 2.2rem; }
-        .metric-card { padding: 36px 16px; }
-        .section-title { font-size: 1.8rem; }
-        .featured-highlight { padding: 80px 0; }
-        .pipeline-step { padding: 28px 20px; }
+        .manifesto-card {
+            padding: 32px 20px;
+            margin: 0 16px;
+        }
+        .featured-card {
+            padding: 24px;
+        }
+        .featured-card h3 {
+            font-size: 1.3rem;
+        }
+        .pipeline-step {
+            padding: 24px;
+        }
+        .section-header h2 {
+            font-size: 1.6rem;
+        }
+        .metric-card {
+            padding: 28px 16px;
+        }
+        .metric-value {
+            font-size: 2rem;
+        }
     }
 </style>
