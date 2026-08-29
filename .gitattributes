@@ -1,0 +1,17 @@
+# Handle PDF files as binary
+*.pdf binary
+
+# Don't try to diff PDF files
+*.pdf -text
+
+# Force Git to treat these as binary (no text conversion)
+*.pdf -diff
+
+# Mark common binary files
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.woff binary
+*.woff2 binary
