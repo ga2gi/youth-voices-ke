@@ -15,7 +15,7 @@
 
 <svelte:head>
     <title>PolicyBridge Kenya — Youth-Led Public Policy & Civic Engagement</title>
-    <meta name="description" content="PolicyBridge Kenya is a youth-led civic platform strengthening youth participation in governance through crowdsourced solutions and evidence-based policy briefs." />
+    <meta name="description" content="PolicyBridge Kenya is a youth-led civic platform strengthening youth participation in governance through crowdsourced solutions and evidence-based policy solutions." />
     <meta property="og:title" content="PolicyBridge Kenya — Youth-Led Public Policy" />
     <meta property="og:description" content="Strengthening meaningful youth participation in governance and policy making." />
     <meta property="og:type" content="website" />
@@ -30,7 +30,7 @@
             <h1>PolicyBridge <span class="text-green-light">KE</span></h1>
             <div class="hero-line"></div>
             <p class="hero-desc">
-                PolicyBridge KE is a youth-led public policy and civic engagement organization dedicated to strengthening meaningful youth participation in governance and policy making. Through our Policy Lab model, we crowdsource youth-generated solutions, facilitate community participation, and synthesize ideas into evidence-based briefs for institutional engagement.
+                PolicyBridge KE is a youth-led public policy and civic engagement organization dedicated to strengthening meaningful youth participation in governance and policy making. Through our Policy Lab model, we crowdsource youth-generated solutions, facilitate community participation, and synthesize ideas into evidence-based policy solutions for institutional engagement.
             </p>
             <div class="hero-actions">
                 <a href="/submit" class="btn btn-primary">Contribute Your Solution</a>
@@ -47,7 +47,7 @@
                 <span class="kicker">Our Belief</span>
                 <h2>Youth as Policy Co-Creators.<br><span class="text-green">Not voices in the crowd.</span></h2>
                 <div class="divider"></div>
-                <p>We empower young Kenyans to shape public policy by proposing practical, actionable solutions — then deliver them directly to decision-makers with transparency and accountability.</p>
+                <p>We empower young Kenyans to shape public policy by proposing practical, actionable solutions, then deliver them directly to decision-makers with transparency and accountability.</p>
                 <p class="closing">Simple. Open. Credible.</p>
             </div>
         </div>
@@ -75,7 +75,7 @@
                 <div class="pipeline-step">
                     <span class="step-num">03</span>
                     <h3>Advocate & Track</h3>
-                    <p>Briefs are delivered to government and stakeholders with public accountability tracking — so you see who responds.</p>
+                    <p>Briefs are delivered to government and stakeholders with public accountability tracking, so you see who responds.</p>
                 </div>
             </div>
         </div>

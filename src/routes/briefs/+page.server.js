@@ -1,29 +1,31 @@
-import { supabase } from '$lib/supabaseClient';
-
 /** @type {import('./$types').PageServerLoad} */
 export async function load() {
-    const { data: briefsData, error: briefsError } = await supabase
-        .from('policybriefs')
-        .select(`
-            id, 
-            title, 
-            description, 
-            delivery_date, 
-            status, 
-            stakeholder_acknowledged, 
-            pdf_url 
-        `)
-        .order('delivery_date', { ascending: false });
+    // Static data for policy briefs - always shows both briefs
+    const staticBriefs = [
+        {
+            id: 'mental-health-brief',
+            title: 'YOUTH MENTAL HEALTH IN KENYA: FROM LISTENING TO IMPLEMENTATION',
+            description: 'A youth-led framework for accessible, affordable and youth-friendly mental-health support to address Kenya\'s growing crisis.',
+            delivery_date: '2026-08-01',
+            status: 'OFFICIAL',
+            stakeholder_acknowledged: 'true',
+            pdf_url: '/downloads/Youth-Mental-Health-Crisis-Policy-Brief-2026.pdf'
+        },
+        {
+            id: 'access-to-capital-brief',
+            title: 'UNLOCKING KENYA\'S YOUTH ACCESS TO CAPITAL: A FIVE-PILLAR REFORM FRAMEWORK',
+            description: 'A strategic framework addressing the KES 500 billion financing gap through structural reform and market-enabling mechanisms.',
+            delivery_date: '2026-07-15',
+            status: 'OFFICIAL',
+            stakeholder_acknowledged: 'true',
+            pdf_url: '/downloads/Youth-Access-to-Capital-Reform-Framework.pdf'
+        }
+    ];
 
-    if (briefsError) {
-        console.error('Database Connection Error:', briefsError);
-        return { groupedBriefs: [] };
-    }
-    
     return { 
         groupedBriefs: [{
             title: "NATIONAL REGISTRY",
-            briefs: briefsData || []
+            briefs: staticBriefs
         }]
     };
 }

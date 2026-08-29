@@ -28,7 +28,15 @@
             ]
         },
         { href: '/education', label: 'Civic Education' },
-        { href: '/about', label: 'About' },
+        { 
+            label: 'About', 
+            type: 'dropdown',
+            key: 'about',
+            children: [
+                { href: '/about', label: 'About Us' },
+                { href: '/team', label: 'Meet the Team' },
+            ]
+        },
     ];
     
     $: {
