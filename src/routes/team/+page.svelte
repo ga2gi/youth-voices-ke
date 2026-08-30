@@ -6,9 +6,9 @@
             role: "Founder",
             email: "sharongatugi@policybridgeke.org",
             bio: "Visionary leader dedicated to bridging the gap between policy research and practical implementation. Sharon founded PolicyBridge KE with a mission to make policy engagement accessible and impactful for all Kenyans.",
-            photo: "/images/team/sharon-gatugi.jpg", // Replace with actual photo path
-            linkedin: "https://www.linkedin.com/in/sharongatugi", // Replace with actual LinkedIn URL
-            website: "https://sharongatugi.com", // Replace with actual website URL
+            photo: "/images/team/sharon-gatugi.jpeg",
+            linkedin: null,
+            website: "https://ga2gi.github.io/sharongikundi.github.io/",
             expertise: ["Policy Development", "Strategic Leadership", "Civic Engagement"],
             initials: "SG"
         },
@@ -17,9 +17,9 @@
             role: "Co-Founder",
             email: "kensonmutethia@policybridgeke.org",
             bio: "Co-founded PolicyBridge KE, bringing legal expertise and policy analysis to the team. As an Advocate of the High Court of Kenya, Kenson specializes in constitutional law, governance, and policy formulation with a focus on creating sustainable social impact.",
-            photo: "/images/team/kenson-mutethia.jpg", // Replace with actual photo path
-            linkedin: "https://www.linkedin.com/in/kensonmutethia", // Replace with actual LinkedIn URL
-            website: "https://kensonmutethia.advocate", // Replace with actual website URL
+            photo: "/images/team/kenson-mutethia.jpeg",
+            linkedin: "https://www.linkedin.com/in/kenson-mutethia-7605a4232?utm_source=share_via&utm_content=profile&utm_medium=member_ios",
+            website: null,
             expertise: ["Constitutional Law", "Policy Analysis", "Legal Advocacy", "Governance"],
             initials: "KM"
         }
@@ -52,7 +52,7 @@
                         <!-- Photo Section -->
                         <div class="member-photo-section">
                             {#if member.photo}
-                                <img src={member.photo} alt="{member.name}" class="profile-photo" />
+                                <img src={member.photo} alt={member.name} class="profile-photo" />
                             {:else}
                                 <div class="photo-placeholder">
                                     <span class="initials">{member.initials}</span>
@@ -235,13 +235,16 @@
     }
 
     .profile-photo {
-        width: 120px;
-        height: 120px;
+        width: 150px;
+        height: 150px;
         border-radius: 50%;
-        object-fit: cover;
+        object-fit: contain;
+        object-position: center;
+        background: white;
         border: 4px solid white;
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         transition: all 0.3s ease;
+        padding: 8px;
     }
 
     .team-card:hover .profile-photo {
@@ -250,8 +253,8 @@
     }
 
     .photo-placeholder {
-        width: 120px;
-        height: 120px;
+        width: 150px;
+        height: 150px;
         border-radius: 50%;
         background: linear-gradient(135deg, #064e3b 0%, #047857 100%);
         display: flex;
@@ -262,7 +265,7 @@
     }
 
     .initials {
-        font-size: 2rem;
+        font-size: 2.5rem;
         font-weight: 700;
         color: white;
         letter-spacing: 1px;
@@ -448,12 +451,12 @@
         
         .profile-photo,
         .photo-placeholder {
-            width: 100px;
-            height: 100px;
+            width: 120px;
+            height: 120px;
         }
         
         .initials {
-            font-size: 1.5rem;
+            font-size: 2rem;
         }
         
         .member-info {
@@ -496,12 +499,12 @@
         
         .profile-photo,
         .photo-placeholder {
-            width: 80px;
-            height: 80px;
+            width: 100px;
+            height: 100px;
         }
         
         .initials {
-            font-size: 1.2rem;
+            font-size: 1.5rem;
         }
     }
 </style>

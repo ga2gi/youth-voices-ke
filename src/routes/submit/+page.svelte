@@ -130,7 +130,9 @@
             ],
             sdg: "SDG 3: Good Health | SDG 10: Reduced Inequalities",
             vision2030: "Social Pillar: Health access | Governance Pillar: Decentralized services",
-            submissionGuide: "Focus on: (1) Mechanisms for ward-level funds, (2) Mental health in primary care and schools, (3) Community models that reduce stigma."
+            submissionGuide: "Focus on: (1) Mechanisms for ward-level funds, (2) Mental health in primary care and schools, (3) Community models that reduce stigma.",
+            highlights: "Policy brief published August 2026: 'Youth Mental Health in Kenya: From Listening to Implementation.' Four-Pillar framework with ward-level integration, education access points, community safe spaces, and digital support.",
+            status: "Closed"
         },
         "youth access to capital": {
             ref: "PL-ECO-001",
@@ -146,7 +148,7 @@
             ],
             sdg: "SDG 1: No Poverty | SDG 8: Decent Work",
             vision2030: "Economic Pillar: MSME development | Social Pillar: Youth employment",
-            highlights: "Policy brief submitted to multiple stakeholders. Live accountability tracking available.",
+            highlights: "Policy brief published April 2026: 'Unlocking Kenya's Youth Access to Capital: A Five-Pillar Reform Framework.' Policy brief submitted to multiple stakeholders. Live accountability tracking available.",
             status: "Closed"
         }
     };

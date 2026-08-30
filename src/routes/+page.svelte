@@ -3,8 +3,8 @@
     export let data;
     
     const metrics = {
-        publishedBriefs: 1,
-        liveChallenges: 6,
+        publishedBriefs: 2,
+        liveChallenges: 5,
         communityMembers: "120+"
     };
 
@@ -86,8 +86,8 @@
         <div class="container">
             <div class="featured-card">
                 <span class="featured-label">Latest Policy Publication</span>
-                <h3>Unlocking Kenya's Youth Access to Capital</h3>
-                <p>A youth-developed strategic framework addressing the KES 500B financing gap via a Five-Pillar reform strategy.</p>
+                <h3>Youth Mental Health in Kenya: From Listening to Implementation</h3>
+                <p>A youth-led framework for accessible, affordable and youth-friendly mental-health support. Based on a National Youth Consultation across 20 counties, this brief proposes a Four-Pillar reform strategy to address Kenya's growing mental health crisis.</p>
                 <a href="/briefs" class="featured-link">View Policy Brief →</a>
             </div>
         </div>
@@ -105,8 +105,8 @@
             <div class="metrics-grid">
                 <div class="metric-card">
                     <span class="metric-value">{metrics.publishedBriefs}</span>
-                    <span class="metric-label">Policy Brief Published</span>
-                    <p class="metric-desc">Youth Access to Capital Framework</p>
+                    <span class="metric-label">Policy Briefs Published</span>
+                    <p class="metric-desc">Youth Mental Health & Access to Capital</p>
                 </div>
                 <div class="metric-card dark">
                     <span class="metric-value">{metrics.liveChallenges}</span>
