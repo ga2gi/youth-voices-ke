@@ -36,7 +36,7 @@
     <section class="team-hero">
         <div class="container">
             <span class="section-badge">Our Team</span>
-            <h1 class="hero-title">Meet the People Behind PolicyBridge</h1>
+            <h1 class="hero-title">Meet the People Behind PolicyBridge KE</h1>
             <p class="hero-subtitle">
                 Dedicated professionals committed to bridging the gap between policy research and real-world implementation in Kenya.
             </p>
